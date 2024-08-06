@@ -12,7 +12,7 @@ namespace ProyectoFinalAPI
         { }
 
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<DetalleVenta> DetallesVenta { get; set; }
+        public DbSet<DetalleVenta> DetalleVenta { get; set; }
         public DbSet<Inventario> Inventarios { get; set; }
         public DbSet<MateriaPrima> MateriasPrimas { get; set; }
         public DbSet<Produccion> Produccion { get; set; }

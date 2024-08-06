@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Desarrollos de .ASP\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
+    "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
   },
   "projects": {
-    "C:\\Desarrollos de .ASP\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {
+    "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Desarrollos de .ASP\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "projectUniqueName": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
         "projectName": "ProyectoFinalAPI",
-        "projectPath": "C:\\Desarrollos de .ASP\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "projectPath": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
         "packagesPath": "C:\\Users\\mazu1\\.nuget\\packages\\",
-        "outputPath": "C:\\Desarrollos de .ASP\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
+        "outputPath": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mazu1\\AppData\\Roaming\\NuGet\\NuGet.Config",

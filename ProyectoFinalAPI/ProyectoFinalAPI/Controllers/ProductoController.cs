@@ -72,6 +72,26 @@ namespace ProyectoFinalAPI.Controllers
 
         }
 
+        [HttpGet("FiltrarProductos")]
+        public async Task<ActionResult<IEnumerable<Producto>>> FiltrarProductos(
+            [FromQuery] string term = null)
+        {
+            
+            if (string.IsNullOrWhiteSpace(term))
+            {
+                return await _context.Producto.ToListAsync();
+            }
+
+            var searchTerm = term.ToLower();
+
+            
+            var productos = await _context.Producto
+                .Where(p => p.nombreProducto.ToLower().Contains(searchTerm) || p.idProducto.ToString().Contains(searchTerm))  
+                .ToListAsync();
+
+            return productos;
+        }
+
 
 
 

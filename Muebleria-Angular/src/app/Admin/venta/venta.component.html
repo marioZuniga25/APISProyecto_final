@@ -1,0 +1,87 @@
+<body>
+    <div class="pos-container">
+        <h1>Punto de Venta</h1>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input 
+            type="text" 
+            id="search" 
+            placeholder="Buscar productos..." 
+            [(ngModel)]="terminoBusqueda" 
+            (input)="buscarProductos()"
+            />
+        </div>
+
+        <h2>Productos Disponibles</h2>
+        <!-- Tabla de productos -->
+        <div class="products-table">
+           
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td>{{product.idProducto}}</td>
+                        <td>{{product.nombreProducto}}</td>
+                        <td>{{product.precio}}</td>
+                        <td>{{product.idCategoria}}</td>
+                        <td><button class="btn-agregar" (click)="agregarProducto(product)">Agregar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Productos Seleccionados</h2>
+        <!-- Tabla de productos seleccionados -->
+        <div class="selected-products-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let selectedProduct of selectedProducts; let i = index">
+                        <td>{{ selectedProduct.producto.idProducto }}</td>
+                        <td>{{ selectedProduct.producto.nombreProducto }}</td>
+                        <td>{{ selectedProduct.producto.precio }}</td>
+                        <td>
+                            <input 
+                                type="number" 
+                                [(ngModel)]="selectedProduct.cantidad" 
+                                (change)="actualizarSubtotal(i)"
+                                min="1"
+                                [value]="selectedProduct.cantidad"
+                            />
+                        </td>
+                        <td>{{ selectedProduct.subtotal | currency }}</td>
+                        <td>
+                            <button class="btn-eliminar" (click)="eliminarProducto(selectedProduct.producto.idProducto)">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <h1>Total: ${{calcularTotal()}}</h1>
+
+        <!-- Botones para acciones -->
+        <div class="action-buttons">
+            <button class="save-btn" (click)="guardarVenta();">Guardar Venta</button>
+            <button class="cancel-btn">Cancelar</button>
+        </div>
+    </div>
+</body>

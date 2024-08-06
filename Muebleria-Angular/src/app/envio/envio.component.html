@@ -1,0 +1,217 @@
+<div class="datos">
+    <div class="datos-titulo">
+        <div class="datos-titulo-linea">
+            <div class="linea">
+                <p class="selected">CARRITO</p>
+                <span class="icon icon-siguiente selected"></span>
+                <p class="selected">DATOS DE ENVÍO</p>
+                <span class="icon icon-siguiente"></span>
+                <p>RESUMEN</p>
+            </div>
+        </div>
+        <div class="datos-titulo-text">
+            <p>COMPRA</p>
+        </div>
+    </div>
+    <div class="datos-contenido">
+        <div class="datos-contenido-requerido">
+            <div class="logo">
+                <img src="images/logo" alt="logo de la muebleria">
+            </div>
+            <div class="datos-contenido-requerido-form">
+                <h3>ESCRIBE LOS DATOS DEL ENVÍO</h3>
+                <form id="formEnvio">
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" name="nombre" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="apellidos">Apellidos</label>
+                                <input type="text" name="apellidos" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" name="telefono" data-validation-engine="validate[required,minSize[10],maxSize[10]]">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="correo">Correo</label>
+                                <input type="email" name="correo" data-validation-engine="validate[required,custom[email]]">
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="calle">Calle</label>
+                                <input type="text" name="calle" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="numero">Número</label>
+                                <input type="text" name="numero" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="colonia">Colonia</label>
+                                <input type="text" name="colonia" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="cuidad">Cuidad</label>
+                                <input type="text" name="cuidad" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="estado">Estado</label>
+                                <input type="text" name="estado" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="codigo">Código Postal</label>
+                                <input type="text" name="codigo" data-validation-engine="validate[required]">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="datos-contenido-requerido-botones">
+                <a href="home" class="boton-volver">
+                    <span class="icon icon-anterior"></span>
+                    <p>Volver al carrito</p>
+                </a>
+                <div class="boton">
+                    <button id="continuarBtn">CONFIRMAR PEDIDO</button>
+                </div>
+            </div>
+        </div>
+        <div class="datos-contenido-bag">
+            <div class="datos-contenido-bag-descripcion">
+                <div class="descripcion">
+                    <div class="descripcion-titulo">
+                        <h2 class="title">BAG</h2>
+                        <span class="title">6</span>
+                    </div>
+                    <div class="descripcion-producto">
+                        <div class="producto-item">
+                            <div class="producto-item-img">
+                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
+                                <div class="compras-item-datos">
+                                    <div class="dato-historico">
+                                        <p class="titulo">Vestido negro</p>
+                                    </div>
+                                    <div class="dato-historico">
+                                        <div class="dato-historico-item">
+                                            <p>Cantidad:</p>
+                                            <p>1</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="producto-item-precio">
+                                <p>$1,200.00</p>
+                            </div>
+                        </div>
+                        <div class="producto-item">
+                            <div class="producto-item-img">
+                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
+                                <div class="compras-item-datos">
+                                    <div class="dato-historico">
+                                        <p class="titulo">Vestido negro</p>
+                                    </div>
+                                    <div class="dato-historico">
+                                        <div class="dato-historico-item">
+                                            <p>Cantidad:</p>
+                                            <p>1</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="producto-item-precio">
+                                <p>$1,200.00</p>
+                            </div>
+                        </div>
+                        <div class="producto-item">
+                            <div class="producto-item-img">
+                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
+                                <div class="compras-item-datos">
+                                    <div class="dato-historico">
+                                        <p class="titulo">Vestido negro</p>
+                                    </div>
+                                    <div class="dato-historico">
+                                        <div class="dato-historico-item">
+                                            <p>Cantidad:</p>
+                                            <p>1</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="producto-item-precio">
+                                <p>$1,200.00</p>
+                            </div>
+                        </div>
+                        <div class="producto-item">
+                            <div class="producto-item-img">
+                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
+                                <div class="compras-item-datos">
+                                    <div class="dato-historico">
+                                        <p class="titulo">Vestido negro</p>
+                                    </div>
+                                    <div class="dato-historico">
+                                        <div class="dato-historico-item">
+                                            <p>Cantidad:</p>
+                                            <p>1</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="producto-item-precio">
+                                <p>$1,200.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="descripcion-descuento">
+                        <div class="descripcion-descuento-total">
+                            <div class="total-item">
+                                <p>Subtotal:</p>
+                                <p>$10,500.00</p>
+                            </div>
+                            <div class="total-item">
+                                <p>Descuento:</p>
+                                <p>$0.00</p>
+                            </div>
+                            <div class="total-item">
+                                <p>Envío:</p>
+                                <p>$0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="descripcion-total">
+                        <p>TOTAL:</p>
+                        <p>$10,500.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
