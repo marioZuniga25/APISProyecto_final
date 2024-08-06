@@ -5,3 +5,22 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
 .footer-container .col{
     width: calc(33.33% - 30px); 
 }
+
+.logo-container img{
+    width: 80px;
+}
+
+.menu{
+    width: calc(100% - 100px);
+    margin:0 0 0 auto;
+    max-width: 100%;
+    padding-left: 0;
+}
+.menu ul{
+    justify-content: end;
+    max-width: 950px;
+    margin-left: auto;
+}
+.header-container{
+    padding: 0 50px !important;
+}

@@ -2,11 +2,13 @@
     <app-header></app-header>
     <app-buscador></app-buscador>
     <app-carrito></app-carrito>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
   </ng-container>
 
-  <router-outlet></router-outlet>
   
-  <ng-container *ngIf="mostrarComponentes">
-    <app-footer></app-footer>
+  <ng-container *ngIf="!mostrarComponentes">
+    <app-menu style="padding-bottom: 20px;"></app-menu>
+    <router-outlet></router-outlet>
   </ng-container>
   
