@@ -1,19 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { IUsuarioDetalle } from '../../interfaces/IUsuarioDetalle';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { FormsModule, NgForm } from '@angular/forms';
 import { AuthResponse } from '../../interfaces/AuthResponse';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login-usuario',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login-usuario.component.html',
+  styleUrl: './login-usuario.component.css'
 })
-export class LoginComponent {
+export class LoginUsuarioComponent {
   loginData: IUsuarioDetalle = {
     idUsuario: 0,
     nombreUsuario: '',
@@ -33,14 +33,8 @@ export class LoginComponent {
     this.authService.login(this.loginData).subscribe(
       (response: AuthResponse) => {
         if (response && response.user) {
-          // Actualizar el estado del usuario en el componente (por si se necesita en otros lugares)
-          this.user = response.user; 
-
           // Redirigir a la página principal después de iniciar sesión
-            this.router.navigate(['/admin/inicio']).then(() => {
-              window.location.reload();
-            });
-          
+          this.router.navigate(['/']);
         }
       },
       (error) => {
@@ -49,7 +43,5 @@ export class LoginComponent {
       }
     );
   }
-
-  // Declaración de la variable user en el componente, como en MenuComponent
-  user: IUsuarioDetalle | null = null;
 }
+

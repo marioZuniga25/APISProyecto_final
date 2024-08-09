@@ -11,8 +11,10 @@ import { DashboardComponent } from './Admin/dashboard/dashboard.component';
 import { ProveedorComponent } from './Admin/proveedor/proveedor.component';
 import { MateriaPrimaComponent } from './Admin/materia-prima/materia-prima.component';
 import { VentaComponent } from './Admin/venta/venta.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.component';
+import { UsuariosComponent } from './Admin/usuarios/usuarios.component';
+import { RegisterComponent } from './Usuario/register/register.component';
+import { LoginUsuarioComponent } from './Usuario/login-usuario/login-usuario.component';
+import { InicioAdminComponent } from './Admin/inicio-admin/inicio-admin.component';
 
 export const routes: Routes = [
   {
@@ -68,7 +70,15 @@ export const routes: Routes = [
     component: UsuariosComponent,
   },
   {
-    path: 'admin/detalle-usuario',
-    component: DetalleUsuarioComponent,
+    path: 'admin/inicio',
+    component: InicioAdminComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'login',
+    component: LoginUsuarioComponent,
   },
 ];

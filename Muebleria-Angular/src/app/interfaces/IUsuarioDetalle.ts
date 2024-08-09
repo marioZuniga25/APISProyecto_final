@@ -4,4 +4,5 @@ export interface IUsuarioDetalle{
     correo:string,
     contrasenia:string,
     rol:number,
+    confirmPassword?: string;
 }

@@ -33,7 +33,7 @@ namespace ProyectoFinalAPI.Controllers
 
 
         [HttpPost]
-        [Route("AgregarUsuario")]
+        [Route("registrar")]
         public async Task<IActionResult> addUsuario([FromBody] Usuario request)
         {
             var usuario = new Usuario
