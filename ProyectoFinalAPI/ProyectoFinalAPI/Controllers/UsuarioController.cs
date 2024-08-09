@@ -100,6 +100,19 @@ namespace ProyectoFinalAPI.Controllers
 
         }
 
+                [HttpGet("DetalleUsuario/{id:int}")]
+        public async Task<ActionResult<Usuario>> GetUsuarioById(int id)
+        {
+            var usuario = await _context.Usuario.FindAsync(id);
+
+            if (usuario == null)
+            {
+                return NotFound(new { message = "Usuario no encontrado." });
+            }
+
+            return Ok(usuario);
+        }
+
 
         //EndPoint para login
         [HttpPost]
@@ -120,8 +133,6 @@ namespace ProyectoFinalAPI.Controllers
             // Si se encuentra el usuario, devolver una respuesta de éxito
             return Ok(new { message = "Inicio de sesión exitoso", user = usuario });
         }
-
-
 
 
 
