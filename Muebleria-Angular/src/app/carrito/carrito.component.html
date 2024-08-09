@@ -1,141 +1,44 @@
-<div class="bag">
+<div class="bag" *ngIf="mostrarBag$ | async">
     <div class="bag-contenido">
-        <div class="bag-contenido-registro">
-            <span class="icon icon-cerrar cerrar"></span>
-            <div class="d-flex">
-                <h2 class="title">BAG</h2>
-                <span class="circulo">4</span>
-            </div>
-            <div class="scroll">
-                <div class="bag-producto">
-                    <div class="bag-producto-item">
-                        <div class="bag-producto-item-contenido">
-                            <div class="bag-producto-item-contenido-img">
-                                <img src="../images/bag/bag1.jpg" alt="MUEBLES TRONCOSO">
-                            </div>
-                            <div class="bag-producto-item-contenido-text">
-                                <div class="bag-titulo">
-                                    <h4>Vestido dorado</h4>
-                                </div>
-                                <div class="bag-descripcion">
-                                    <div class="bag-descripcion-item">
-                                        <p>Talla:</p>
-                                        <p>M</p>
-                                    </div>
-                                    <div class="bag-descripcion-item">
-                                        <p>Cantidad:</p>
-                                        <p>1</p>
-                                    </div>
-                                    <div class="bag-descripcion-item precio">
-                                        <p>$1,200.00</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icono-eliminar">
-                                <span class="icon icon-menos"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bag-producto-item">
-                        <div class="bag-producto-item-contenido">
-                            <div class="bag-producto-item-contenido-img">
-                                <img src="../images/bag/bag1.jpg" alt="MUEBLES TRONCOSO">
-                            </div>
-                            <div class="bag-producto-item-contenido-text">
-                                <div class="bag-titulo">
-                                    <h4>Vestido dorado</h4>
-                                </div>
-                                <div class="bag-descripcion">
-                                    <div class="bag-descripcion-item">
-                                        <p>Talla:</p>
-                                        <p>M</p>
-                                    </div>
-                                    <div class="bag-descripcion-item">
-                                        <p>Cantidad:</p>
-                                        <p>1</p>
-                                    </div>
-                                    <div class="bag-descripcion-item precio">
-                                        <p>$1,200.00</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icono-eliminar">
-                                <span class="icon icon-menos"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bag-producto-item">
-                        <div class="bag-producto-item-contenido">
-                            <div class="bag-producto-item-contenido-img">
-                                <img src="../images/bag/bag1.jpg" alt="MUEBLES TRONCOSO">
-                            </div>
-                            <div class="bag-producto-item-contenido-text">
-                                <div class="bag-titulo">
-                                    <h4>Vestido dorado</h4>
-                                </div>
-                                <div class="bag-descripcion">
-                                    <div class="bag-descripcion-item">
-                                        <p>Talla:</p>
-                                        <p>M</p>
-                                    </div>
-                                    <div class="bag-descripcion-item">
-                                        <p>Cantidad:</p>
-                                        <p>1</p>
-                                    </div>
-                                    <div class="bag-descripcion-item precio">
-                                        <p>$1,200.00</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icono-eliminar">
-                                <span class="icon icon-menos"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bag-producto-item">
-                        <div class="bag-producto-item-contenido">
-                            <div class="bag-producto-item-contenido-img">
-                                <img src="../images/bag/bag1.jpg" alt="MUEBLES TRONCOSO">
-                            </div>
-                            <div class="bag-producto-item-contenido-text">
-                                <div class="bag-titulo">
-                                    <h4>Vestido dorado</h4>
-                                </div>
-                                <div class="bag-descripcion">
-                                    <div class="bag-descripcion-item">
-                                        <p>Talla:</p>
-                                        <p>M</p>
-                                    </div>
-                                    <div class="bag-descripcion-item">
-                                        <p>Cantidad:</p>
-                                        <p>1</p>
-                                    </div>
-                                    <div class="bag-descripcion-item precio">
-                                        <p>$1,200.00</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icono-eliminar">
-                                <span class="icon icon-menos"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="recomendaciones">
-                    <p>RECOMENDADOS</p>
-                    <div class="recomendaciones-contenido">
-                        <div class="recomendaciones-contenido-img">
-                            <img src="../images/bag/recomendado1.jpg" alt="MUEBLES TRONCOSO">
-                        </div>
-                        <div class="recomendaciones-contenido-img">
-                            <img src="../images/bag/recomendado2.jpg" alt="MUEBLES TRONCOSO">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="boton">
-                <a href="../datos_de_envio">TERMINAR COMPRA</a>
-            </div>
+      <div class="bag-contenido-registro">
+        <span class="icon icon-cerrar cerrar" (click)="toggleBag()"></span>
+        <div class="d-flex">
+          <h2 class="title">BAG</h2>
+          <span class="circulo">{{ (itemsCarrito$ | async)?.length || 0 }}</span>
         </div>
+        <div class="scroll">
+            <div class="bag-producto" *ngFor="let item of itemsCarrito$ | async">
+                <div class="bag-producto-item">
+                  <div class="bag-producto-item-contenido">
+                    <div class="bag-producto-item-contenido-img">
+                      <img style="max-width: 100px;" [src]="'/assets/images/imagenesbd/' + (item?.imagen || 'default.jpg')" alt="{{ item?.nombreProducto || 'Producto' }}">
+                    </div>
+                    <div class="bag-producto-item-contenido-text">
+                      <div class="bag-titulo">
+                        <h4>{{ item.nombreProducto}}</h4>
+                      </div>
+                      <div class="bag-descripcion">
+                        <div class="bag-descripcion-item">
+                          <p>Cantidad:</p>
+                          <p>{{ item?.cantidad || 0 }}</p>
+                        </div>
+                        <div class="bag-descripcion-item precio">
+                          <p>Precio: ${{ item?.precio | number:'1.2-2' || '0.00' }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icono-eliminar" (click)="eliminarDelCarrito(item?.id)">
+                      <span class="icon fa-solid fa-x"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+        </div>
+        <div class="boton">
+          <a href="../datos_de_envio">TERMINAR COMPRA</a>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  

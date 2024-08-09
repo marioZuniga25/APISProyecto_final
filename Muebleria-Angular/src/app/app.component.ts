@@ -20,6 +20,7 @@ import { MenuComponent } from './Admin/menu/menu.component';
 export class AppComponent {
   title = 'Muebleria-Angular';
   mostrarComponentes: boolean = true;
+  mostrarBag : boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -27,5 +28,8 @@ export class AppComponent {
         this.mostrarComponentes = !event.url.includes('/admin');
       }
     });
+  }
+  toggleBag() {
+    this.mostrarBag = !this.mostrarBag;
   }
 }

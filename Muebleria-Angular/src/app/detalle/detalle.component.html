@@ -2,12 +2,12 @@
     <div class="Detalle-producto">
         <div class="Detalle-producto-container">
             <div class="images">
-                <div class="open" style="display: flex; align-items: center; justify-content: center;width: 100%;">
+                <div style="display: flex; align-items: center; justify-content: center;width: 100%;">
                     <img [src]="'/assets/images/imagenesbd/' + producto.imagen" alt="{{ producto.nombreProducto }}">
                 </div>
             </div>
             <div class="text">
-                <h1>{{ producto.nombreProducto }}</h1>
+                <h1>{{ producto.nombreProducto }}</h1> 
                 <p class="price">${{ producto.precio | number:'1.2-2' }}</p>
                 <p>
                     Cantidad: <span>{{producto.stock}} disponibles</span>
@@ -22,97 +22,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="tiempo">Tiempo aproximado de entrega ({{ producto.tiempoEntrega }} días)</div>
-                <button class="btn-negro">COMPRAR</button>
+                <div class="tiempo">Tiempo aproximado de entrega 2 días</div>
+                <button class="btn-negro" (click)="agregarAlCarrito()">COMPRAR</button>
+                
             </div>
         </div>
     </div>
-    <!-- <div class="Detalle-recomendaciones">
-        <div class="Detalle-recomendaciones-container">
-            <div class="flex">
-                <button class="icon icon-anterior"></button>
-                <h2 class="title">TE PODRIAN GUSTAR</h2>
-                <button class="icon icon-siguiente"></button>
-            </div>
-            <div class="carrousel">
-                <div class="item">
-                    <a class="Producto">
-                        <div class="img">
-                            <div class="float">-20%</div>
-                            <div class="heart icon-favorito"></div>
-                            <img src="/assets/images/reacuadro4.jpg" alt="MUEBLES TRONCOSO">
-                            <div class="quiero">LO QUIERO</div>
-                        </div>
-                        
-                    </a>
-                </div>
-                <div class="item">
-                    <a class="Producto">
-                        <div class="img">
-                            <div class="float">-20%</div>
-                            <div class="heart icon-favorito"></div>
-                            <img src="/assets/images/recuadro5.jpg" alt="MUEBLES TRONCOSO">
-                            <div class="quiero">LO QUIERO</div>
-                        </div>
-                        
-                    </a>
-                </div>
-                <div class="item">
-                    <a class="Producto">
-                        <div class="img">
-                            <div class="float">-20%</div>
-                            <div class="heart icon-favorito"></div>
-                            <img src="/assets/images/recuadros1.jpg" alt="MUEBLES TRONCOSO">
-                            <div class="quiero">LO QUIERO</div>
-                        </div>
-                        
-                    </a>
-                </div>
-                <div class="item">
-                    <a class="Producto">
-                        <div class="img">
-                            <div class="float">-20%</div>
-                            <div class="heart icon-favorito"></div>
-                            <img src="/assets/images/reacuadro4.jpg" alt="MUEBLES TRONCOSO">
-                            <div class="quiero">LO QUIERO</div>
-                        </div>
-                        
-                    </a>
-                </div>
-                <div class="item">
-                    <a class="Producto">
-                        <div class="img">
-                            <div class="float">-20%</div>
-                            <div class="heart icon-favorito"></div>
-                            <img src="/assets/images/recuadro5.jpg" alt="MUEBLES TRONCOSO">
-                            <div class="quiero">LO QUIERO</div>
-                        </div>
-                        
-                    </a>
-                </div>
-                <div class="item">
-                    <a class="Producto">
-                        <div class="img">
-                            <div class="float">-20%</div>
-                            <div class="heart icon-favorito"></div>
-                            <img src="/assets/images/recuadros1.jpg" alt="MUEBLES TRONCOSO">
-                            <div class="quiero">LO QUIERO</div>
-                        </div>
-                        
-                    </a>
-                </div>
-                <div class="item">
-                    <a class="Producto">
-                        <div class="img">
-                            <div class="float">-20%</div>
-                            <div class="heart icon-favorito"></div>
-                            <img src="/assets/images/recuadros1.jpg" alt="MUEBLES TRONCOSO">
-                            <div class="quiero">LO QUIERO</div>
-                        </div>
-                        
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>

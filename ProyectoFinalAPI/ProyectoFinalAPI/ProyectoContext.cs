@@ -21,6 +21,8 @@ namespace ProyectoFinalAPI
         public DbSet<Proveedor> Proveedor{ get; set; }
         public DbSet<Usuario> Usuario{ get; set; }
         public DbSet<Venta> Venta { get; set; }
+        public DbSet<CarritoItem> CarritoItems { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -145,6 +147,17 @@ namespace ProyectoFinalAPI
 
             });
 
+            modelBuilder.Entity<CarritoItem>(carritoItem=>
+            {
+                carritoItem.ToTable("CarritoItem");
+                carritoItem.HasKey(i => i.id);
+                carritoItem.Property(i => i.id).ValueGeneratedOnAdd().UseIdentityColumn();
+                carritoItem.Property(i => i.productoId).IsRequired();
+                carritoItem.Property(i => i.nombreProducto).IsRequired();
+                carritoItem.Property(i => i.cantidad).IsRequired();
+                carritoItem.Property(i => i.precio).IsRequired();
+                carritoItem.Property(i => i.imagen).IsRequired();
+            });
 
         }
     }

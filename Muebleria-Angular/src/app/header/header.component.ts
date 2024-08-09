@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CarritoService } from '../services/carrito/carrito.service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  constructor(private carritoService: CarritoService) {}
 
+  toggleBag() {
+    this.carritoService.toggleBag();
+  }
 }
