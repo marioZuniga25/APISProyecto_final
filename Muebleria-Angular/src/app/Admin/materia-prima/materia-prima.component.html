@@ -1,1 +1,120 @@
-<p>materia-prima works!</p>
+<!-- src/app/inventario/inventario.component.html -->
+
+<div class="container">
+    <h2>Inventario de Materias Primas</h2>
+    <div class="table-container">
+      <table class="inventory-table">
+        <thead>
+          <tr>
+            <th>ID Materia Prima</th>
+            <th>Nombre Materia Prima</th>
+            <th>Descripción</th>
+            <th>ID Inventario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let materiaPrima of materiasPrimas"
+            (click)="openEditModal(materiaPrima)"
+            class="clickable-row"
+          >
+            <td>{{ materiaPrima.idMateriaPrima }}</td>
+            <td>{{ materiaPrima.nombreMateriaPrima }}</td>
+            <td>{{ materiaPrima.descripcion }}</td>
+            <td>{{ materiaPrima.idInventario }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Modal para agregar nueva materia prima -->
+
+    <button class="add-btn" (click)="openModal()">Agregar Materia Prima</button>
+  
+    <!-- Modal para agregar materia prima -->
+     
+    <div class="modal" [ngClass]="{'show': isModalOpen}">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h3>Agregar Materia Prima</h3>
+        <form (ngSubmit)="addMateriaPrima()">
+          <div class="form-group">
+            <label for="nombreMateriaPrima">Nombre de Materia Prima</label>
+            <input
+              type="text"
+              [(ngModel)]="nuevaMateriaPrima.nombreMateriaPrima"
+              name="nombreMateriaPrima"
+              id="nombreMateriaPrima"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea
+              [(ngModel)]="nuevaMateriaPrima.descripcion"
+              name="descripcion"
+              id="descripcion"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="idInventario">ID Inventario</label>
+            <input
+              type="number"
+              [(ngModel)]="nuevaMateriaPrima.idInventario"
+              name="idInventario"
+              id="idInventario"
+              required
+            />
+          </div>
+          <button type="submit" class="submit-btn">Agregar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal para editar materia prima -->
+    <div class="modal" [ngClass]="{'show': isEditModalOpen}">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h3>Editar Materia Prima</h3>
+        <form (ngSubmit)="saveChanges()">
+          <div class="form-group">
+            <label for="nombreMateriaPrima">Nombre de Materia Prima</label>
+            <input
+              type="text"
+              [(ngModel)]="selectedMateriaPrima.nombreMateriaPrima"
+              name="nombreMateriaPrima"
+              id="nombreMateriaPrima"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea
+              [(ngModel)]="selectedMateriaPrima.descripcion"
+              name="descripcion"
+              id="descripcion"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="idInventario">ID Inventario</label>
+            <input
+              type="number"
+              [(ngModel)]="selectedMateriaPrima.idInventario"
+              name="idInventario"
+              id="idInventario"
+              required
+            />
+            <input type="text" disabled name="idMateriaPrima" 
+            [(ngModel)]="selectedMateriaPrima.idMateriaPrima" style="display: none;"/>
+          </div>
+          <button type="submit" class="submit-btn">Guardar Cambios</button>
+          <button class="delete-btn" (click)="deleteMateria()">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -62,7 +62,7 @@ export const routes: Routes = [
     component: ProveedorComponent,
   },
   {
-    path: 'admin/materia_prima',
+    path: 'admin/materiaprima',
     component: MateriaPrimaComponent,
   },
   {

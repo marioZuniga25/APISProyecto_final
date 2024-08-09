@@ -408,6 +408,7 @@ C:/Users/mazu1/OneDrive/Escritorio/APIs del proyecto final/APISProyecto_final/Pr
 /Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/Debug/net8.0/ProyectoFinalAPI.pdb
 /Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/Debug/net8.0/ProyectoFinalAPI.genruntimeconfig.cache
 /Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/Debug/net8.0/ref/ProyectoFinalAPI.dll
+<<<<<<< HEAD
 /Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/bin/Debug/net8.0/appsettings.Development.json
 /Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/bin/Debug/net8.0/appsettings.json
 /Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/bin/Debug/net8.0/ProyectoFinalAPI
@@ -545,3 +546,5 @@ C:/Users/mazu1/OneDrive/Escritorio/APIs del proyecto final/APISProyecto_final/Pr
 /Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/Debug/net8.0/ProyectoFinalAPI.pdb
 /Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/Debug/net8.0/ProyectoFinalAPI.genruntimeconfig.cache
 /Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/Debug/net8.0/ref/ProyectoFinalAPI.dll
+=======
+>>>>>>> f75dcb708fe846287fb957977764db3f6eee3ea5
