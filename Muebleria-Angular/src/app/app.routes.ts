@@ -11,18 +11,64 @@ import { DashboardComponent } from './Admin/dashboard/dashboard.component';
 import { ProveedorComponent } from './Admin/proveedor/proveedor.component';
 import { MateriaPrimaComponent } from './Admin/materia-prima/materia-prima.component';
 import { VentaComponent } from './Admin/venta/venta.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'gracias', component: GraciasComponent },
-  { path: 'envio', component: EnvioComponent },
-  { path: 'detalle', component: DetalleComponent },
-  { path: 'contacto', component: ContactoComponent },
-  { path: 'catalogo', component: CatalogoComponent },
-  { path: 'bag', component: BagComponent },
-  {path: 'admin', component: LoginComponent},
-  {path: 'admin/dashboard', component: DashboardComponent},
-  {path: 'admin/proveedor', component: ProveedorComponent},
-  {path: 'admin/materia_prima', component: MateriaPrimaComponent},
-  {path: 'admin/venta', component: VentaComponent}
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'gracias',
+    component: GraciasComponent,
+  },
+  {
+    path: 'envio',
+    component: EnvioComponent,
+  },
+  {
+    path: 'detalle',
+    component: DetalleComponent,
+  },
+  {
+    path: 'contacto',
+    component: ContactoComponent,
+  },
+  {
+    path: 'catalogo',
+    component: CatalogoComponent,
+  },
+  {
+    path: 'bag',
+    component: BagComponent,
+  },
+  {
+    path: 'admin',
+    component: LoginComponent,
+  },
+  {
+    path: 'admin/dashboard',
+    component: DashboardComponent,
+  },
+  {
+    path: 'admin/proveedor',
+    component: ProveedorComponent,
+  },
+  {
+    path: 'admin/materia_prima',
+    component: MateriaPrimaComponent,
+  },
+  {
+    path: 'admin/venta',
+    component: VentaComponent,
+  },
+  {
+    path: 'admin/usuarios',
+    component: UsuariosComponent,
+  },
+  {
+    path: 'admin/detalle-usuario',
+    component: DetalleUsuarioComponent,
+  },
 ];

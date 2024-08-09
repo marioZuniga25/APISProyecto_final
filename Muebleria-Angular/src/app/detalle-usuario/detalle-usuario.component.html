@@ -1,0 +1,25 @@
+<div *ngIf="usuario$ | async as usuario; else noUsuario">
+    <form >
+      <div class="mb-3">
+        <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+        <input type="text" id="nombreUsuario" class="form-control" [(ngModel)]="usuario.nombreUsuario" name="nombreUsuario" required>
+      </div>
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input type="email" id="correo" class="form-control" [(ngModel)]="usuario.correo" name="correo" required>
+      </div>
+      <div class="mb-3">
+        <label for="rol" class="form-label">Rol</label>
+        <select id="rol" class="form-select" [(ngModel)]="usuario.rol" name="rol" required>
+          <option [value]="0">Usuario</option>
+          <option [value]="1">Administrador</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+      <button type="button" class="btn btn-secondary">Cancelar</button>
+    </form>
+  </div>
+  <ng-template #noUsuario>
+    <p class="text-muted">Seleccione un usuario para ver los detalles.</p>
+  </ng-template>
+  

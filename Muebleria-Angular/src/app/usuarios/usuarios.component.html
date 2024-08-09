@@ -1,0 +1,46 @@
+<app-detalle-usuario></app-detalle-usuario>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">USUARIOS</h4>
+    </div>
+    <div class="card-body">
+      <div *ngIf="(user$ | async) as usuarios; else noUsuarios">
+        <div *ngIf="usuarios.length > 0; else noUsuarios">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre de Usuario</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios; trackBy: trackById">
+                <td>{{ usuario.idUsuario }}</td>
+                <td>{{ usuario.nombreUsuario }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td>
+                  <select class="form-select" [(ngModel)]="usuario.rol" (change)="actualizarRol(usuario.idUsuario, usuario.rol)">
+                    <option [value]="0">Usuario</option>
+                    <option [value]="1">Administrador</option>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-info btn-sm" style="border-radius: 10px; color:white" (click)="verDetalle(usuario.idUsuario)">
+                    Ver Detalles
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <ng-template #noUsuarios>
+        <p class="text-muted">No hay usuarios disponibles.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
