@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IProducto } from '../interfaces/IProducto';
 import { IVenta } from '../interfaces/IVenta';
 import { IDetalleVenta } from '../interfaces/IDetalleVenta';
+import { IProductoResponse } from '../interfaces/IProductoResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class VentasService {
   constructor(private _http: HttpClient) {}
 
     
-    getList(): Observable<IProducto[]>{
-      return this._http.get<IProducto[]>( `${this._apiUrlP}ListadoProductos`);
+    getList(): Observable<IProductoResponse[]>{
+      return this._http.get<IProductoResponse[]>( `${this._apiUrlP}ListadoProductos`);
     }
 
     addVenta(request: IVenta): Observable<number> {
@@ -37,8 +38,8 @@ export class VentasService {
       return this._http.post<void>(`${this._apiUrlV}AgregarDetalleVenta`, request);
     }
 
-    filtrarProductos(request: string): Observable<IProducto[]> {
-      return this._http.get<IProducto[]>(`${this._apiUrlP}FiltrarProductos?term=${request}`);
+    filtrarProductos(request: string): Observable<IProductoResponse[]> {
+      return this._http.get<IProductoResponse[]>(`${this._apiUrlP}FiltrarProductos?term=${request}`);
     }
 
     /*search(name: string): Observable<IProducto[]>{

@@ -9,6 +9,6 @@
         public int stock { get; set;}
         public int idCategoria { get; set;}
         public int idInventario { get; set;}
-
+        public string imagen { get; set; }  // Nueva propiedad
     }
 }

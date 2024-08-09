@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/AuthResponse';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   user: User | null = null;
   isDropdownOpen = false;
 
@@ -19,9 +19,7 @@ export class MenuComponent {
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    if(this.user === null){
-      this.router.navigate(['/admin']);
-    }
+    
   }
 
   toggleDropdown(event: Event): void {
@@ -34,4 +32,6 @@ export class MenuComponent {
     this.user = null;
     this.router.navigate(['/admin']);
   }
+
+
 }

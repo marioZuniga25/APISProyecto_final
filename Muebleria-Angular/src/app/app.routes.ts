@@ -15,6 +15,9 @@ import { UsuariosComponent } from './Admin/usuarios/usuarios.component';
 import { RegisterComponent } from './Usuario/register/register.component';
 import { LoginUsuarioComponent } from './Usuario/login-usuario/login-usuario.component';
 import { InicioAdminComponent } from './Admin/inicio-admin/inicio-admin.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthGuardAdmin } from './guards/auth-admin.guard';
+import { BuscadorComponent } from './buscador/buscador.component';
 
 export const routes: Routes = [
   {
@@ -54,6 +57,10 @@ export const routes: Routes = [
     component: DashboardComponent,
   },
   {
+    path: 'buscador',
+    component: BuscadorComponent,
+  },
+  {
     path: 'admin/proveedor',
     component: ProveedorComponent,
   },
@@ -64,14 +71,17 @@ export const routes: Routes = [
   {
     path: 'admin/venta',
     component: VentaComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'admin/usuarios',
     component: UsuariosComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'admin/inicio',
     component: InicioAdminComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'register',

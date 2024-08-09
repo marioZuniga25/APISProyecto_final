@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { IUsuarioDetalle } from '../interfaces/IUsuarioDetalle';
 import { AuthResponse, User } from '../interfaces/AuthResponse';
 import { map } from 'rxjs/operators';
@@ -10,11 +10,17 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  apiUrl : string = environment.endpoint;
-  private userKey = "";
+  apiUrl: string = environment.endpoint;
+  private userKey = "currentUser"; // Asegúrate de tener una clave única
+  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUser: Observable<User | null>;
 
-  constructor(private http: HttpClient) { }
 
+  constructor(private http: HttpClient) { 
+    const storedUser = JSON.parse(localStorage.getItem(this.userKey) || 'null');
+    this.currentUserSubject = new BehaviorSubject<User | null>(storedUser);
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
   // Obtener detalles de un usuario por ID
   getUsuarioById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}usuario/DetalleUsuario/${id}`);
@@ -22,37 +28,52 @@ export class AuthService {
 
   setUser(user: User): void {
     localStorage.setItem(this.userKey, JSON.stringify(user));
+    this.currentUserSubject.next(user); // Notifica a los suscriptores del cambio
+  }
+
+  //Saber si es admin
+  isAdmin(): boolean {
+    const user = this.getUser();
+    return user?.rol === 1; 
+  }
+
+  //Saber si está logueado
+  isLoggedIn(): boolean {
+    return this.getUser() !== null;
   }
 
   // Obtener todos los usuarios
   getAllUsuarios = (): Observable<IUsuarioDetalle[]> =>
-    this.http.get<any[]>(`${this.apiUrl}usuario/listado`);
+    this.http.get<any[]>(`${this.apiUrl}usuario/listad`);
 
   registerUsuario (data: IUsuarioDetalle): Observable<any>{
     return this.http.post<any>(`${this.apiUrl}usuario/registrar`, data);
   }
 
   getUser(): User | null {
-    const userJson = localStorage.getItem(this.userKey);
-    return userJson ? JSON.parse(userJson) : null;
+    return this.currentUserSubject.value;
   }
 
-  removeUser(){
+  removeUser(): void {
     localStorage.removeItem(this.userKey);
+    this.currentUserSubject.next(null); // Notifica a los suscriptores del cambio
   }
-  
   
   login(data: IUsuarioDetalle): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}usuario/login`, data)
       .pipe(
-        map((response: AuthResponse) => {  // Especifica el tipo de response aquí
+        map((response: AuthResponse) => {
           if (response && response.user) {
-            localStorage.setItem(this.userKey, JSON.stringify(response.user));
+            this.setUser(response.user);
           }
           return response;
         })
       );
+  }
+
+  searchUsuariosPorNombre(nombre: string): Observable<IUsuarioDetalle[]> {
+    return this.http.get<IUsuarioDetalle[]>(`${this.apiUrl}usuario/BuscarPorNombre?nombre=${nombre}`);
   }
 
   // Actualizar el rol de un usuario (0 = usuario, 1 = administrador)

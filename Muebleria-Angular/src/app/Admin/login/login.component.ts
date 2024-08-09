@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IUsuarioDetalle } from '../../interfaces/IUsuarioDetalle';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginData: IUsuarioDetalle = {
     idUsuario: 0,
     nombreUsuario: '',
@@ -24,6 +24,13 @@ export class LoginComponent {
   errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
+  ngOnInit(): void {
+    if(this.authService.isAdmin())
+      this.router.navigate(['/admin/inicio'])
+  }
+
+  
+
 
   onSubmit(form: NgForm): void {
     if (form.invalid) {
@@ -33,14 +40,18 @@ export class LoginComponent {
     this.authService.login(this.loginData).subscribe(
       (response: AuthResponse) => {
         if (response && response.user) {
-          // Actualizar el estado del usuario en el componente (por si se necesita en otros lugares)
-          this.user = response.user; 
+          // Verificar si el usuario tiene el rol de administrador (rol 1)
+          if (response.user.rol === 1) {
+            // Guardar usuario en el servicio
+            this.authService.setUser(response.user);
 
-          // Redirigir a la página principal después de iniciar sesión
-            this.router.navigate(['/admin/inicio']).then(() => {
-              window.location.reload();
-            });
-          
+            // Redirigir a la página de administración después de iniciar sesión
+            this.router.navigate(['/admin/inicio']);
+            location.reload();
+          } else {
+            // Mostrar mensaje de error si el usuario no es administrador
+            this.errorMessage = 'Acceso denegado.';
+          }
         }
       },
       (error) => {
@@ -49,6 +60,7 @@ export class LoginComponent {
       }
     );
   }
+
 
   // Declaración de la variable user en el componente, como en MenuComponent
   user: IUsuarioDetalle | null = null;

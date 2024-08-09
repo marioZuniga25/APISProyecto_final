@@ -16,7 +16,7 @@
             <label for="password">Contraseña</label>
             <input type="password" name="password" id="password" [(ngModel)]="loginData.contrasenia" required>
           </div>
-          <div *ngIf="errorMessage" class="text-danger">
+          <div *ngIf="errorMessage" class="text-danger text-center pb-3">
             {{ errorMessage }}
           </div>
           <div class="boton">
