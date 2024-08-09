@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'gracias', component: GraciasComponent },
   { path: 'envio', component: EnvioComponent },
-  { path: 'detalle', component: DetalleComponent },
+  { path: 'detalle/:id', component: DetalleComponent }, 
   { path: 'contacto', component: ContactoComponent },
   { path: 'catalogo', component: CatalogoComponent },
   { path: 'bag', component: BagComponent },

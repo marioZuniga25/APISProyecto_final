@@ -13,6 +13,7 @@ namespace ProyectoFinalAPI
 
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<DetalleVenta> DetalleVenta { get; set; }
+        public DbSet<InstructivoProducto> instructivoProductos{get; set;}
         public DbSet<Inventario> Inventarios { get; set; }
         public DbSet<MateriaPrima> MateriasPrimas { get; set; }
         public DbSet<Produccion> Produccion { get; set; }
@@ -54,6 +55,14 @@ namespace ProyectoFinalAPI
 
                 //Agregar datos iniciales
                 //empleado.HasData(empleadoInit);
+            });
+
+            modelBuilder.Entity<InstructivoProducto>(InstructivoProducto=>{
+                InstructivoProducto.HasKey(i => i.id);
+                InstructivoProducto.Property(i => i.idProducto);
+                InstructivoProducto.Property(i => i.idMateriaPrima);
+                InstructivoProducto.Property(i => i.cantidad);
+
             });
 
             modelBuilder.Entity<Inventario>(inventario=>

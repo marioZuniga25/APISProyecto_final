@@ -68,6 +68,28 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("DetalleVenta", (string)null);
                 });
 
+            modelBuilder.Entity("ProyectoFinalAPI.Models.InstructivoProducto", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<double>("cantidad")
+                        .HasColumnType("float");
+
+                    b.Property<int>("idMateriaPrima")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idProducto")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("instructivoProductos");
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.Inventario", b =>
                 {
                     b.Property<int>("idInventario")
@@ -148,6 +170,10 @@ namespace ProyectoFinalAPI.Migrations
 
                     b.Property<int>("idInventario")
                         .HasColumnType("int");
+
+                    b.Property<string>("imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombreProducto")
                         .IsRequired()

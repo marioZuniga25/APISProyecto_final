@@ -6,54 +6,24 @@
     </div>
     <div class="Home-colecciones">
         <div class="Home-colecciones-container layout">
-            <p>Encuentra el mueble de tus sueños</p>
-            <div class="flex" id="carrousel-colecciones-arrows">
-                <h2 class="title">CATALOGO</h2>
+          <p>Encuentra el mueble de tus sueños</p>
+          <div class="flex" id="carrousel-colecciones-arrows">
+            <h2 class="title">CATALOGO</h2>
+          </div>
+          <div class="carrousel-colecciones">
+            <div *ngFor="let producto of productos" class="item">
+              <a [routerLink]="['/detalle', producto.idProducto]">
+                <div class="img">
+                  <img [src]="'/assets/images/imagenesbd/' + producto.imagen" alt="{{ producto.nombreProducto }}">
+                </div>
+                <h3>{{ producto.nombreProducto }}</h3>
+              </a>
             </div>
-            <div class="carrousel-colecciones">
-                <div class="item">
-                    <a href="../catalogo">
-                        <div class="img">
-                            <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
-                        </div>
-                        <h3>MUEBLES</h3>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="../catalogo">
-                        <div class="img">
-                            <img src="/assets/images/imagen2.jpeg" alt="MUEBLES TRONCOSO">
-                        </div>
-                        <h3>MUEBLES</h3>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="../catalogo">
-                        <div class="img">
-                            <img src="/assets/images/imagen3.jpeg" alt="MUEBLES TRONCOSO">
-                        </div>
-                        <h3>MUEBLES</h3>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="../catalogo">
-                        <div class="img">
-                            <img src="/assets/images/imagen5.jpeg" alt="MUEBLES TRONCOSO">
-                        </div>
-                        <h3>MUEBLES</h3>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="../catalogo">
-                        <div class="img">
-                            <img src="/assets/images/imagen3.jpeg" alt="MUEBLES TRONCOSO">
-                        </div>
-                        <h3>MUEBLES</h3>
-                    </a>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
+      </div>
+      
+      
     <div class="Home-renta" style="background: url('/assets/images/interesa.jpg')">
         <div class="col">
             <p>Te interesan nuestros muebles</p>
