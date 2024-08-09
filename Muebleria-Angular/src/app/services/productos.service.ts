@@ -9,11 +9,17 @@ import { IProductoResponse } from '../interfaces/IProductoResponse';
 })
 export class ProductosService {
 
-  _apiUrl : string = environment.endpoint;
+  _apiUrl: string = environment.endpoint;
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
-  getProductos(request: string): Observable<IProductoResponse[]>{
-    return this._http.get<IProductoResponse[]>( `${this._apiUrl}producto/FiltrarProductos?term=${request}`);
+  getProductos(request: string): Observable<IProductoResponse[]> {
+    return this._http.get<IProductoResponse[]>(`${this._apiUrl}producto/FiltrarProductos?term=${request}`);
   }
+
+  getAllProductos(): Observable<IProductoResponse[]> {
+    return this._http.get<IProductoResponse[]>(`${this._apiUrl}producto/ListadoProductos`);
+  }
+
+
 }
