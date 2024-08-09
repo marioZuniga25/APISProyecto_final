@@ -1,6 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({

@@ -1,16 +1,16 @@
-<div *ngIf="usuario$ | async as usuario; else noUsuario">
-    <form >
+<div>
+    <form>
       <div class="mb-3">
         <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
-        <input type="text" id="nombreUsuario" class="form-control" [(ngModel)]="usuario.nombreUsuario" name="nombreUsuario" required>
+        <input type="text" id="nombreUsuario" class="form-control" name="nombreUsuario" required>
       </div>
       <div class="mb-3">
         <label for="correo" class="form-label">Correo</label>
-        <input type="email" id="correo" class="form-control" [(ngModel)]="usuario.correo" name="correo" required>
+        <input type="email" id="correo" class="form-control"  name="correo" required>
       </div>
       <div class="mb-3">
         <label for="rol" class="form-label">Rol</label>
-        <select id="rol" class="form-select" [(ngModel)]="usuario.rol" name="rol" required>
+        <select id="rol" class="form-select" name="rol" required>
           <option [value]="0">Usuario</option>
           <option [value]="1">Administrador</option>
         </select>
