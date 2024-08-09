@@ -44,7 +44,7 @@ export class AuthService {
 
   // Obtener todos los usuarios
   getAllUsuarios = (): Observable<IUsuarioDetalle[]> =>
-    this.http.get<any[]>(`${this.apiUrl}usuario/listad`);
+    this.http.get<any[]>(`${this.apiUrl}usuario/listado`);
 
   registerUsuario (data: IUsuarioDetalle): Observable<any>{
     return this.http.post<any>(`${this.apiUrl}usuario/registrar`, data);
