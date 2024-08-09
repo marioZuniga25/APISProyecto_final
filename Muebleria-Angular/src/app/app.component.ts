@@ -9,7 +9,6 @@ import { CarritoComponent } from './carrito/carrito.component';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './Admin/menu/menu.component';
-
 @Component({
   selector: 'app-root',
   standalone: true,

@@ -33,7 +33,7 @@ namespace ProyectoFinalAPI.Controllers
 
 
         [HttpPost]
-        [Route("AgregarUsuario")]
+        [Route("registrar")]
         public async Task<IActionResult> addUsuario([FromBody] Usuario request)
         {
             var usuario = new Usuario
@@ -100,6 +100,19 @@ namespace ProyectoFinalAPI.Controllers
 
         }
 
+        [HttpGet("DetalleUsuario/{id:int}")]
+        public async Task<ActionResult<Usuario>> GetUsuarioById(int id)
+        {
+            var usuario = await _context.Usuario.FindAsync(id);
+
+            if (usuario == null)
+            {
+                return NotFound(new { message = "Usuario no encontrado." });
+            }
+
+            return Ok(usuario);
+        }
+
 
         //EndPoint para login
         [HttpPost]
@@ -121,8 +134,20 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(new { message = "Inicio de sesión exitoso", user = usuario });
         }
 
+        [HttpGet("BuscarPorNombre")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> SearchUsuariosPorNombre(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+            {
+                return BadRequest("El nombre de usuario es requerido.");
+            }
 
+            var usuarios = await _context.Usuario
+                .Where(u => u.nombreUsuario.Contains(nombre))
+                .ToListAsync();
 
+            return Ok(usuarios); // Devuelve 200 OK con una lista (posiblemente vacía)
+        }
 
 
     }

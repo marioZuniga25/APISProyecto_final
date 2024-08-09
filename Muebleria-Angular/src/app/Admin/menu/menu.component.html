@@ -1,11 +1,50 @@
 <div class="menu-container">
     <nav>
         <ul>
-            <li><a href="#"><i class="fas fa-home"></i><span>Inicio</span></a></li>
-            <li><a href="#"><i class="fas fa-shopping-cart"></i><span>Ventas</span></a></li>
-            <li><a href="#"><i class="fas fa-cubes"></i><span>Materias Primas</span></a></li>
-            <li><a href="#"><i class="fas fa-truck"></i><span>Proveedor</span></a></li>
-            <li><a href="#"><i class="fas fa-clipboard-list"></i><span>Pedidos</span></a></li>
+            <li><a href="/admin/inicio">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li><a href="/admin/venta">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Ventas</span></a>
+            </li>
+            <li><a href="#">
+                    <i class="fas fa-cubes"></i>
+                    <span>Materias Primas</span>
+                </a>
+            </li>
+            <li><a href="#">
+                    <i class="fas fa-truck"></i>
+                    <span>Proveedor</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Pedidos</span>
+                </a>
+            </li>
+            <li>
+                <a href="admin/usuarios">
+                    <i class="fa-duotone fa-solid fa-users"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <ng-container *ngIf="user; else noUser">
+                <li class="user">
+                    <a href="#" (click)="toggleDropdown($event)">
+                        <i class="fa-duotone fa-solid fa-user"></i>
+                        <span>{{ user.nombreUsuario }}</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a (click)="logout()">Cerrar sesión</a>
+                    </div>
+                </li>
+            </ng-container>
+            <ng-template #noUser>
+            </ng-template>
         </ul>
     </nav>
 </div>

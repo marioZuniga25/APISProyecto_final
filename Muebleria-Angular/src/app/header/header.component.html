@@ -1,31 +1,51 @@
 <header class="header">
-    <div class="header-container layout">
-        <span id="btnMenu" class="icon icon-menu"></span>
-        <div class="logo">
-            <a href="../home" class="logo-container">
-                <img src="/assets/images/prb-logo.png" alt="MUEBLES TRONCOSO">
-            </a>
+  <div class="header-container layout">
+      <span id="btnMenu" class="icon icon-menu"></span>
+      <div class="logo">
+          <a href="../home" class="logo-container">
+              <img src="/assets/images/prb-logo.png" alt="MUEBLES TRONCOSO">
+          </a>
+      </div>
+      <nav class="menu">
+          <span class="icon icon-cerrar" id="cerrarMenu"></span>
+          <ul>
+              <li>
+                  <a href="/">INICIO</a>
+              </li>
+              <li>
+                  <a href="/catalogo">CATÁLOGO</a>
+              </li>
+              <li>
+                  <a href="/contacto">CONTACTO</a>
+              </li>
+              <ng-container *ngIf="user; else noUser">
+                <li class="dropdown" (click)="toggleDropdown($event)">
+                  <a href="#" class="dropdown-toggle">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="user-name">{{ user.nombreUsuario }}</span>
+                  </a>
+                  <div class="dropdown-menu" [class.show]="isDropdownOpen">
+                    <a href="#" class="dropdown-item" (click)="logout()">Cerrar sesión</a>
+                  </div>
+                </li>
+              </ng-container>
+              <ng-template #noUser>
+                  <li style="color: blue;">
+                      <a href="/login"><span><i class="fa-duotone fa-solid fa-right-to-bracket"></i></span> <span style="margin-left: 5px;">INICIAR SESIÓN</span></a>
+                  </li>
+              </ng-template>
+              <li style="width: 30px;">
+                  <span id="buscador" class="fas fa-search" (click)="toggleBuscador()"></span>
+              </li>
+              <li style="width: 30px;">
+                  <span id="carrito" class="fas fa-shopping-cart" (click)="toggleBag()"></span>
+              </li>
+          </ul>
+      </nav>
+  </div>
 
-        </div>
-        <nav class="menu">
-            <span class="icon icon-cerrar" id="cerrarMenu"></span>
-            <ul>
-                <li>
-                    <a href="/">INICIO</a>
-                </li>
-                <li>
-                    <a href="/catalogo">CATÁLOGO</a>
-                </li>
-                <li>
-                    <a href="/contacto">CONTACTO</a>
-                </li>
-                <li style="width: 30px;">
-                    <span id="buscador" class="fas fa-search"></span>
-                </li>
-                <li style="width: 30px;">
-                    <span id="carrito" class="fas fa-shopping-cart" (click)="toggleBag()"></span>
-                </li>
-            </ul>
-        </nav>
-    </div>
+  <!-- Buscador -->
+  <div>
+    <app-buscador [isVisible]="isBuscadorVisible"></app-buscador>
+  </div>
 </header>

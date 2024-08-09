@@ -17,11 +17,26 @@ namespace ProyectoFinalAPI.Controllers
         }
 
         [HttpGet("ListadoProductos")]
-        public async Task<ActionResult<IEnumerable<Producto>>> GetListadoProductos()
+        public async Task<ActionResult<IEnumerable<ProductoDto>>> GetListadoProductos()
         {
-            
-            return await _context.Producto.ToListAsync();
+            var productos = await _context.Producto
+                .Join(_context.Categorias,
+                    producto => producto.idCategoria,
+                    categoria => categoria.idCategoria,
+                    (producto, categoria) => new ProductoDto
+                    {
+                        IdProducto = producto.idProducto,
+                        NombreProducto = producto.nombreProducto,
+                        Descripcion = producto.descripcion,
+                        Precio = producto.precio,
+                        Stock = producto.stock,
+                        NombreCategoria = categoria.nombreCategoria,
+                        IdInventario = producto.idInventario,
+                        Imagen = producto.imagen
+                    })
+                .ToListAsync();
 
+            return Ok(productos);
         }
         [HttpGet("{id}")]
             public async Task<ActionResult<Producto>> GetProductoById(int id)
@@ -38,7 +53,7 @@ namespace ProyectoFinalAPI.Controllers
 
 
         [HttpPost("Agregar")]
-        public async Task<ActionResult> AgregarProducto([FromBody]Producto request)
+        public async Task<ActionResult> AgregarProducto([FromBody] Producto request)
         {
 
             var newProducto = new Producto
@@ -65,7 +80,7 @@ namespace ProyectoFinalAPI.Controllers
         {
 
             var productoModificar = await _context.Producto.FindAsync(id);
-            
+
             if (productoModificar == null)
             {
                 return BadRequest("Usuario no encontrado");
@@ -77,7 +92,7 @@ namespace ProyectoFinalAPI.Controllers
             productoModificar.stock = request.stock;
             productoModificar.idInventario = request.idInventario;
             productoModificar.idCategoria = request.idCategoria;
-            
+
 
             await _context.SaveChangesAsync();
 
@@ -86,26 +101,54 @@ namespace ProyectoFinalAPI.Controllers
         }
 
         [HttpGet("FiltrarProductos")]
-        public async Task<ActionResult<IEnumerable<Producto>>> FiltrarProductos(
-            [FromQuery] string term = null)
+        public async Task<ActionResult<IEnumerable<ProductoDto>>> FiltrarProductos([FromQuery] string term = null)
         {
-            
             if (string.IsNullOrWhiteSpace(term))
             {
-                return await _context.Producto.ToListAsync();
+                var productos = await _context.Producto
+                    .Join(_context.Categorias,
+                          producto => producto.idCategoria,
+                          categoria => categoria.idCategoria,
+                          (producto, categoria) => new ProductoDto
+                          {
+                              IdProducto = producto.idProducto,
+                              NombreProducto = producto.nombreProducto,
+                              Descripcion = producto.descripcion,
+                              Precio = producto.precio,
+                              Stock = producto.stock,
+                              NombreCategoria = categoria.nombreCategoria,
+                              IdInventario = producto.idInventario,
+                              Imagen = producto.imagen
+                          })
+                    .ToListAsync();
+
+                return Ok(productos);
             }
 
             var searchTerm = term.ToLower();
 
-            
-            var productos = await _context.Producto
-                .Where(p => p.nombreProducto.ToLower().Contains(searchTerm) || p.idProducto.ToString().Contains(searchTerm))  
+            var filteredProductos = await _context.Producto
+                .Join(_context.Categorias,
+                      producto => producto.idCategoria,
+                      categoria => categoria.idCategoria,
+                      (producto, categoria) => new { producto, categoria })
+                .Where(pc => pc.producto.nombreProducto.ToLower().Contains(searchTerm) ||
+                             pc.producto.idProducto.ToString().Contains(searchTerm))
+                .Select(pc => new ProductoDto
+                {
+                    IdProducto = pc.producto.idProducto,
+                    NombreProducto = pc.producto.nombreProducto,
+                    Descripcion = pc.producto.descripcion,
+                    Precio = pc.producto.precio,
+                    Stock = pc.producto.stock,
+                    NombreCategoria = pc.categoria.nombreCategoria,
+                    IdInventario = pc.producto.idInventario,
+                    Imagen = pc.producto.imagen
+                })
                 .ToListAsync();
 
-            return productos;
+            return Ok(filteredProductos);
         }
-
-
 
 
     }
