@@ -23,6 +23,6 @@ export const routes: Routes = [
   {path: 'admin', component: LoginComponent},
   {path: 'admin/dashboard', component: DashboardComponent},
   {path: 'admin/proveedor', component: ProveedorComponent},
-  {path: 'admin/materia_prima', component: MateriaPrimaComponent},
+  {path: 'admin/materiaprima', component: MateriaPrimaComponent},
   {path: 'admin/venta', component: VentaComponent}
 ];

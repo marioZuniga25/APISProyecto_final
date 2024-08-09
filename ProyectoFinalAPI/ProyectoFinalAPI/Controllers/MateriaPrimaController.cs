@@ -40,5 +40,52 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(request);
         }
 
+
+        [HttpPut("ModificarMateriaP")]
+        public async Task<IActionResult> updateMateriaPrima(int id, [FromBody] MateriaPrima request)
+        {
+            var materiaModificar = await _context.MateriasPrimas.FindAsync(id);
+
+            if (materiaModificar == null)
+            {
+                return BadRequest("No existe la Materia Prima");
+            }
+
+            materiaModificar.nombreMateriaPrima = request.nombreMateriaPrima;
+            materiaModificar.descripcion = request.descripcion;
+            materiaModificar.idInventario = request.idInventario;
+
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return NotFound();
+
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("EliminarMateriaP/{id:int}")]
+        public async Task<IActionResult> deleteUsuario(int id)
+        {
+            var materiaEliminar = await _context.MateriasPrimas.FindAsync(id);
+
+            if (materiaEliminar == null)
+            {
+                return BadRequest("No se encontro la Materia Prima.");
+            }
+            _context.MateriasPrimas.Remove(materiaEliminar);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+        }
+
     }
 }

@@ -3,22 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\materiaprimacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\materiaprimacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,28 +11,48 @@
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\materiaprima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\materiaprima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\detalleventa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\detalleventa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\migrations\\20240809012752_agregaimagen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\migrations\\20240809012752_agregaimagen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,35 +62,111 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "ProyectoContext.cs",
               "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoContext.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\ProyectoContext.cs",
               "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoContext.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\ProyectoContext.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAlwA4AAAAvAAAA",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAAAIwAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-03T22:50:07.031Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Program.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAHAAAA",
+              "DocumentIndex": 4,
+              "Title": "Proveedor.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Proveedor.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Models\\Proveedor.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-01T00:33:26.839Z"
+              "WhenOpened": "2024-07-06T02:04:24.885Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MateriaPrimaController.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
+              "ViewState": "AQIAAEMAAAAAAAAAAAAQwEkAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T23:32:59.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductoController.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAmwEQAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T00:06:30.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MateriaPrima.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\MateriaPrima.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Models\\MateriaPrima.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T02:05:38.643Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "UsuarioController.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
+              "ViewState": "AQIAAFIAAAAAAAAAAAAAwGQAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-10T18:04:59.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "20240809012752_agregaimagen.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-09T01:27:52.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Producto.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Producto.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Models\\Producto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T01:53:20.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "VentasController.cs",
               "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\VentasController.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\VentasController.cs",
@@ -98,68 +178,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MateriaPrimaController.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAsAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-11T23:32:59.553Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProductoController.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAQwEgAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-11T00:06:30.469Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UsuarioController.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
-              "ViewState": "AQIAAGUAAAAAAAAAAAAQwHEAAABSAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-10T18:04:59.238Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "MateriaPrima.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\MateriaPrima.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Models\\MateriaPrima.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAtAAAA",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T02:05:38.643Z"
+              "WhenOpened": "2024-08-01T00:33:26.839Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Producto.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Producto.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Models\\Producto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T01:53:20.396Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Usuario.cs",
@@ -171,7 +202,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Categoria.cs",
               "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Categoria.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Categoria.cs",
@@ -180,18 +211,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T01:50:22.846Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Proveedor.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Proveedor.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Models\\Proveedor.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T02:04:24.885Z"
             },
             {
               "$type": "Document",
