@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20240809053441_campoImagenProductos")]
-    partial class campoImagenProductos
+    [Migration("20240809232641_carrito")]
+    partial class carrito
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace ProyectoFinalAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.CarritoItem", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<string>("imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombreProducto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("productoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("CarritoItem", (string)null);
+                });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Categoria", b =>
                 {
@@ -69,6 +99,28 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasKey("idDetalleVenta");
 
                     b.ToTable("DetalleVenta", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.InstructivoProducto", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<double>("cantidad")
+                        .HasColumnType("float");
+
+                    b.Property<int>("idMateriaPrima")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idProducto")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("instructivoProductos");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Inventario", b =>

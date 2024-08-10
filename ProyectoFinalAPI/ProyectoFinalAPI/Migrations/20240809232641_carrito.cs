@@ -6,11 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class carrito : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "CarritoItem",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    productoId = table.Column<int>(type: "int", nullable: false),
+                    nombreProducto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    imagen = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarritoItem", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categoria",
                 columns: table => new
@@ -39,6 +56,21 @@ namespace ProyectoFinalAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DetalleVenta", x => x.idDetalleVenta);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "instructivoProductos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idProducto = table.Column<int>(type: "int", nullable: false),
+                    idMateriaPrima = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_instructivoProductos", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,18 +120,19 @@ namespace ProyectoFinalAPI.Migrations
                 name: "Producto",
                 columns: table => new
                 {
-                    IdProducto = table.Column<int>(type: "int", nullable: false)
+                    idProducto = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombreProducto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     precio = table.Column<double>(type: "float", nullable: false),
                     stock = table.Column<int>(type: "int", nullable: false),
                     idCategoria = table.Column<int>(type: "int", nullable: false),
-                    idInventario = table.Column<int>(type: "int", nullable: false)
+                    idInventario = table.Column<int>(type: "int", nullable: false),
+                    imagen = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Producto", x => x.IdProducto);
+                    table.PrimaryKey("PK_Producto", x => x.idProducto);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,10 +184,16 @@ namespace ProyectoFinalAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CarritoItem");
+
+            migrationBuilder.DropTable(
                 name: "Categoria");
 
             migrationBuilder.DropTable(
                 name: "DetalleVenta");
+
+            migrationBuilder.DropTable(
+                name: "instructivoProductos");
 
             migrationBuilder.DropTable(
                 name: "Inventario");
