@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ProductosService } from '../services/productos.service';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-buscador',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './buscador.component.html',
   styleUrls: ['./buscador.component.css']
 })
@@ -25,6 +26,10 @@ export class BuscadorComponent implements OnChanges {
 
   toggleBuscador(): void {
     this.isVisible = !this.isVisible;
+  }
+
+  cerrarBuscador(): void {
+    this.isVisible = false;
   }
 
   buscarProductos(): void {

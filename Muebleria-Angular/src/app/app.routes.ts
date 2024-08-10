@@ -32,10 +32,7 @@ export const routes: Routes = [
     path: 'envio',
     component: EnvioComponent,
   },
-  {
-    path: 'detalle',
-    component: DetalleComponent,
-  },
+  { path: 'detalle/:id', component: DetalleComponent }, 
   {
     path: 'contacto',
     component: ContactoComponent,
@@ -65,8 +62,9 @@ export const routes: Routes = [
     component: ProveedorComponent,
   },
   {
-    path: 'admin/materia_prima',
+    path: 'admin/materiaprima',
     component: MateriaPrimaComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'admin/venta',

@@ -38,6 +38,19 @@ namespace ProyectoFinalAPI.Controllers
 
             return Ok(productos);
         }
+        [HttpGet("{id}")]
+            public async Task<ActionResult<Producto>> GetProductoById(int id)
+            {
+                var producto = await _context.Producto.FindAsync(id);
+
+                if (producto == null)
+                {
+                    return NotFound();
+                }
+
+                return producto;
+            }
+
 
         [HttpPost("Agregar")]
         public async Task<ActionResult> AgregarProducto([FromBody] Producto request)
