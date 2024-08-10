@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>MuebleriaAngular</title>
+  <title>Muebles Troncoso</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="assets/plugins/slick/slick.css">
   <link rel="stylesheet" href="assets/plugins/validationEngine/validationEngine.jquery.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+  <!-- BOOTRAP 5-->
+  <link href="/assets/plugins/boostrap5/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body>
@@ -102,16 +105,16 @@
         $('.registrarme').addClass('active');
         $('#registro').addClass('selected');
     })
-    $(function(){
-        $('#formRegistro').validationEngine({
-            scroll: false
-        });
-    });
-    $(function(){
-        $('#formLogin').validationEngine({
-            scroll: false
-        });
-    });
+    // $(function(){
+    //     $('#formRegistro').validationEngine({
+    //         scroll: false
+    //     });
+    // });
+    // $(function(){
+    //     $('#formLogin').validationEngine({
+    //         scroll: false
+    //     });
+    // });
   </script>
   <!-- script del catalogo -->
   <script>
@@ -154,11 +157,11 @@
   </script>
   <!-- script del envio -->
   <script>
-    $(function(){
-            $('#formEnvio').validationEngine({
-                scroll: false
-            });
-        });
+    // $(function(){
+    //         $('#formEnvio').validationEngine({
+    //             scroll: false
+    //         });
+    //     });
   </script>
   <!-- script del detalle -->
   <script>
@@ -217,12 +220,12 @@
 </script>
   <!-- script del contacto -->
   <script>
-    $(document).ready(function(){
-            $('#formContacto').validationEngine('attach', {
-                scroll: false,
-                promptPosition: "topLeft"
-            });
-        });
+    // $(document).ready(function(){
+    //         $('#formContacto').validationEngine('attach', {
+    //             scroll: false,
+    //             promptPosition: "topLeft"
+    //         });
+    //     });
   </script>
   <!-- script del bag -->
   <script>
@@ -231,4 +234,7 @@
     })
   </script>
 </body>
+<!-- BOOTSTRAP 5-->
+<script src="assets/plugins/boostrap5/js/bootstrap.min.js"></script>
+
 </html>

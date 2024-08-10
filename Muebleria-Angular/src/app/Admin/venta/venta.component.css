@@ -1,21 +1,15 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 20px;
-    color: #333;
-}
-
-.pos-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+.card-ventas{
+    background-color: #F2F2F2;
+    border-radius:20px; 
+    margin: 4%;
+    -webkit-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+    -moz-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+    box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+    padding: 1% 4% 4% 4%;
 }
 
 h1, h2 {
+    text-transform: capitalize;
     text-align: center;
     color: #333;
 }
@@ -24,6 +18,10 @@ h1, h2 {
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
+}
+
+.selected-producto{
+    background-color: red;
 }
 
 #search {
@@ -79,19 +77,12 @@ table {
     margin-bottom: 20px;
 }
 
-thead {
-    background-color: #f4f4f9;
-}
-
 th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-th {
-    background-color: #f0f0f5;
-}
 
 .add-btn, .remove-btn, .save-btn, .cancel-btn {
     padding: 8px 12px;
@@ -133,7 +124,7 @@ th {
 }
 
 .btn-agregar:hover {
-    background-color: #62fc86;
+    background-color: #158a30;
     scale: 1.1;
     cursor: pointer;
 }
@@ -152,12 +143,12 @@ th {
 }
 
 .btn-eliminar:hover {
-    background-color: #fd6574;
+    background-color: #9c2834;
     scale: 1.1;
     cursor: pointer;
 }
 
 .btn-eliminar:active {
-    background-color: #dc3545;
+    background-color: #9c2834;
     scale: 1.0;
 }

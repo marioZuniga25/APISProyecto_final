@@ -1,37 +1,76 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ChangeDetectorRef } from '@angular/core';
 import * as jQuery from 'jquery';
 import 'slick-carousel';
+import { ProductosService } from '../services/productos/productos.service';
+import { CommonModule, NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 declare var $: any;
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, NgFor, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnInit {
+  productos: any[] = [];
+
+  constructor(
+    private productosService: ProductosService,
+    private cdr: ChangeDetectorRef
+  ) {}
+  
+  ngOnInit(): void {
+    this.productosService.getAllProductos().subscribe(
+      (data) => {
+        this.productos = data;
+        // Detect changes and initialize Slick Slider
+        this.cdr.detectChanges();
+        this.initializeSlickSlider();
+      },
+      (error) => {
+        console.error('Error al obtener los productos', error);
+      }
+    );
+  }
+
   ngAfterViewInit(): void {
-    $('.carrousel-colecciones').slick({
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 2000,
-      pauseOnHover: false,
-      swipeToSlide: true,
-      responsive: [
-        {
-          breakpoint: 840,
-          settings: {
-            slidesToShow: 3
-          }
-        },
-        {
-          breakpoint: 520,
-          settings: {
-            slidesToShow: 2
-          }
-        }
-      ]
-    });
+    // Ensure Slick Slider is initialized after view is completely initialized
+    this.initializeSlickSlider();
+  }
+
+  private initializeSlickSlider(): void {
+    // Delay initialization to ensure DOM updates
+    setTimeout(() => {
+      const $carousel = $('.carrousel-colecciones');
+      if ($carousel.length) {
+        $carousel.slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          pauseOnHover: false,
+          swipeToSlide: true,
+          responsive: [
+            {
+              breakpoint: 840,
+              settings: {
+                slidesToShow: 3
+              }
+            },
+            {
+              breakpoint: 520,
+              settings: {
+                slidesToShow: 2
+              }
+            }
+          ]
+        });
+      } else {
+        console.error('El elemento .carrousel-colecciones no se encontró.');
+      }
+    }, 100); // Ajusta el tiempo si es necesario
   }
 }

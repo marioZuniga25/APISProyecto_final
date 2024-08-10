@@ -10,10 +10,7 @@ nav {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
     padding: 20px;
     width: 100%;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+    border-radius: 10px; /* Simplificado para mayor compatibilidad */
 }
 
 ul {
@@ -28,6 +25,7 @@ ul {
 
 ul li {
     margin: 20px 0;
+    position: relative; /* Para posicionar el menú desplegable */
 }
 
 ul li a {
@@ -37,6 +35,8 @@ ul li a {
     display: flex;
     align-items: center;
     transition: color 0.3s;
+    padding: 10px 15px;
+    border-radius: 20px;
 }
 
 ul li a:hover {
@@ -50,4 +50,53 @@ ul li a i {
 
 ul li a span {
     font-size: 16px;
+}
+
+/* Específico para el usuario */
+ul li.user a {
+    background-color: #fff;
+    color: black;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+ul li.user a i {
+    font-size: 18px;
+    color: black;
+}
+
+ul li.user a span {
+    margin-left: 5px;
+    color: black;
+}
+
+ul li.user:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
 }

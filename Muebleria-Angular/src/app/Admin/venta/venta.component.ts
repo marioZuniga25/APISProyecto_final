@@ -8,6 +8,7 @@ import { IVenta } from '../../interfaces/IVenta';
 import { IDetalleVenta } from '../../interfaces/IDetalleVenta';
 import { IProductoSeleccionado } from '../../interfaces/IProductoAux';
 import { Subscription } from 'rxjs';
+import { IProductoResponse } from '../../interfaces/IProductoResponse';
 
 @Component({
   selector: 'app-venta',
@@ -17,10 +18,10 @@ import { Subscription } from 'rxjs';
   styleUrl: './venta.component.css'
 })
 export class VentaComponent {
-
-  products: IProducto[] = [];
+  products: IProductoResponse[] = [];
   selectedProducts: IProductoSeleccionado[] = [];
-  
+
+
   total: number = 0;
 
   isResultLoaded = false;
@@ -31,50 +32,57 @@ export class VentaComponent {
     fechaVenta: new Date(),
     total: 0
   };
-  
+
 
   detalleVenta: IDetalleVenta[] = [];
   terminoBusqueda: string = '';
 
-  
 
 
 
-  constructor( private route: ActivatedRoute, private _ventaService: VentasService){
 
+  constructor(private route: ActivatedRoute, private _ventaService: VentasService) {
     //this.obtenerProductos();
     this.buscarProductos();
-    console.log(this.products, this.total);
   }
 
-  obtenerProductos(){
+  obtenerProductos() {
     this._ventaService.getList().subscribe({
-    
-      next:(data) => {
+     
+
+      next: (data) => {
         this.products = data;
         this.isResultLoaded = true;
-        
-      }, 
-      error:(e) =>{console.log(e)}
-    
+
+      },
+      error: (e) => { console.log(e) }
+
     });
   }
 
 
-  agregarProducto(producto: IProducto) {
+  agregarProducto(producto: IProductoResponse) {
     const productoExistente = this.selectedProducts.find(item => item.producto.idProducto === producto.idProducto);
+    
     if (productoExistente) {
       alert('El producto ya está en la lista.');
       return;
     }
+  
+    if (producto.stock < 1) {
+      alert('No hay stock disponible para este producto.');
+      return;
+    }
+  
     const nuevoProducto: IProductoSeleccionado = {
       producto: producto,
       cantidad: 1,
       subtotal: producto.precio
     };
-
+  
     this.selectedProducts.push(nuevoProducto);
   }
+  
 
 
   eliminarProducto(id: number) {
@@ -83,6 +91,11 @@ export class VentaComponent {
 
   actualizarSubtotal(index: number) {
     const item = this.selectedProducts[index];
+  
+    if (item.cantidad > item.producto.stock) {
+      item.cantidad = item.producto.stock;  // Limita la cantidad al stock disponible
+    }
+  
     item.subtotal = item.producto.precio * item.cantidad;
   }
 
@@ -91,7 +104,7 @@ export class VentaComponent {
   }
 
 
-  guardarVenta() {  
+  guardarVenta() {
     this.nuevaVenta.total = this.calcularTotal();
 
     this._ventaService.addVenta(this.nuevaVenta).subscribe({
@@ -107,7 +120,7 @@ export class VentaComponent {
           error: (error) => console.error('Error al guardar los detalles de venta:', error)
         });
 
-        this.nuevaVenta = { fechaVenta: new Date(), total: 0 , idUsuario: 1};
+        this.nuevaVenta = { fechaVenta: new Date(), total: 0, idUsuario: 1 };
         this.selectedProducts = [];
       },
       error: (error) => {
@@ -137,13 +150,12 @@ export class VentaComponent {
       },
       error: (error) => {
         console.error('Error al obtener los productos:', error);
+        this.products = []; 
       },
       complete: () => {
         console.log('Consulta de productos completada');
+
       }
     });
   }
-
-  
-
 }

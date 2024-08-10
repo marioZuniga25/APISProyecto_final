@@ -6,4 +6,5 @@ export interface IProducto{
     descripcion: string;
     precio: number;
     stock: number;
+    imagen: string;
 }
