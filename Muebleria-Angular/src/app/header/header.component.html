@@ -25,13 +25,16 @@
                     <span class="user-name">{{ user.nombreUsuario }}</span>
                   </a>
                   <div class="dropdown-menu" [class.show]="isDropdownOpen">
+                    <ng-container *ngIf="isAdmin">
+                      <a class="dropdown-item"  [routerLink]="['/admin/inicio']">Administración</a>
+                    </ng-container>
                     <a href="#" class="dropdown-item" (click)="logout()">Cerrar sesión</a>
                   </div>
                 </li>
               </ng-container>
               <ng-template #noUser>
-                  <li style="color: blue;">
-                      <a href="/login"><span><i class="fa-duotone fa-solid fa-right-to-bracket"></i></span> <span style="margin-left: 5px;">INICIAR SESIÓN</span></a>
+                  <li style="color: black;">
+                      <a href="/login" class="iniciar-sesion"><span><i class="fa-duotone fa-solid fa-right-to-bracket"></i></span> <span style="margin-left: 5px;">INICIAR SESIÓN</span></a>
                   </li>
               </ng-template>
               <li style="width: 30px;">

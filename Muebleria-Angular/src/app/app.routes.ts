@@ -64,6 +64,7 @@ export const routes: Routes = [
   {
     path: 'admin/materiaprima',
     component: MateriaPrimaComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'admin/venta',

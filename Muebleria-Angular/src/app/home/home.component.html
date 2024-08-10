@@ -14,7 +14,7 @@
             <div *ngFor="let producto of productos" class="item">
               <a [routerLink]="['/detalle', producto.idProducto]">
                 <div class="img">
-                  <img [src]="'/assets/images/imagenesbd/' + producto.imagen" alt="{{ producto.nombreProducto }}">
+                  <img [src]="producto.imagen" alt="{{ producto.nombreProducto }}">
                 </div>
                 <h3>{{ producto.nombreProducto }}</h3>
               </a>

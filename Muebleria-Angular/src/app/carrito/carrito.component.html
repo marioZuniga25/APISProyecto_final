@@ -3,7 +3,7 @@
       <div class="bag-contenido-registro">
         <span class="icon icon-cerrar cerrar" (click)="toggleBag()"></span>
         <div class="d-flex">
-          <h2 class="title">BAG</h2>
+          <h2 class="title">CARRITO</h2>
           <span class="circulo">{{ (itemsCarrito$ | async)?.length || 0 }}</span>
         </div>
         <div class="scroll">
@@ -11,7 +11,7 @@
                 <div class="bag-producto-item">
                   <div class="bag-producto-item-contenido">
                     <div class="bag-producto-item-contenido-img">
-                      <img style="max-width: 100px;" [src]="'/assets/images/imagenesbd/' + (item?.imagen || 'default.jpg')" alt="{{ item?.nombreProducto || 'Producto' }}">
+                      <img style="max-width: 100px;" [src]="item?.imagen" alt="{{ item?.nombreProducto || 'Producto' }}">
                     </div>
                     <div class="bag-producto-item-contenido-text">
                       <div class="bag-titulo">
