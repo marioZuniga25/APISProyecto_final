@@ -14,7 +14,7 @@ export class AuthGuardAdmin implements CanActivate {
     if (user && user.rol === 1) {
       return true;
     } else {
-      this.router.navigate(['/admin/login']); // Redirigir a una página de acceso denegado o al inicio
+      this.router.navigate(['/']); // Redirigir a una página de acceso denegado o al inicio
       return false;
     }
   }

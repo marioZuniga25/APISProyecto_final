@@ -32,7 +32,9 @@ export const routes: Routes = [
     path: 'envio',
     component: EnvioComponent,
   },
-  { path: 'detalle/:id', component: DetalleComponent }, 
+  { path: 'detalle/:id', 
+    component: DetalleComponent,
+   }, 
   {
     path: 'contacto',
     component: ContactoComponent,
@@ -60,6 +62,13 @@ export const routes: Routes = [
   {
     path: 'admin/proveedor',
     component: ProveedorComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
+  },
+
+  {
+    path: 'admin/pedidos',
+    component: InicioAdminComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'admin/materiaprima',

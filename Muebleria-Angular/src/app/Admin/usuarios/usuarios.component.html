@@ -6,16 +6,18 @@
   <div class="card">
     <div class="card-header bg-dark text-white">
       <div class="row">
-        <div class="col">
-          <h4 class="mt-2 text-end">USUARIOS</h4>
+        <div class="col-9">
+          <h4 class="mt-2 text-center">USUARIOS</h4>
         </div>
         <div class="col">
-          <app-buscador-usuario (searchResults)="onSearch($event)"></app-buscador-usuario>
+          <app-buscador-compartido [items]="usuarios" searchProperty="nombreUsuario"
+            placeholder="Buscar usuario..." (searchResults)="onSearchResults($event)">
+          </app-buscador-compartido>
         </div>
       </div>
     </div>
     <div class="card-body">
-      <div *ngIf="filteredUsers.length > 0; else noUsuarios">
+      <div *ngIf="resultadosBusqueda.length > 0; else noUsuarios">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -27,7 +29,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let usuario of filteredUsers; trackBy: trackById">
+            <tr *ngFor="let usuario of resultadosBusqueda; trackBy: trackById">
               <td class="d-none">{{ usuario.idUsuario }}</td>
               <td>{{ usuario.nombreUsuario }}</td>
               <td>{{ usuario.correo }}</td>

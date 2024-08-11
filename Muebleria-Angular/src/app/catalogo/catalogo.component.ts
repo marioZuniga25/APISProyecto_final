@@ -8,12 +8,12 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './catalogo.component.html',
-  styleUrl: './catalogo.component.css'
+  styleUrls: ['./catalogo.component.css']
 })
-export class CatalogoComponent implements OnInit{
+export class CatalogoComponent implements OnInit {
   productos: any[] = [];
 
-  constructor(private productosService: ProductosService) { }
+  constructor(private productosService: ProductosService) {}
 
   ngOnInit(): void {
     this.productosService.getAllProductos().subscribe(

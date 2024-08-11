@@ -4,35 +4,45 @@ import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DetalleUsuarioComponent } from "../detalle-usuario/detalle-usuario.component";
 import { AuthService } from '../../services/auth.service';
-import { BuscadorUsuarioComponent } from "../buscador-usuario/buscador-usuario.component";
 import { IUsuarioDetalle } from '../../interfaces/IUsuarioDetalle';
+import { BuscadorCompartidoComponent } from '../shared/buscador-compartido/buscador-compartido.component';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [AsyncPipe, NgForOf, NgIf, FormsModule, DetalleUsuarioComponent, BuscadorUsuarioComponent],
+  imports: [AsyncPipe, NgForOf, NgIf, FormsModule, DetalleUsuarioComponent, BuscadorCompartidoComponent],
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-  user$: Observable<IUsuarioDetalle[]> = of([]);
-  filteredUsers: IUsuarioDetalle[] = [];
+  usuarios: IUsuarioDetalle[] = []; // Mantiene la lista completa de usuarios
+  resultadosBusqueda: IUsuarioDetalle[] = []; // Propiedad para almacenar los resultados de la búsqueda
   usuarioSeleccionado$: Observable<IUsuarioDetalle> | null = null;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.user$ = this.authService.getAllUsuarios();
-    this.user$.subscribe(users => this.filteredUsers = users); // Inicializar con todos los usuarios
+    this.getUsuarios();
   }
 
-  onSearch(users: IUsuarioDetalle[]): void {
-    // Actualizar directamente con los resultados
-    this.filteredUsers = users.length > 0 ? users : [];
+  getUsuarios(): void {
+    this.authService.getAllUsuarios().subscribe(
+      (data: IUsuarioDetalle[]) => {
+        this.usuarios = data;  // Asigna todos los usuarios a la lista completa
+        this.resultadosBusqueda = data; // Inicializa con todos los usuarios
+      },
+      (error) => {
+        console.error('Error al obtener los usuarios', error);
+      }
+    );
+  }
+
+  onSearchResults(resultados: IUsuarioDetalle[]): void {
+    this.resultadosBusqueda = resultados;
   }
 
   actualizarUsuario(): void {
-    this.authService.getAllUsuarios().subscribe(users => this.filteredUsers = users);
+    this.authService.getAllUsuarios().subscribe(users => this.resultadosBusqueda = users);
     this.usuarioSeleccionado$ = null;
   }
 
