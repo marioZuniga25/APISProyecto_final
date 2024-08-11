@@ -3,16 +3,18 @@ import { IMateriaPrima } from '../../interfaces/IMateriaPrima';
 import { MateriaprimaService } from '../../services/materiaprima.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BuscadorCompartidoComponent } from '../shared/buscador-compartido/buscador-compartido.component';
 
 @Component({
   selector: 'app-materia-prima',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,BuscadorCompartidoComponent],
   templateUrl: './materia-prima.component.html',
   styleUrl: './materia-prima.component.css'
 })
 export class MateriaPrimaComponent {
   materiasPrimas: IMateriaPrima[] = [];
+  resultadosBusqueda: IMateriaPrima[] = []; // Propiedad para almacenar los resultados de la búsqueda
   selectedMateriaPrima: IMateriaPrima = {
     idMateriaPrima: 0,
     nombreMateriaPrima: '',
@@ -35,13 +37,17 @@ export class MateriaPrimaComponent {
     this.getMateriasPrimas();
   }
 
+  // Método para manejar los resultados de la búsqueda
+  onSearchResults(resultados: IMateriaPrima[]): void {
+    this.resultadosBusqueda = resultados;
+  }
   
   getMateriasPrimas(){
     this._materiaPrimaService.getList().subscribe({
     
       next:(data) => {
         this.materiasPrimas = data;
-        console.log(data);
+        this.resultadosBusqueda = data; // Inicializar con todos los proveedores
         this.isResultLoaded = true;
         
       }, 

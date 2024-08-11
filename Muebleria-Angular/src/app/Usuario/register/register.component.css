@@ -72,3 +72,13 @@
 .admin-contenido-form .boton{
     padding: 0 !important;
 }
+
+.text-danger {
+    color: #d9534f;
+    font-size: 12px;
+  }
+  
+  .text-danger small {
+    display: block;
+  }
+  

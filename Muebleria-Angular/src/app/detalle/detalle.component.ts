@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductosService } from '../services/productos/productos.service';
 import { CommonModule } from '@angular/common';
 import { CarritoService } from '../services/carrito/carrito.service';
-import { error } from 'jquery';
+import { BuscadorService } from '../services/buscador.service';
 
 @Component({
   selector: 'app-detalle',
@@ -19,7 +19,8 @@ export class DetalleComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private carritoService: CarritoService,
-    private productosService: ProductosService
+    private productosService: ProductosService,
+    private buscadorService: BuscadorService,
   ) {}
 
   ngOnInit(): void {
@@ -30,12 +31,16 @@ export class DetalleComponent implements OnInit {
       if (id !== null) {
         this.productosService.getProductoById(id).subscribe(producto => {
           this.producto = producto;
+          
+          // Close the buscador after setting the product
+          this.buscadorService.closeBuscador();
         });
       } else {
         console.error('Product ID is null or invalid');
       }
     });
   }
+
   agregarAlCarrito(): void {
     if (this.cantidad <= this.producto.stock) {
       this.carritoService.agregarProductoAlCarrito(this.producto, this.cantidad).subscribe(

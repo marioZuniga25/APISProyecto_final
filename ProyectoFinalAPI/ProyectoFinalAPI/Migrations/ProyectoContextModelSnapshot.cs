@@ -228,7 +228,19 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idProveedor"));
 
+                    b.Property<string>("correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("materiaPrima")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("nombreProveedor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -11,14 +11,6 @@
   padding: 1% 4% 4% 4%;
 }
 
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  color: #333;
-}
-
 /* Estilos para la tabla */
 .table-container {
   overflow-x: auto;
@@ -109,6 +101,7 @@ h2 {
   width: 90%;
   max-width: 400px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }
 
 .close {

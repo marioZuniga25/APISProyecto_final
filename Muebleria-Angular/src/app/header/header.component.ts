@@ -5,11 +5,12 @@ import { AuthService } from '../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BuscadorComponent } from '../buscador/buscador.component';
+import { BuscadorService } from '../services/buscador.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, BuscadorComponent,RouterLink],
+  imports: [CommonModule, BuscadorComponent, RouterLink],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -23,7 +24,8 @@ export class HeaderComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private buscadorService: BuscadorService,
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +34,11 @@ export class HeaderComponent {
       if (user) {
         this.isAdmin = this.authService.isAdmin();
       }
+    });
+
+    // Subscribe to the buscador state
+    this.buscadorService.getBuscadorState().subscribe(state => {
+      this.isBuscadorVisible = state;
     });
   }
 
@@ -45,7 +52,7 @@ export class HeaderComponent {
   }
 
   toggleBuscador(): void {
-    this.isBuscadorVisible = !this.isBuscadorVisible;
+    this.buscadorService.toggleBuscador();
   }
 
   logout(): void {

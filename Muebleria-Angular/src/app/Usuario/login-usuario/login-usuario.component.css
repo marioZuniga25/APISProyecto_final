@@ -1,9 +1,11 @@
 .header{
     display: none !important;
 }
+
 .footer{
     display: none !important;
 }
+
 .admin {
     position: relative; /* Asegura que la pseudo-clase se posicione correctamente */
     height: 100vh;
