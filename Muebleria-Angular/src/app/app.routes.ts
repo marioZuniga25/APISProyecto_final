@@ -18,6 +18,7 @@ import { InicioAdminComponent } from './Admin/inicio-admin/inicio-admin.componen
 import { AuthGuard } from './guards/auth.guard';
 import { AuthGuardAdmin } from './guards/auth-admin.guard';
 import { BuscadorComponent } from './buscador/buscador.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 export const routes: Routes = [
   {
@@ -98,4 +99,8 @@ export const routes: Routes = [
     path: 'login',
     component: LoginUsuarioComponent,
   },
+  {
+    path: 'perfil/:id',
+    component: PerfilComponent
+  }
 ];

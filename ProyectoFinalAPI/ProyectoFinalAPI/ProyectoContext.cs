@@ -19,6 +19,7 @@ namespace ProyectoFinalAPI
         public DbSet<Produccion> Produccion { get; set; }
         public DbSet<Producto> Producto{ get; set; }
         public DbSet<Proveedor> Proveedor{ get; set; }
+        public DbSet<Tarjetas> Tarjetas{ get; set; }
         public DbSet<Usuario> Usuario{ get; set; }
         public DbSet<Venta> Venta { get; set; }
         public DbSet<CarritoItem> CarritoItems { get; set; }
@@ -121,6 +122,19 @@ namespace ProyectoFinalAPI
                 producto.HasKey(i => i.idProveedor);
                 producto.Property(i => i.idProveedor).ValueGeneratedOnAdd().UseIdentityColumn();
                 producto.Property(i => i.nombreProveedor).IsRequired();
+
+            });
+            modelBuilder.Entity<Tarjetas>(producto =>
+            {
+                producto.ToTable("Tarjetas");
+                producto.HasKey(i => i.idTarjeta);
+                producto.Property(i => i.idTarjeta).ValueGeneratedOnAdd().UseIdentityColumn();
+                producto.Property(i => i.idUsuario).IsRequired();
+                producto.Property(i => i.nombrePropietario).IsRequired();
+                producto.Property(i => i.numeroTarjeta).IsRequired();
+                producto.Property(i => i.fechaVencimiento).IsRequired();
+                producto.Property(i => i.ccv).IsRequired();
+
 
             });
 
