@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinalAPI.Models;
 
@@ -26,6 +25,7 @@ namespace ProyectoFinalAPI.Controllers
                     (producto, categoria) => new ProductoDto
                     {
                         IdProducto = producto.idProducto,
+                        IdCategoria = producto.idCategoria,
                         NombreProducto = producto.nombreProducto,
                         Descripcion = producto.descripcion,
                         Precio = producto.precio,
@@ -39,17 +39,17 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(productos);
         }
         [HttpGet("{id}")]
-            public async Task<ActionResult<Producto>> GetProductoById(int id)
+        public async Task<ActionResult<Producto>> GetProductoById(int id)
+        {
+            var producto = await _context.Producto.FindAsync(id);
+
+            if (producto == null)
             {
-                var producto = await _context.Producto.FindAsync(id);
-
-                if (producto == null)
-                {
-                    return NotFound();
-                }
-
-                return producto;
+                return NotFound();
             }
+
+            return producto;
+        }
 
 
         [HttpPost("Agregar")]
@@ -64,7 +64,8 @@ namespace ProyectoFinalAPI.Controllers
                 nombreProducto = request.nombreProducto,
                 descripcion = request.descripcion,
                 precio = request.precio,
-                stock = request.stock
+                stock = request.stock,
+                imagen = request.imagen
             };
 
             await _context.Producto.AddAsync(newProducto);
@@ -75,29 +76,29 @@ namespace ProyectoFinalAPI.Controllers
         }
 
 
-        [HttpPost("Modificar")]
+        [HttpPost("Modificar/{id}")]
         public async Task<ActionResult> ModificarProducto(int id, [FromBody] Producto request)
         {
-
             var productoModificar = await _context.Producto.FindAsync(id);
 
             if (productoModificar == null)
             {
-                return BadRequest("Usuario no encontrado");
+                return BadRequest("Producto no encontrado");
             }
 
+            // Actualizar los campos necesarios
             productoModificar.nombreProducto = request.nombreProducto;
             productoModificar.descripcion = request.descripcion;
             productoModificar.precio = request.precio;
             productoModificar.stock = request.stock;
             productoModificar.idInventario = request.idInventario;
             productoModificar.idCategoria = request.idCategoria;
+            productoModificar.imagen = request.imagen;
 
-
+            // Guardar cambios
             await _context.SaveChangesAsync();
 
-            return Ok(request);
-
+            return Ok(productoModificar);
         }
 
         [HttpGet("FiltrarProductos")]
@@ -150,6 +151,19 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(filteredProductos);
         }
 
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult> EliminarProducto(int id)
+        {
+            var producto = await _context.Producto.FindAsync(id);
 
+            if (producto == null)
+            {
+                return NotFound(new { mensaje = "Producto no encontrado" });
+            }
+
+            _context.Producto.Remove(producto);
+            await _context.SaveChangesAsync();
+
+        return Ok(new { mensaje = "Producto eliminado correctamente" });        }
     }
 }

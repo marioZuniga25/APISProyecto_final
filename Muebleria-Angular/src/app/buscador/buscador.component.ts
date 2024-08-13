@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ProductosService } from '../services/productos.service';
+import { ProductosService } from '../services/productos/productos.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 

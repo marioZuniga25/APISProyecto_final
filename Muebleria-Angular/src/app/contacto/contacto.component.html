@@ -13,25 +13,25 @@
                 por favor, ponte en contacto con nosotros completando el formulario a continuación.
             </p>    
             <div class="contacto-queremos-contenido-form">
-                <form id="formContacto">
+                <form id="formContacto" (ngSubmit)="enviarContacto(formContacto)" #formContacto="ngForm">
                     <div class="input">
                         <label for="Nombre">Nombre</label>
-                        <input type="text" id="Nombre" placeholder="Ingresa tu nombre">
+                        <input type="text" id="Nombre" placeholder="Ingresa tu nombre" name="nombre" [(ngModel)]="contacto.nombre" required>
                     </div>
                     <div class="input">
                         <label for="correo">Correo</label>
-                        <input type="text" id="correo" placeholder="Ingresa tu correo eléctronico">
+                        <input type="email" id="correo" placeholder="Ingresa tu correo electrónico" name="correo" [(ngModel)]="contacto.correo" required>
                     </div>
                     <div class="input">
-                        <label for="Telefono">Telefono</label>
-                        <input type="text" id="Telefono" placeholder="Ingresa tu teléfono móvil">
+                        <label for="Telefono">Teléfono</label>
+                        <input type="text" id="Telefono" placeholder="Ingresa tu teléfono móvil" name="telefono" [(ngModel)]="contacto.telefono" (input)="onPhoneNumberInput($event)" maxlength="12" required>
                     </div>
                     <div class="input">
                         <label for="Mensaje">Mensaje</label>
-                        <textarea placeholder="Escribe tu duda aquí"></textarea>
+                        <textarea placeholder="Escribe tu duda aquí" name="mensaje" [(ngModel)]="contacto.mensaje" required></textarea>
                     </div>
                     <div class="boton">
-                        <button type="submit">ENVIAR</button>
+                        <button type="submit" [disabled]="formContacto.invalid">ENVIAR</button>
                     </div>
                 </form>
             </div>
@@ -47,17 +47,17 @@
                 <div class="text">
                     <div class="text-direccion">
                         <h4>DIRECCIÓN</h4>
-                        <a href="../https://goo.gl/maps/GbpJeBxkqdxRnjg67" target="_blank">
+                        <a href="https://goo.gl/maps/GbpJeBxkqdxRnjg67" target="_blank">
                             UTL UNIVERSIDAD TECNOLOGICA DE LEON GTO
                         </a>
                     </div>
                     <div class="text-telefono">
                         <h4>TELÉFONO</h4>
-                        <a href="../tel:+524791451392">479 145 1392</a>
+                        <a href="tel:+524791451392">479 145 1392</a>
                     </div>
                     <div class="text-correo">
                         <h4>CORREO</h4>
-                        <a href="../mailto:prueba@gmail.com">pruebagmail.com</a>
+                        <a href="mailto:prueba@gmail.com">prueba&#64;gmail.com</a>
                     </div>
                 </div>
             </div>

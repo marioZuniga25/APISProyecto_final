@@ -13,18 +13,31 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
   user: User | null = null;
-  isDropdownOpen = false;
+  isProductosDropdownOpen = false;
+  isUserDropdownOpen = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    
   }
 
-  toggleDropdown(event: Event): void {
+  toggleProductosDropdown(event: Event): void {
     event.preventDefault();
-    this.isDropdownOpen = !this.isDropdownOpen;
+    this.isProductosDropdownOpen = !this.isProductosDropdownOpen;
+    // Asegúrate de que solo un dropdown esté abierto a la vez
+    if (this.isProductosDropdownOpen) {
+      this.isUserDropdownOpen = false;
+    }
+  }
+
+  toggleUserDropdown(event: Event): void {
+    event.preventDefault();
+    this.isUserDropdownOpen = !this.isUserDropdownOpen;
+    // Asegúrate de que solo un dropdown esté abierto a la vez
+    if (this.isUserDropdownOpen) {
+      this.isProductosDropdownOpen = false;
+    }
   }
 
   logout(): void {
@@ -32,6 +45,4 @@ export class MenuComponent implements OnInit {
     this.user = null;
     this.router.navigate(['/admin']);
   }
-
-
 }

@@ -13,23 +13,25 @@ namespace ProyectoFinalAPI
 
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<DetalleVenta> DetalleVenta { get; set; }
-        public DbSet<InstructivoProducto> instructivoProductos{get; set;}
+        public DbSet<InstructivoProducto> instructivoProductos { get; set; }
         public DbSet<Inventario> Inventarios { get; set; }
         public DbSet<MateriaPrima> MateriasPrimas { get; set; }
         public DbSet<Produccion> Produccion { get; set; }
-        public DbSet<Producto> Producto{ get; set; }
-        public DbSet<Proveedor> Proveedor{ get; set; }
-        public DbSet<Tarjetas> Tarjetas{ get; set; }
-        public DbSet<Usuario> Usuario{ get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
+        public DbSet<Tarjetas> Tarjetas { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
         public DbSet<CarritoItem> CarritoItems { get; set; }
+        public DbSet<Receta> Recetas { get; set; }
+        public DbSet<Contacto> Contactos { get; set; }
 
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Categoria>(categoria=>
+            modelBuilder.Entity<Categoria>(categoria =>
             {
                 categoria.ToTable("Categoria");
                 categoria.HasKey(c => c.idCategoria);
@@ -40,12 +42,7 @@ namespace ProyectoFinalAPI
 
             });
 
-
-
-
-
-           
-            modelBuilder.Entity<DetalleVenta>(dVenta=>
+            modelBuilder.Entity<DetalleVenta>(dVenta =>
             {
                 dVenta.ToTable("DetalleVenta");
                 dVenta.HasKey(dv => dv.idDetalleVenta);
@@ -53,14 +50,14 @@ namespace ProyectoFinalAPI
                 dVenta.Property(dv => dv.cantidad).IsRequired();
                 dVenta.Property(dv => dv.idVenta).IsRequired();
                 dVenta.Property(dv => dv.precioUnitario).IsRequired();
-                
 
 
                 //Agregar datos iniciales
                 //empleado.HasData(empleadoInit);
             });
 
-            modelBuilder.Entity<InstructivoProducto>(InstructivoProducto=>{
+            modelBuilder.Entity<InstructivoProducto>(InstructivoProducto =>
+            {
                 InstructivoProducto.HasKey(i => i.id);
                 InstructivoProducto.Property(i => i.idProducto);
                 InstructivoProducto.Property(i => i.idMateriaPrima);
@@ -68,7 +65,7 @@ namespace ProyectoFinalAPI
 
             });
 
-            modelBuilder.Entity<Inventario>(inventario=>
+            modelBuilder.Entity<Inventario>(inventario =>
             {
                 inventario.ToTable("Inventario");
                 inventario.HasKey(i => i.idInventario);
@@ -79,7 +76,7 @@ namespace ProyectoFinalAPI
             });
 
 
-            modelBuilder.Entity<MateriaPrima>(matPrim=>
+            modelBuilder.Entity<MateriaPrima>(matPrim =>
             {
                 matPrim.ToTable("MateriaPrima");
                 matPrim.HasKey(i => i.idMateriaPrima);
@@ -90,7 +87,7 @@ namespace ProyectoFinalAPI
 
             });
 
-            modelBuilder.Entity<Produccion>(produccion=>
+            modelBuilder.Entity<Produccion>(produccion =>
             {
                 produccion.ToTable("Produccion");
                 produccion.HasKey(p => p.idProduccion);
@@ -101,7 +98,7 @@ namespace ProyectoFinalAPI
             });
 
 
-            modelBuilder.Entity<Producto>(producto=>
+            modelBuilder.Entity<Producto>(producto =>
             {
                 producto.ToTable("Producto");
                 producto.HasKey(i => i.idProducto);
@@ -138,7 +135,7 @@ namespace ProyectoFinalAPI
 
             });
 
-            modelBuilder.Entity<Usuario>(usuario=>
+            modelBuilder.Entity<Usuario>(usuario =>
             {
                 usuario.ToTable("Usuario");
                 usuario.HasKey(i => i.idUsuario);
@@ -150,7 +147,7 @@ namespace ProyectoFinalAPI
 
             });
 
-            modelBuilder.Entity<Venta>(venta=>
+            modelBuilder.Entity<Venta>(venta =>
             {
                 venta.ToTable("Venta");
                 venta.HasKey(i => i.idVenta);
@@ -161,7 +158,7 @@ namespace ProyectoFinalAPI
 
             });
 
-            modelBuilder.Entity<CarritoItem>(carritoItem=>
+            modelBuilder.Entity<CarritoItem>(carritoItem =>
             {
                 carritoItem.ToTable("CarritoItem");
                 carritoItem.HasKey(i => i.id);
@@ -172,6 +169,24 @@ namespace ProyectoFinalAPI
                 carritoItem.Property(i => i.precio).IsRequired();
                 carritoItem.Property(i => i.imagen).IsRequired();
             });
+
+            modelBuilder.Entity<Receta>()
+    .HasOne(r => r.Producto)
+    .WithMany()
+    .HasForeignKey(r => r.idProducto)
+    .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.Cascade, dependiendo de tus necesidades
+
+            modelBuilder.Entity<RecetaDetalle>()
+                .HasOne(rd => rd.Receta)
+                .WithMany(r => r.Detalles)
+                .HasForeignKey(rd => rd.idReceta)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RecetaDetalle>()
+                .HasOne(rd => rd.MateriaPrima)
+                .WithMany()
+                .HasForeignKey(rd => rd.idMateriaPrima)
+                .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.Cascade, dependiendo de tus necesidades
 
         }
     }
