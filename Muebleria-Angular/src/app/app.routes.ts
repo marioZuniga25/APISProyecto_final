@@ -19,6 +19,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthGuardAdmin } from './guards/auth-admin.guard';
 import { BuscadorComponent } from './buscador/buscador.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { ProductosComponent } from './Admin/productos/productos.component';
+import { RecetaComponent } from './Admin/receta/receta.component';
 
 export const routes: Routes = [
   {
@@ -84,6 +86,16 @@ export const routes: Routes = [
   {
     path: 'admin/usuarios',
     component: UsuariosComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
+  },
+  {
+    path: 'admin/productos',
+    component: ProductosComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
+  },
+  {
+    path: 'admin/receta',
+    component: RecetaComponent,
     canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {

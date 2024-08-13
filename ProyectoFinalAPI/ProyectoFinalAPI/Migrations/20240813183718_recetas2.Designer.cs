@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20240810144828_AgregarCamposProveedor")]
-    partial class AgregarCamposProveedor
+    [Migration("20240813183718_recetas2")]
+    partial class recetas2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -252,6 +252,82 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Proovedor", (string)null);
                 });
 
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
+                {
+                    b.Property<int>("idReceta")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idReceta"));
+
+                    b.Property<int>("idProducto")
+                        .HasColumnType("int");
+
+                    b.HasKey("idReceta");
+
+                    b.HasIndex("idProducto");
+
+                    b.ToTable("Recetas");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.RecetaDetalle", b =>
+                {
+                    b.Property<int>("idRecetaDetalle")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idRecetaDetalle"));
+
+                    b.Property<double>("cantidad")
+                        .HasColumnType("float");
+
+                    b.Property<int>("idMateriaPrima")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idReceta")
+                        .HasColumnType("int");
+
+                    b.HasKey("idRecetaDetalle");
+
+                    b.HasIndex("idMateriaPrima");
+
+                    b.HasIndex("idReceta");
+
+                    b.ToTable("RecetaDetalle");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Tarjetas", b =>
+                {
+                    b.Property<int>("idTarjeta")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idTarjeta"));
+
+                    b.Property<string>("ccv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("fechaVencimiento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nombrePropietario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("numeroTarjeta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("idTarjeta");
+
+                    b.ToTable("Tarjetas", (string)null);
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.Usuario", b =>
                 {
                     b.Property<int>("idUsuario")
@@ -300,6 +376,41 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasKey("idVenta");
 
                     b.ToTable("Venta", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("idProducto")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.RecetaDetalle", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.MateriaPrima", "MateriaPrima")
+                        .WithMany()
+                        .HasForeignKey("idMateriaPrima")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinalAPI.Models.Receta", "Receta")
+                        .WithMany("Detalles")
+                        .HasForeignKey("idReceta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MateriaPrima");
+
+                    b.Navigation("Receta");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
+                {
+                    b.Navigation("Detalles");
                 });
 #pragma warning restore 612, 618
         }

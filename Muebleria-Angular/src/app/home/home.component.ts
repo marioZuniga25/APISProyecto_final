@@ -26,15 +26,15 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.productosService.getAllProductos().subscribe(
       (data) => {
         this.productos = data;
-        // Detect changes and initialize Slick Slider
-        this.cdr.detectChanges();
-        this.initializeSlickSlider();
+        this.cdr.detectChanges(); // Asegurarse de que la vista se ha actualizado
+        this.initializeSlickSlider(); // Inicializa después de detectar los cambios
       },
       (error) => {
         console.error('Error al obtener los productos', error);
       }
     );
   }
+  
 
   ngAfterViewInit(): void {
     // Ensure Slick Slider is initialized after view is completely initialized
@@ -45,7 +45,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     // Delay initialization to ensure DOM updates
     setTimeout(() => {
       const $carousel = $('.carrousel-colecciones');
-      if ($carousel.length) {
+      if ($carousel.length && $carousel.find('.item').length > 0) {
         $carousel.slick({
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -69,8 +69,9 @@ export class HomeComponent implements AfterViewInit, OnInit {
           ]
         });
       } else {
-        console.error('El elemento .carrousel-colecciones no se encontró.');
+        console.error('El elemento .carrousel-colecciones no se encontró o no tiene elementos.');
       }
-    }, 100); // Ajusta el tiempo si es necesario
+    }, 300); // Ajusta el tiempo si es necesario
   }
+  
 }

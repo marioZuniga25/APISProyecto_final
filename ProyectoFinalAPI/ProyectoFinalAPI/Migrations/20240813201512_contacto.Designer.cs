@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20240809232641_carrito")]
-    partial class carrito
+    [Migration("20240813201512_contacto")]
+    partial class contacto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,35 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasKey("idCategoria");
 
                     b.ToTable("Categoria", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Contacto", b =>
+                {
+                    b.Property<int>("IdContacto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContacto"));
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mensaje")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdContacto");
+
+                    b.ToTable("Contactos");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleVenta", b =>
@@ -231,13 +260,101 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idProveedor"));
 
+                    b.Property<string>("correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("materiaPrima")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("nombreProveedor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("idProveedor");
 
                     b.ToTable("Proovedor", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
+                {
+                    b.Property<int>("idReceta")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idReceta"));
+
+                    b.Property<int>("idProducto")
+                        .HasColumnType("int");
+
+                    b.HasKey("idReceta");
+
+                    b.HasIndex("idProducto");
+
+                    b.ToTable("Recetas");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.RecetaDetalle", b =>
+                {
+                    b.Property<int>("idRecetaDetalle")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idRecetaDetalle"));
+
+                    b.Property<double>("cantidad")
+                        .HasColumnType("float");
+
+                    b.Property<int>("idMateriaPrima")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idReceta")
+                        .HasColumnType("int");
+
+                    b.HasKey("idRecetaDetalle");
+
+                    b.HasIndex("idMateriaPrima");
+
+                    b.HasIndex("idReceta");
+
+                    b.ToTable("RecetaDetalle");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Tarjetas", b =>
+                {
+                    b.Property<int>("idTarjeta")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idTarjeta"));
+
+                    b.Property<string>("ccv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("fechaVencimiento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nombrePropietario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("numeroTarjeta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("idTarjeta");
+
+                    b.ToTable("Tarjetas", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Usuario", b =>
@@ -288,6 +405,41 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasKey("idVenta");
 
                     b.ToTable("Venta", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("idProducto")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.RecetaDetalle", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.MateriaPrima", "MateriaPrima")
+                        .WithMany()
+                        .HasForeignKey("idMateriaPrima")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinalAPI.Models.Receta", "Receta")
+                        .WithMany("Detalles")
+                        .HasForeignKey("idReceta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MateriaPrima");
+
+                    b.Navigation("Receta");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
+                {
+                    b.Navigation("Detalles");
                 });
 #pragma warning restore 612, 618
         }
