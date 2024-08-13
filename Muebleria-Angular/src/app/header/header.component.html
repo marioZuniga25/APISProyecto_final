@@ -28,6 +28,7 @@
                     <ng-container *ngIf="isAdmin">
                       <a class="dropdown-item"  [routerLink]="['/admin/inicio']">Administración</a>
                     </ng-container>
+                    <a [routerLink]="['/perfil', user.idUsuario]" class="dropdown-item">Ver mi perfil</a>
                     <a href="#" class="dropdown-item" (click)="logout()">Cerrar sesión</a>
                   </div>
                 </li>

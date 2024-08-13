@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginData).subscribe(
       (response: AuthResponse) => {
         if (response && response.user) {
+          localStorage.setItem('userId', response.user.idUsuario.toString());
           // Verificar si el usuario tiene el rol de administrador (rol 1)
           if (response.user.rol === 1) {
             // Guardar usuario en el servicio

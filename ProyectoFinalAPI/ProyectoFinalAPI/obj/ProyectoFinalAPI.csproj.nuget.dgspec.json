@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
+    "/Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
   },
   "projects": {
-    "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
+    "/Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "projectUniqueName": "/Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
         "projectName": "ProyectoFinalAPI",
-        "projectPath": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
-        "packagesPath": "/Users/angelroberto/.nuget/packages/",
-        "outputPath": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
+        "projectPath": "/Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "packagesPath": "/Users/cristianleyva/.nuget/packages/",
+        "outputPath": "/Users/cristianleyva/Documents/Integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/angelroberto/.nuget/NuGet/NuGet.Config"
+          "/Users/cristianleyva/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -84,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.206/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
