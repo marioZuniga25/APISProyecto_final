@@ -124,6 +124,64 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(new { mensaje = "Receta eliminada correctamente" });
         }
 
+        [HttpPost("ProcesarReceta/{id}/{cantidad}")]
+        public async Task<ActionResult> ProcesarReceta(int id, int cantidad)
+        {
+            // Obtener la receta por ID, incluyendo detalles y materia prima
+            var receta = await _context.Recetas
+                .Include(r => r.Detalles)
+                    .ThenInclude(d => d.MateriaPrima)
+                .Include(r => r.Producto) // Incluir el producto asociado a la receta
+                .FirstOrDefaultAsync(r => r.idReceta == id);
+
+            if (receta == null)
+            {
+                return NotFound("Receta no encontrada");
+            }
+
+            // Validar que haya suficiente inventario para producir la cantidad solicitada
+            foreach (var detalle in receta.Detalles)
+            {
+                var inventarioItem = await _context.Inventarios
+                    .FirstOrDefaultAsync(i => i.idInventario == detalle.MateriaPrima.idInventario);
+
+                if (inventarioItem == null)
+                {
+                    return BadRequest($"No se encontró la materia prima con ID de inventario {detalle.MateriaPrima.idInventario}");
+                }
+
+                var totalRequerido = detalle.cantidad * cantidad;
+                if (inventarioItem.cantidad < totalRequerido)
+                {
+                    return BadRequest($"Cantidad insuficiente en inventario para la materia prima {detalle.MateriaPrima.nombreMateriaPrima}. Cantidad disponible: {inventarioItem.cantidad}, Cantidad requerida: {totalRequerido}");
+                }
+            }
+
+            // Si hay suficiente inventario, proceder a descontar las cantidades
+            foreach (var detalle in receta.Detalles)
+            {
+                var inventarioItem = await _context.Inventarios
+                    .FirstOrDefaultAsync(i => i.idInventario == detalle.MateriaPrima.idInventario);
+
+                inventarioItem.cantidad -= detalle.cantidad * cantidad;
+            }
+
+            // Actualizar el stock del producto
+            var producto = await _context.Producto
+                .FirstOrDefaultAsync(p => p.idProducto == receta.idProducto);
+
+            if (producto == null)
+            {
+                return BadRequest("Producto no encontrado para esta receta");
+            }
+
+            producto.stock += cantidad; // Aumenta el stock del producto por la cantidad producida
+
+            // Guardar los cambios en la base de datos
+            await _context.SaveChangesAsync();
+
+            return Ok(new { mensaje = "Receta procesada y cantidades descontadas del inventario correctamente" });
+        }
 
     }
 }

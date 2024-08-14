@@ -13,7 +13,7 @@
     </div>
   </div>
   <!-- Tabla de recetas -->
-  <div class="table-responsive" style="max-height: 48vh; overflow-y: auto;" *ngIf="resultadosBusqueda.length > 0; else noRecetas">
+  <div class="table-responsive mb-5" style="max-height: 48vh; overflow-y: auto;" *ngIf="resultadosBusqueda.length > 0; else noRecetas">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -37,8 +37,9 @@
             </ul>
           </td>
           <td>
-            <button (click)="abrirModalModificar(receta); $event.stopPropagation();" class="btn btn-primary" title="Editar Producto"><i class="fa-duotone fa-solid fa-pen"></i></button>
-            <button (click)="eliminarReceta(receta.idReceta); $event.stopPropagation();" class="btn btn-danger" title="Eliminar Receta"><i class="fa-duotone fa-solid fa-trash"></i></button>
+            <button (click)="abrirModalModificar(receta); $event.stopPropagation();" class="btn btn-primary" title="Editar"><i class="fa-duotone fa-solid fa-pen"></i></button>
+            <button (click)="eliminarReceta(receta.idReceta); $event.stopPropagation();" class="ms-2 btn btn-danger" title="Eliminar"><i class="fa-duotone fa-solid fa-trash"></i></button>
+            <button (click)="producirReceta(receta.idReceta); $event.stopPropagation();" class="ms-2 btn btn-secondary" title="Producir "><i class="fa-solid fa-hammer"></i><span class="ms-3">Producir</span></button>
           </td>
         </tr>
       </tbody>

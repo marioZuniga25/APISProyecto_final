@@ -14,10 +14,10 @@ import { BuscadorCompartidoComponent } from "../shared/buscador-compartido/busca
   selector: 'app-receta',
   imports: [FormsModule, NgClass, NgFor, NgIf, BuscadorCompartidoComponent],
   standalone: true,
-  templateUrl: './receta.component.html',
-  styleUrls: ['./receta.component.css']
+  templateUrl: './produccion.component.html',
+  styleUrls: ['./produccion.component.css']
 })
-export class RecetaComponent implements OnInit {
+export class ProduccionComponent implements OnInit {
 
   @ViewChild('detallesContainer') detallesContainer!: ElementRef;
 
@@ -43,20 +43,67 @@ export class RecetaComponent implements OnInit {
     this.getMateriasPrimas();
   }
 
-  onSearchResults(resultados: IProductoResponse[]): void {
-    
-      this.resultadosBusqueda = this.recetas.filter(receta =>
-        resultados.some(producto => producto.idProducto === receta.idProducto)
-      );
+  producirReceta(recetaId: number): void {
+    Swal.fire({
+      title: '¿Cuántos productos quieres producir?',
+      input: 'number',
+      inputAttributes: {
+        min: '1',
+        step: '1'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Producir',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const cantidad = Number(result.value);
+
+        if (cantidad > 0) {
+          this.recetaService.producirReceta(recetaId, cantidad).subscribe(
+            response => {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Productos hechos"
+              });
+            },
+            error => {
+              Swal.fire('Error', error.error || 'Error al procesar la receta', 'error');
+              console.error('Error al procesar la receta:', error);
+            }
+          );
+        } else {
+          Swal.fire('Error', 'Debes ingresar un número válido.', 'error');
+        }
+      }
+    });
   }
-  
+
+
+  onSearchResults(resultados: IProductoResponse[]): void {
+
+    this.resultadosBusqueda = this.recetas.filter(receta =>
+      resultados.some(producto => producto.idProducto === receta.idProducto)
+    );
+  }
+
 
 
   getRecetas(): void {
     this.recetaService.getRecetas().subscribe(
       (data: IReceta[]) => {
         this.recetas = data;
-        this.resultadosBusqueda = this.recetas; 
+        this.resultadosBusqueda = this.recetas;
       },
       error => Swal.fire('Error', 'Error al obtener recetas', 'error')
     );
