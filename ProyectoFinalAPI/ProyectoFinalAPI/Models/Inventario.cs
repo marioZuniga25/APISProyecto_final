@@ -4,6 +4,6 @@
     {
         public int idInventario {  get; set; }
         public string nombre { get; set; }
-        public int cantidad { get; set; }
+        public double cantidad { get; set; }
     }
 }

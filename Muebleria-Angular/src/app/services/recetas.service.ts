@@ -32,4 +32,8 @@ export class RecetaService {
   deleteReceta(id: number): Observable<any> {
     return this.http.delete(`${this._apiUrl}receta/Eliminar/${id}`);
   }
+
+  producirReceta(id: number, cantidad: number): Observable<any> {
+    return this.http.post<any>(`${this._apiUrl}receta/ProcesarReceta/${id}/${cantidad}`, {});
+  }
 }

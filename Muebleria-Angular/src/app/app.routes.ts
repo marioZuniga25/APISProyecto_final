@@ -20,7 +20,7 @@ import { AuthGuardAdmin } from './guards/auth-admin.guard';
 import { BuscadorComponent } from './buscador/buscador.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ProductosComponent } from './Admin/productos/productos.component';
-import { RecetaComponent } from './Admin/receta/receta.component';
+import { ProduccionComponent } from './Admin/produccion/produccion.component';
 
 export const routes: Routes = [
   {
@@ -94,8 +94,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
-    path: 'admin/receta',
-    component: RecetaComponent,
+    path: 'admin/produccion',
+    component: ProduccionComponent,
     canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
