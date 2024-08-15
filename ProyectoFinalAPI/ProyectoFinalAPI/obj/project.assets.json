@@ -4523,25 +4523,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/angelroberto/.nuget/packages/": {}
+    "C:\\Users\\mazu1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+      "projectUniqueName": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
       "projectName": "ProyectoFinalAPI",
-      "projectPath": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
-      "packagesPath": "/Users/angelroberto/.nuget/packages/",
-      "outputPath": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
+      "projectPath": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+      "packagesPath": "C:\\Users\\mazu1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/angelroberto/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\mazu1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4605,7 +4606,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
