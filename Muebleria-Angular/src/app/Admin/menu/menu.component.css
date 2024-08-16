@@ -4,13 +4,16 @@
     align-items: center;
     width: 100%;
 }
-
 nav {
     background-color: #111;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
     padding: 20px;
     width: 100%;
     border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
 }
 
 ul {
@@ -87,3 +90,4 @@ ul li a span {
 .dropdown-item:hover {
     background-color: #555; /* Color de fondo ligeramente más claro al pasar el mouse */
 }
+

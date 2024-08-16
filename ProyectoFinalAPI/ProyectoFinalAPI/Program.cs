@@ -13,15 +13,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSqlServer<ProyectoContext>(builder.Configuration.GetConnectionString("cnProyecto"));
 
 
-builder.Services.AddCors(options => {
-
+builder.Services.AddCors(options =>
+{
     options.AddPolicy("NuevaPolitica", app =>
     {
-
-        app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-
+        app.SetIsOriginAllowed(origin => true) // Permite cualquier origen temporalmente
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials(); // Si estás usando cookies o autenticación con credenciales
     });
-
+});
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5194); // Escucha en todas las interfaces de red
 });
 
 var app = builder.Build();

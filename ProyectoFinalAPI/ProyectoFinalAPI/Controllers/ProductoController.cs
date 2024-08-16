@@ -164,6 +164,35 @@ namespace ProyectoFinalAPI.Controllers
             _context.Producto.Remove(producto);
             await _context.SaveChangesAsync();
 
-        return Ok(new { mensaje = "Producto eliminado correctamente" });        }
+        return Ok(new { mensaje = "Producto eliminado correctamente" });        
+        }
+
+        [HttpGet("ProductoPorCategoria/{idCategoria}")]
+        public async Task<ActionResult<IEnumerable<ProductoDto>>> GetProductosPorCategoria(int idCategoria)
+        {
+            var productos = await (from p in _context.Producto
+                                   join c in _context.Categorias on p.idCategoria equals c.idCategoria
+                                   where p.idCategoria == idCategoria
+                                   select new ProductoDto
+                                   {
+                                       IdProducto = p.idProducto,
+                                       NombreProducto = p.nombreProducto,
+                                       Descripcion = p.descripcion,
+                                       Precio = p.precio,
+                                       Stock = p.stock,
+                                       IdInventario = p.idInventario,
+                                       Imagen = p.imagen,
+                                       NombreCategoria = c.nombreCategoria,
+                                       IdCategoria = p.idCategoria
+                                   }).ToListAsync();
+
+            if (productos == null || productos.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return productos;
+        }
     }
 }
+
