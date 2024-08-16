@@ -22,7 +22,7 @@ export class LoginUsuarioComponent {
     rol: 0,
   };
   errorMessage: string = '';
-
+  idUsuarioLocal: string = '';
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(form: NgForm): void {
@@ -33,6 +33,9 @@ export class LoginUsuarioComponent {
     this.authService.login(this.loginData).subscribe(
       (response: AuthResponse) => {
         if (response && response.user) {
+          this.idUsuarioLocal = response.user.idUsuario.toString();
+          console.log(this.idUsuarioLocal);
+          localStorage.setItem('userId', this.idUsuarioLocal);
           // Redirigir a la página principal después de iniciar sesión
           this.router.navigate(['/']);
         }

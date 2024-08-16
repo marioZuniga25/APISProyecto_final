@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     rol: 0,
   };
   errorMessage: string = '';
+  idUsuarioLocal: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
   ngOnInit(): void {
@@ -40,7 +41,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginData).subscribe(
       (response: AuthResponse) => {
         if (response && response.user) {
-          localStorage.setItem('userId', response.user.idUsuario.toString());
+          this.idUsuarioLocal = response.user.idUsuario.toString();
+          console.log(this.idUsuarioLocal);
+          localStorage.setItem('userId', this.idUsuarioLocal);
           // Verificar si el usuario tiene el rol de administrador (rol 1)
           if (response.user.rol === 1) {
             // Guardar usuario en el servicio

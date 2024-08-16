@@ -14,7 +14,7 @@
             <div *ngFor="let producto of productos" class="item">
                 <a [routerLink]="['/detalle', producto.idProducto]">
                     <div class="img">
-                        <img [src]="producto.imagen" alt="{{ producto.nombreProducto }}">
+                        <img style="width: 270px !important; height: 270px !important;" [src]="producto.imagen" alt="{{ producto.nombreProducto }}">
                     </div>
                     <h3>{{ producto.nombreProducto }}</h3>
                 </a>
@@ -38,34 +38,34 @@
                 <p>Puedes ver toda nuestra variedad de muebles</p>
             </div>
             <div class="blocks">
-                <a href="../#" class="blocks-item">
+                <a href="/catalogo" class="blocks-item">
                     <img src="/assets/images/reacuadro2.jpg" alt="MUEBLES TRONCOSO">
                     <div class="text">
                         <h3>SOFÁS</h3>
                         <p>Confort y estilo en cada rincón, perfectos para crear el espacio acogedor que tu hogar merece.</p>
                     </div>
                 </a>
-                <a href="../#" class="blocks-item">
+                <a href="/catalogo" class="blocks-item">
                     <div class="text">
                         <h3>MESAS DE COMEDOR</h3>
                         <p>El corazón de tu comedor, donde cada comida se convierte en una experiencia memorable.</p>
                     </div>
                 </a>
-                <a href="../#" class="blocks-item">
+                <a href="/catalogo" class="blocks-item">
                     <img src="/assets/images/recuadros1.jpg" alt="MUEBLES TRONCOSO">
                     <div class="text">
                         <h3>CAMAS</h3>
                         <p>Descansa como te mereces, con la comodidad y elegancia que sólo nuestras camas pueden ofrecer.</p>
                     </div>
                 </a>
-                <a href="../#" class="blocks-item">
+                <a href="/catalogo" class="blocks-item">
                     <img src="/assets/images/recuadro5.jpg" alt="MUEBLES TRONCOSO">
                     <div class="text">
                         <h3>ARMARIO</h3>
                         <p>Organización y estilo en un solo lugar, para que encuentres todo lo que necesitas al instante.</p>
                     </div>
                 </a>
-                <a href="../#" class="blocks-item">
+                <a href="/catalogo" class="blocks-item">
                     <img src="/assets/images/reacuadro4.jpg" alt="MUEBLES TRONCOSO">
                     <div class="text">
                         <h3>ESCRITORIO</h3>
