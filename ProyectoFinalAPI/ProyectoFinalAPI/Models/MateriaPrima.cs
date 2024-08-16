@@ -6,5 +6,6 @@
         public string nombreMateriaPrima { get; set; }
         public string descripcion {  get; set; }
         public int idInventario { get; set; }
+        public int idProveedor { get; set; }
     }
 }

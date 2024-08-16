@@ -65,43 +65,57 @@
           <input type="number" [(ngModel)]="nuevaMateriaPrima.idInventario" name="idInventario" id="idInventario"
             required />
         </div>
+        <div class="form-group">
+          <label for="idProveedor">Proveedor</label>
+          <select class="form-select form-select-lg mb-3" [(ngModel)]="nuevaMateriaPrima.idProveedor" name="idProveedor" id="idProveedor" required>
+            <option value="0" selected hidden>Selecciona un Proveedor</option>
+            <option *ngFor="let proveedor of proveedores" [value]="proveedor.idProveedor" >{{proveedor.nombreProveedor}} </option>
+          </select>
+        </div>
         <button type="submit" class="submit-btn">Agregar</button>
       </form>
     </div>
   </div>
 
+
   <!-- Modal para editar materia prima -->
-  <div class="modal" [ngClass]="{'show': isEditModalOpen}">
-    <div class="modal-content">
-      <div class="row">
-        <div class="col">
-          <h3>Modificar Materia Prima</h3>
-        </div>
-        <div class="col-1">
-          <span class="close" (click)="closeModal()">&times;</span>
-        </div>
+<div class="modal" [ngClass]="{'show': isEditModalOpen}">
+  <div class="modal-content">
+    <div class="row">
+      <div class="col">
+        <h3>Modificar Materia Prima</h3>
       </div>
-      <form (ngSubmit)="saveChanges()">
-        <div class="form-group">
-          <label for="nombreMateriaPrima">Nombre de Materia Prima</label>
-          <input type="text" [(ngModel)]="selectedMateriaPrima.nombreMateriaPrima" name="nombreMateriaPrima"
-            id="nombreMateriaPrima" required />
-        </div>
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea [(ngModel)]="selectedMateriaPrima.descripcion" name="descripcion" id="descripcion" rows="3"
-            required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="idInventario">ID Inventario</label>
-          <input type="number" [(ngModel)]="selectedMateriaPrima.idInventario" name="idInventario" id="idInventario"
-            required />
-          <input type="text" disabled name="idMateriaPrima" [(ngModel)]="selectedMateriaPrima.idMateriaPrima"
-            style="display: none;" />
-        </div>
-        <button type="submit" class="submit-btn">Guardar Cambios</button>
-        <button class="delete-btn mt-2" (click)="deleteMateria()">Eliminar</button>
-      </form>
+      <div class="col-1">
+        <span class="close" (click)="closeModal()">&times;</span>
+      </div>
     </div>
+    <form (ngSubmit)="saveChanges()">
+      <div class="form-group">
+        <label for="nombreMateriaPrima">Nombre de Materia Prima</label>
+        <input type="text" [(ngModel)]="selectedMateriaPrima.nombreMateriaPrima" name="nombreMateriaPrima"
+          id="nombreMateriaPrima" required />
+      </div>
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea [(ngModel)]="selectedMateriaPrima.descripcion" name="descripcion" id="descripcion" rows="3"
+          required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="idInventario">ID Inventario</label>
+        <input type="number" [(ngModel)]="selectedMateriaPrima.idInventario" name="idInventario" id="idInventario"
+          required />
+      </div>
+      <div class="form-group">
+        <label for="idProveedor">Proveedor</label>
+        <select class="form-select form-select-lg mb-3" [(ngModel)]="selectedMateriaPrima.idProveedor" name="idProveedor" id="idProveedor" required>
+          <option value="" disabled hidden>Seleccione un proveedor</option>
+          <option *ngFor="let proveedor of proveedores" [value]="proveedor.idProveedor">
+            {{ proveedor.nombreProveedor }}
+          </option>
+        </select>
+      </div>
+      <button type="submit" class="submit-btn">Guardar Cambios</button>
+      <button class="delete-btn mt-2" (click)="deleteMateria()">Eliminar</button>
+    </form>
   </div>
 </div>
