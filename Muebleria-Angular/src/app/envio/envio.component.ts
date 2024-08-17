@@ -113,6 +113,7 @@ export class EnvioComponent implements OnInit{
                         () => {
                             // Crear el objeto del pedido
                             const nuevoPedido: IPedidos = {
+                                idPedido: 0,
                                 idVenta: idVentaGenerado,
                                 idUsuario: parseInt(idUsuario),
                                 idTarjeta: parseInt(idTarjeta || '0'),

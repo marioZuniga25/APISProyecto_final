@@ -1,5 +1,6 @@
 // pedido.model.ts
 export interface IPedidos {
+    idPedido: number;
     idVenta: number;
     idUsuario: number;
     idTarjeta: number;

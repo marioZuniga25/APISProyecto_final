@@ -21,6 +21,7 @@ import { BuscadorComponent } from './buscador/buscador.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ProductosComponent } from './Admin/productos/productos.component';
 import { ProduccionComponent } from './Admin/produccion/produccion.component';
+import { PedidosComponent } from './Admin/pedidos/pedidos.component';
 
 export const routes: Routes = [
   {
@@ -70,7 +71,7 @@ export const routes: Routes = [
 
   {
     path: 'admin/pedidos',
-    component: InicioAdminComponent,
+    component: PedidosComponent,
     canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
