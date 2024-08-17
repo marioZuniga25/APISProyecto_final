@@ -30,7 +30,7 @@ class PantallaLoginState extends State<PantallaLogin> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        SnackBar(content: Text('Usuario o contraseña incorrectos')),
       );
     }
   }
