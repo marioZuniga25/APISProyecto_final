@@ -19,4 +19,5 @@ export interface IProductoRequest{
     precio: number;
     stock: number;
     imagen: string;
+    nombreCategoria: string;
 }

@@ -1,62 +1,66 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\",
+  "WorkspaceRootPath": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\controllers\\pedidocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\pedidocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\materiaprimacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\materiaprimacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\materiaprima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\materiaprima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\models\\detalleventa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\models\\detalleventa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\detalleventa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\mazu1\\onedrive\\escritorio\\apis del proyecto final\\apisproyecto_final\\proyectofinalapi\\proyectofinalapi\\migrations\\20240809012752_agregaimagen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\migrations\\20240809012752_agregaimagen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\controllers\\materiaprimacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\materiaprimacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\models\\materiaprima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\materiaprima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\models\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\proyectocontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\controllers\\ventascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|c:\\users\\emman\\idgs901\\mueblestroncoso\\proyectofinalapi\\proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8929F1CB-88D6-4B8B-82D5-4A9727285E29}|ProyectoFinalAPI\\ProyectoFinalAPI.csproj|solutionrelative:proyectofinalapi\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -71,35 +75,23 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\appsettings.json",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\appsettings.json",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\appsettings.json",
-              "RelativeToolTip": "ProyectoFinalAPI\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-08-09T20:29:20.295Z",
+              "Title": "PedidoController.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\PedidoController.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\PedidoController.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\PedidoController.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\PedidoController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-17T10:29:11.967Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ProyectoContext.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoContext.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\ProyectoContext.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoContext.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\ProyectoContext.cs",
-              "ViewState": "AQIAAHsAAAAAAAAAAAAAAIwAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-03T22:50:07.031Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "Proveedor.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Proveedor.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Proveedor.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Models\\Proveedor.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -107,36 +99,36 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "MateriaPrimaController.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\MateriaPrimaController.cs",
               "ViewState": "AQIAAEMAAAAAAAAAAAAQwFEAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-11T23:32:59.553Z",
+              "WhenOpened": "2024-07-11T23:32:59.553Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductoController.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
+              "ViewState": "AQIAAGcAAAAAAAAAAAAAANEAAABLAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-11T00:06:30.469Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProductoController.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\ProductoController.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAmwEQAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-11T00:06:30.469Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "MateriaPrima.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\MateriaPrima.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\MateriaPrima.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Models\\MateriaPrima.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -144,11 +136,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "UsuarioController.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
               "ViewState": "AQIAAFIAAAAAAAAAAAAAwGQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -156,35 +148,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "20240809012752_agregaimagen.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
-              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
-              "RelativeToolTip": "ProyectoFinalAPI\\Migrations\\20240809012752_agregaimagen.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-09T01:27:52.572Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 6,
               "Title": "Producto.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Producto.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Producto.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Models\\Producto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAApAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T01:53:20.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "VentasController.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\VentasController.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\VentasController.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Controllers\\VentasController.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\VentasController.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Controllers\\VentasController.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\VentasController.cs",
               "ViewState": "AQIAACwAAAAAAAAAAAAgwDcAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -192,23 +172,60 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Program.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Program.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAHAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-01T00:33:26.839Z"
+              "WhenOpened": "2024-08-01T00:33:26.839Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
+              "Title": "ProyectoContext.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoContext.cs",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\ProyectoContext.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoContext.cs",
+              "RelativeToolTip": "ProyectoFinalAPI\\ProyectoContext.cs",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAAAIwAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-03T22:50:07.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\appsettings.json",
+              "RelativeToolTip": "ProyectoFinalAPI\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-09T20:29:20.295Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "ProyectoFinalAPI\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Properties\\launchSettings.json",
+              "RelativeToolTip": "ProyectoFinalAPI\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAABhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-17T06:27:32.89Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Usuario.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Usuario.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Usuario.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Models\\Usuario.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -216,23 +233,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "Categoria.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Categoria.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Categoria.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\Categoria.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Categoria.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\Categoria.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Models\\Categoria.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAtAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T01:50:22.846Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 4,
               "Title": "DetalleVenta.cs",
-              "DocumentMoniker": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\DetalleVenta.cs",
+              "DocumentMoniker": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\DetalleVenta.cs",
               "RelativeDocumentMoniker": "ProyectoFinalAPI\\Models\\DetalleVenta.cs",
-              "ToolTip": "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APIs del proyecto final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\DetalleVenta.cs",
+              "ToolTip": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\Models\\DetalleVenta.cs",
               "RelativeToolTip": "ProyectoFinalAPI\\Models\\DetalleVenta.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
