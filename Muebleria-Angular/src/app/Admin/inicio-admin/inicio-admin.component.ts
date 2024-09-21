@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/AuthResponse';
 import { AuthService } from '../../services/auth.service';
+import { DashboardComponent } from "../dashboard/dashboard.component";
 
 @Component({
   selector: 'app-inicio-admin',
   standalone: true,
   templateUrl: './inicio-admin.component.html',
-  styleUrls: ['./inicio-admin.component.css']
+  styleUrls: ['./inicio-admin.component.css'],
+  imports: [DashboardComponent]
 })
 export class InicioAdminComponent implements OnInit {
   user: User | null = null;

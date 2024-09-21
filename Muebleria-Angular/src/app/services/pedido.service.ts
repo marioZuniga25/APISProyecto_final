@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPedidos } from '../interfaces/IPedidos';
+import { IPedidos, IPedidosResponse } from '../interfaces/IPedidos';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,8 @@ export class PedidoService {
   constructor(private http: HttpClient) {}
 
   // Obtener todos los pedidos
-  getPedidos(): Observable<IPedidos[]> {
-    return this.http.get<IPedidos[]>(this.apiUrl);
+  getPedidos(): Observable<IPedidosResponse[]> {
+    return this.http.get<IPedidosResponse[]>(this.apiUrl);
   }
 
   // Agregar un nuevo pedido

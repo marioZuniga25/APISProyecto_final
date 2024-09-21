@@ -71,6 +71,31 @@ namespace ProyectoFinalAPI.Controllers
         }
 
 
-       
+       [HttpGet("{id}")]
+        public async Task<ActionResult<Venta>> GetVentaById(int id)
+        {
+            var venta = await _context.Venta.FindAsync(id);
+            if (venta == null)
+            {
+                return NotFound();
+            }
+            return venta;
+        }
+
+        // Nuevo Endpoint para obtener los detalles de una venta por ID de la venta
+        [HttpGet("{id}/detalles")]
+        public async Task<ActionResult<IEnumerable<DetalleVenta>>> GetDetalleVentaByVentaId(int id)
+        {
+            var detallesVenta = await _context.DetalleVenta
+                .Where(dv => dv.idVenta == id)
+                .ToListAsync();
+
+            if (detallesVenta == null || !detallesVenta.Any())
+            {
+                return NotFound();
+            }
+
+            return detallesVenta;
+        }
     }
 }

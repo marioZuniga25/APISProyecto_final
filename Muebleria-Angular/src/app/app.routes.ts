@@ -54,10 +54,12 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: LoginComponent,
+    
   },
   {
     path: 'admin/dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'buscador',

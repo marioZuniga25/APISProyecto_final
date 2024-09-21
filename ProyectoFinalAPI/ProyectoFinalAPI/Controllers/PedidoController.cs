@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinalAPI.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProyectoFinalAPI.Controllers
 {
@@ -18,12 +15,64 @@ namespace ProyectoFinalAPI.Controllers
             _context = context;
         }
 
-        // Obtener todos los pedidos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pedidos>>> GetPedidos()
+        public async Task<ActionResult<IEnumerable<PedidoDetalleDto>>> GetPedidos()
         {
-            return await _context.Pedidos.ToListAsync();
+            var result = await (from pedido in _context.Pedidos
+                                join detalleVenta in _context.DetalleVenta on pedido.idVenta equals detalleVenta.idVenta
+                                join producto in _context.Producto on detalleVenta.idProducto equals producto.idProducto
+                                select new
+                                {
+                                    pedido,
+                                    detalleVenta,
+                                    producto
+                                })
+                               .GroupBy(g => new
+                               {
+                                   g.pedido.idPedido,
+                                   g.pedido.idVenta,
+                                   g.pedido.nombre,
+                                   g.pedido.apellidos,
+                                   g.pedido.telefono,
+                                   g.pedido.correo,
+                                   g.pedido.calle,
+                                   g.pedido.numero,
+                                   g.pedido.colonia,
+                                   g.pedido.ciudad,
+                                   g.pedido.estado,
+                                   g.pedido.codigoPostal,
+                                   g.pedido.estatus
+                               })
+                               .Select(group => new PedidoDetalleDto
+                               {
+                                   idPedido = group.Key.idPedido,
+                                   idVenta = group.Key.idVenta,
+                                   nombre = group.Key.nombre,
+                                   apellidos = group.Key.apellidos,
+                                   telefono = group.Key.telefono,
+                                   correo = group.Key.correo,
+                                   calle = group.Key.calle,
+                                   numero = group.Key.numero,
+                                   colonia = group.Key.colonia,
+                                   ciudad = group.Key.ciudad,
+                                   estado = group.Key.estado,
+                                   codigoPostal = group.Key.codigoPostal,
+                                   estatus = group.Key.estatus,
+                                   Productos = group.Select(item => new DetalleProducto
+                                   {
+                                       idProducto = item.producto.idProducto,
+                                       nombreProducto = item.producto.nombreProducto,
+                                       descripcion = item.producto.descripcion,
+                                       precioUnitario = item.detalleVenta.precioUnitario,
+                                       cantidad = item.detalleVenta.cantidad,
+                                       imagen = item.producto.imagen
+                                   }).ToList()
+                               })
+                               .ToListAsync();
+
+            return result;
         }
+
 
         // Agregar un nuevo pedido
         [HttpPost]

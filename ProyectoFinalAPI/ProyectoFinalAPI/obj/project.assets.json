@@ -4523,26 +4523,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emman\\.nuget\\packages\\": {}
+    "/Users/angelroberto/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+      "projectUniqueName": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
       "projectName": "ProyectoFinalAPI",
-      "projectPath": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
-      "packagesPath": "C:\\Users\\emman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emman\\IDGS901\\MueblesTroncoso\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
+      "projectPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+      "packagesPath": "/Users/angelroberto/.nuget/packages/",
+      "outputPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\emman\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/angelroberto/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4606,7 +4605,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
