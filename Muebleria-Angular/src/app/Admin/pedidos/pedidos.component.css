@@ -186,3 +186,21 @@
   max-width: max-content;
   padding: 5px 40px;
 }
+
+.contenido-pedidos{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.contenido-pedidos-50{
+  width: calc(50% - 20px);
+}
+.corregir{
+  max-width: 1000px !important; 
+  margin: 0 auto !important; 
+}
+.corregir-content{
+  max-width: 100% !important; 
+  width: 100% !important;
+}
