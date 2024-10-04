@@ -19,13 +19,15 @@ export class MateriaPrimaComponent {
     idMateriaPrima: 0,
     nombreMateriaPrima: '',
     descripcion: '',
-    idInventario: 0
+    idInventario: 0,
+    cantidad: 0,
   };
   nuevaMateriaPrima: IMateriaPrima = {
     idMateriaPrima: 0,
     nombreMateriaPrima: '',
     descripcion: '',
-    idInventario: 0
+    idInventario: 0,
+    cantidad: 0,
   };
   isResultLoaded = false;
   isUpdateFormActive = false;
@@ -68,7 +70,8 @@ export class MateriaPrimaComponent {
       idMateriaPrima: 0,
       nombreMateriaPrima: '',
       descripcion: '',
-      idInventario: 0
+      idInventario: 0,
+      cantidad: 0,
     };
   }
 
@@ -90,7 +93,8 @@ export class MateriaPrimaComponent {
           idMateriaPrima: 0,
           nombreMateriaPrima: '',
           descripcion: '',
-          idInventario: 0
+          idInventario: 0,
+          cantidad: 0,
         };
         this.closeModal();
         this.getMateriasPrimas();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProyectoFinalAPI.DTOs;
 using ProyectoFinalAPI.Models;
 
 namespace ProyectoFinalAPI.Controllers
@@ -17,12 +18,25 @@ namespace ProyectoFinalAPI.Controllers
 
 
         [HttpGet("ListadoMateriasP")]
-        public async Task<ActionResult<IEnumerable<MateriaPrima>>> GetListadoMateriasPrimas()
+        public async Task<ActionResult<IEnumerable<MateriaPrimaDto>>> GetListadoMateriasPrimas()
         {
+            var materiasPrimas = await _context.MateriasPrimas
+                .Include(mp => mp.Inventario) // Asegúrate de que la relación está correctamente configurada
+                .ToListAsync();
 
-            return await _context.MateriasPrimas.ToListAsync();
+            // Mapea las materias primas a DTOs
+            var resultado = materiasPrimas.Select(mp => new MateriaPrimaDto
+            {
+                idMateriaPrima = mp.idMateriaPrima,
+                nombreMateriaPrima = mp.nombreMateriaPrima,
+                descripcion = mp.descripcion,
+                idInventario = mp.idInventario,
+                cantidad = mp.Inventario.cantidad // Incluye la cantidad de inventario
+            });
 
+            return Ok(resultado);
         }
+
 
         [HttpGet("BuscarMateriaP")]
         public async Task<ActionResult<IEnumerable<MateriaPrima>>> SearchMateriaPrima(string materia)

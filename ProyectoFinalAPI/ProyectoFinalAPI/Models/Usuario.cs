@@ -8,5 +8,7 @@
         public string contrasenia { get; set;}
         public int rol { get; set;}
 
+        public int type { get; set; }
+
     }
 }

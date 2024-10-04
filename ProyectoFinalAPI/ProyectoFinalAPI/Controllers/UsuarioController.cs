@@ -16,11 +16,17 @@ namespace ProyectoFinalAPI.Controllers
         }
 
         [HttpGet("Listado")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetListadoUsuarios()
+        public async Task<ActionResult> GetListadoUsuarios()
         {
-            // Incluir la categoría relacionada en la consulta
-            return await _context.Usuario.ToListAsync();
+            // Listar usuarios externos (type = 0) e internos (type = 1)
+            var usuariosExternos = await _context.Usuario.Where(u => u.type == 0).ToListAsync();
+            var usuariosInternos = await _context.Usuario.Where(u => u.type == 1).ToListAsync();
 
+            return Ok(new
+            {
+                Externos = usuariosExternos,
+                Internos = usuariosInternos
+            });
         }
 
         [HttpGet("Buscar")]
@@ -43,12 +49,34 @@ namespace ProyectoFinalAPI.Controllers
                 correo = request.correo,
                 contrasenia = request.contrasenia,
                 rol = request.rol,
+                type = 0,
             };
 
             await _context.Usuario.AddAsync(usuario);
             await _context.SaveChangesAsync();
             return Ok(request);
         }
+
+        // Endpoint para registrar empleados (usuarios internos)
+        [HttpPost]
+        [Route("registrarInterno")]
+        public async Task<IActionResult> addUsuarioInterno([FromBody] Usuario request)
+        {
+            var usuario = new Usuario
+            {
+                idUsuario = 0,
+                nombreUsuario = request.nombreUsuario,
+                correo = request.correo,
+                contrasenia = request.contrasenia,
+                rol = request.rol,
+                type = 1, // Usuario interno (empleado)
+            };
+
+            await _context.Usuario.AddAsync(usuario);
+            await _context.SaveChangesAsync();
+            return Ok(request);
+        }
+
 
         [HttpPut]
         [Route("ModificarUsuario/{id:int}")]

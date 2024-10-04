@@ -16,8 +16,11 @@ import { BuscadorCompartidoComponent } from '../shared/buscador-compartido/busca
 })
 export class UsuariosComponent implements OnInit {
   usuarios: IUsuarioDetalle[] = []; // Mantiene la lista completa de usuarios
+  externos: IUsuarioDetalle[] = []; // Usuarios externos
+  internos: IUsuarioDetalle[] = []; // Usuarios internos
   resultadosBusqueda: IUsuarioDetalle[] = []; // Propiedad para almacenar los resultados de la búsqueda
   usuarioSeleccionado$: Observable<IUsuarioDetalle> | null = null;
+  tipoUsuarioSeleccionado: string = 'externos'; // Valor predeterminado para el tipo de usuario
 
   constructor(private authService: AuthService) { }
 
@@ -27,9 +30,10 @@ export class UsuariosComponent implements OnInit {
 
   getUsuarios(): void {
     this.authService.getAllUsuarios().subscribe(
-      (data: IUsuarioDetalle[]) => {
-        this.usuarios = data;  // Asigna todos los usuarios a la lista completa
-        this.resultadosBusqueda = data; // Inicializa con todos los usuarios
+      (data: any) => {
+        this.externos = data.externos;  
+        this.internos = data.internos;  
+        this.filtrarUsuariosPorTipo(); 
       },
       (error) => {
         console.error('Error al obtener los usuarios', error);
@@ -37,12 +41,24 @@ export class UsuariosComponent implements OnInit {
     );
   }
 
+  filtrarUsuariosPorTipo(): void {
+    if (this.tipoUsuarioSeleccionado === 'externos') {
+      this.resultadosBusqueda = this.externos;
+    } else {
+      this.resultadosBusqueda = this.internos;
+    }
+  }
+
   onSearchResults(resultados: IUsuarioDetalle[]): void {
     this.resultadosBusqueda = resultados;
   }
 
   actualizarUsuario(): void {
-    this.authService.getAllUsuarios().subscribe(users => this.resultadosBusqueda = users);
+    this.authService.getAllUsuarios().subscribe(data => {
+      this.externos = data.externos;
+      this.internos = data.internos;
+      this.filtrarUsuariosPorTipo();
+    });
     this.usuarioSeleccionado$ = null;
   }
 
@@ -51,7 +67,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   trackById(index: number, usuario: IUsuarioDetalle): number {
-    return usuario.idUsuario;
+    return usuario.idUsuario || 0;
   }
 
   verDetalle(idUsuario: number): void {
@@ -68,4 +84,16 @@ export class UsuariosComponent implements OnInit {
       }
     );
   }
+
+  agregarNuevoUsuario(): void {
+    // Inicializa un nuevo usuario con los campos necesarios
+    this.usuarioSeleccionado$ = of({
+      idUsuario: null,
+      nombreUsuario: '',
+      correo: '',
+      contrasenia: '',
+      rol: 0, // Cambia esto según tu lógica, 0 para 'Usuario' y 1 para 'Administrador'
+      type: 1 // Establecer como interno
+    });
+  }  
 }

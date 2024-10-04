@@ -22,15 +22,18 @@ export class DetalleUsuarioComponent implements OnChanges {
   alertType: 'success' | 'info' | 'warning' | 'danger' = 'info';
   isAlertVisible: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['usuario$'] && this.usuario$) {
       this.usuario$.subscribe(data => {
         this.usuario = { ...data };
+        // Asegúrate de que el type esté definido
+        console.log('Usuario recibido:', this.usuario); // Para depuración
       });
     }
   }
+
 
   actualizarUsuario(): void {
     if (!this.usuario.nombreUsuario || !this.usuario.correo || this.usuario.rol === undefined) {
@@ -38,17 +41,36 @@ export class DetalleUsuarioComponent implements OnChanges {
       return;
     }
 
+    // Asegúrate de que rol sea un número
+    this.usuario.rol = Number(this.usuario.rol);
+
     if (this.usuario) {
-      this.authService.updateUsuario(this.usuario.idUsuario, this.usuario).subscribe(
-        response => {
-          this.showAlert('Usuario actualizado correctamente.', 'success');
-          this.usuarioActualizado.emit();
-          this.cerrarDetalle();
-        },
-        error => {
-          this.showAlert('Error al actualizar el usuario.', 'danger');
-        }
-      );
+      // Si el idUsuario es null, se considera que es una creación
+      if (this.usuario.idUsuario === null) {
+        // Asigna 0 a idUsuario si es null
+        this.usuario.idUsuario = 0;
+        this.authService.createUsuario(this.usuario).subscribe(
+          response => {
+            this.showAlert('Usuario creado correctamente.', 'success');
+            this.usuarioActualizado.emit();
+            this.cerrarDetalle();
+          },
+          error => {
+            this.showAlert('Error al crear el usuario.', 'danger');
+          }
+        );
+      } else {
+        this.authService.updateUsuario(this.usuario.idUsuario, this.usuario).subscribe(
+          response => {
+            this.showAlert('Usuario actualizado correctamente.', 'success');
+            this.usuarioActualizado.emit();
+            this.cerrarDetalle();
+          },
+          error => {
+            this.showAlert('Error al actualizar el usuario.', 'danger');
+          }
+        );
+      }
     }
   }
 

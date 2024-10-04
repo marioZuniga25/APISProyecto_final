@@ -20,6 +20,7 @@ export class RegisterComponent {
     contrasenia: '',
     rol: 0,
     confirmPassword: '',
+    type: 0,
   };
 
   errorMessage: string = '';

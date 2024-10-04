@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     correo: '',
     contrasenia: '',
     rol: 0,
+    type: 0,
   };
   errorMessage: string = '';
   idUsuarioLocal: string = '';
