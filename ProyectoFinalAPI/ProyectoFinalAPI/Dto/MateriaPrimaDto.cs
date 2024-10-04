@@ -1,13 +1,11 @@
-﻿namespace ProyectoFinalAPI.Models
+namespace ProyectoFinalAPI.DTOs
 {
-    public class MateriaPrima
+    public class MateriaPrimaDto
     {
         public int idMateriaPrima { get; set; }
         public string nombreMateriaPrima { get; set; }
         public string descripcion { get; set; }
         public int idInventario { get; set; }
-
-        // Propiedad de navegación a Inventario
-        public virtual Inventario Inventario { get; set; } 
+        public double cantidad { get; set; }  // Propiedad de cantidad
     }
 }

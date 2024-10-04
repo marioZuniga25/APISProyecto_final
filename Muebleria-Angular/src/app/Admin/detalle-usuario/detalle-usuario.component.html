@@ -24,15 +24,22 @@
         </div>
         <div class="col-md-6">
           <label for="rol" class="form-label">Rol</label>
-          <select id="rol" class="form-select"
-                  [(ngModel)]="usuario.rol" name="rol"
-                  required #rol="ngModel">
-            <option [value]="0">Usuario</option>
-            <option [value]="1">Administrador</option>
-          </select>
-          <div *ngIf="rol.invalid && rol.touched" class="text-danger">
-            <small *ngIf="rol.errors?.['required']">El rol es obligatorio.</small>
-          </div>
+          <ng-container *ngIf="usuario.type === 1; else rolNoEditable">
+            <select id="rol" class="form-select"
+                    [(ngModel)]="usuario.rol" name="rol"
+                    required #rol="ngModel">
+              <option [value]="0">Usuario</option>
+              <option [value]="1">Administrador</option>
+            </select>
+            <div *ngIf="rol.invalid && rol.touched" class="text-danger">
+              <small *ngIf="rol.errors?.['required']">El rol es obligatorio.</small>
+            </div>
+          </ng-container>
+          <ng-template #rolNoEditable>
+            <input type="text" id="rol" class="form-control" 
+                   [value]="usuario.rol === 1 ? 'Administrador' : 'Usuario'" 
+                   readonly>
+          </ng-template>
         </div>
       </div>
       <div class="row g-3 mt-3">

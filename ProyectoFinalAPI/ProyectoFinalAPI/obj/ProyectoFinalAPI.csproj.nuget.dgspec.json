@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
+    "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
   },
   "projects": {
-    "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
+    "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "projectUniqueName": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
         "projectName": "ProyectoFinalAPI",
-        "projectPath": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "projectPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
         "packagesPath": "/Users/angelroberto/.nuget/packages/",
-        "outputPath": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
+        "outputPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/angelroberto/.nuget/NuGet/NuGet.Config"

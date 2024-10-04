@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QwAAl8zP/JU=",
+  "dgSpecHash": "TMdzkGLEkiQ=",
   "success": true,
-  "projectFilePath": "/Users/angelroberto/Library/CloudStorage/OneDrive-Personal/9vo Cuatrimestre/DWI/Parcial 3/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+  "projectFilePath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
   "expectedPackageFiles": [
     "/Users/angelroberto/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/angelroberto/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",

@@ -20,6 +20,7 @@ export class LoginUsuarioComponent {
     correo: '',
     contrasenia: '',
     rol: 0,
+    type: 0,
   };
   errorMessage: string = '';
 

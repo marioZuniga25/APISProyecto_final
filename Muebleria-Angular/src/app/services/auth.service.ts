@@ -31,6 +31,11 @@ export class AuthService {
     this.currentUserSubject.next(user); // Notifica a los suscriptores del cambio
   }
 
+  createUsuario(usuario: IUsuarioDetalle): Observable<any> {
+    return this.http.post(`${this.apiUrl}usuario/registrarInterno`, usuario);
+  }
+  
+
   //Saber si es admin
   isAdmin(): boolean {
     const user = this.getUser();
@@ -43,8 +48,8 @@ export class AuthService {
   }
 
   // Obtener todos los usuarios
-  getAllUsuarios = (): Observable<IUsuarioDetalle[]> =>
-    this.http.get<any[]>(`${this.apiUrl}usuario/listado`);
+  getAllUsuarios = (): Observable<{ externos: IUsuarioDetalle[], internos: IUsuarioDetalle[] }> =>
+    this.http.get<{ externos: IUsuarioDetalle[], internos: IUsuarioDetalle[] }>(`${this.apiUrl}usuario/listado`);
 
   registerUsuario (data: IUsuarioDetalle): Observable<any>{
     return this.http.post<any>(`${this.apiUrl}usuario/registrar`, data);

@@ -85,6 +85,10 @@ namespace ProyectoFinalAPI
                 matPrim.Property(i => i.descripcion);
                 matPrim.Property(i => i.idInventario).IsRequired();
 
+                // Configurar la relación con Inventario
+                matPrim.HasOne(mp => mp.Inventario) // Definir la relación
+                    .WithMany() // Asumiendo que Inventario no tiene una colección de MateriaPrimas
+                    .HasForeignKey(mp => mp.idInventario); // Definir la clave foránea
             });
 
             modelBuilder.Entity<Produccion>(produccion =>
