@@ -9,6 +9,8 @@ import { IDetalleVenta } from '../../interfaces/IDetalleVenta';
 import { IProductoSeleccionado } from '../../interfaces/IProductoAux';
 import { Subscription } from 'rxjs';
 import { IProductoResponse } from '../../interfaces/IProductoResponse';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-venta',
@@ -93,7 +95,7 @@ export class VentaComponent {
     const item = this.selectedProducts[index];
   
     if (item.cantidad > item.producto.stock) {
-      item.cantidad = item.producto.stock;  // Limita la cantidad al stock disponible
+      item.cantidad = item.producto.stock;  
     }
   
     item.subtotal = item.producto.precio * item.cantidad;
@@ -105,30 +107,56 @@ export class VentaComponent {
 
 
   guardarVenta() {
+    if (this.selectedProducts.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No hay productos seleccionados',
+        text: 'Debes seleccionar al menos un producto antes de realizar la venta.',
+      });
+      return;  // Evita que continúe con la lógica de guardar la venta
+    }
+  
     this.nuevaVenta.total = this.calcularTotal();
-
+  
     this._ventaService.addVenta(this.nuevaVenta).subscribe({
       next: (idVentaGenerada) => {
         console.log('ID de la venta generada:', idVentaGenerada);
-        alert(`Venta creada exitosamente con ID: ${idVentaGenerada}`);
-
+        Swal.fire({
+          icon: 'success',
+          title: 'Venta creada exitosamente',
+          text: `Venta creada con ID: ${idVentaGenerada}`
+        });
+  
         const detalleVenta = this.generarDetalleVenta(idVentaGenerada);
         console.log('Detalle de Venta:', detalleVenta);
-
+  
         this._ventaService.addDetalleVenta(detalleVenta).subscribe({
           next: () => console.log('Detalles de venta guardados exitosamente.'),
-          error: (error) => console.error('Error al guardar los detalles de venta:', error)
+          error: (error) => {
+            console.error('Error al guardar los detalles de venta:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Hubo un error al guardar los detalles de la venta. Inténtalo nuevamente.'
+            });
+          }
         });
-
+  
+        // Reiniciar la venta y los productos seleccionados
         this.nuevaVenta = { fechaVenta: new Date(), total: 0, idUsuario: 1 };
         this.selectedProducts = [];
       },
       error: (error) => {
         console.error('Error al crear la venta:', error);
-        alert('Hubo un error al crear la venta. Inténtalo nuevamente.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al crear la venta',
+          text: 'Hubo un error al crear la venta. Inténtalo nuevamente.'
+        });
       }
     });
   }
+  
 
 
   generarDetalleVenta(idVenta: number): IDetalleVenta[] {
@@ -158,4 +186,19 @@ export class VentaComponent {
       }
     });
   }
+
+  validarTecla(event: KeyboardEvent) {
+    const tecla = event.key;
+    
+    // Permitir teclas de control (backspace, tab, etc.)
+    if (['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(tecla)) {
+      return;
+    }
+    
+    // Verifica si la tecla presionada es un número (0-9)
+    if (!/^[0-9]$/.test(tecla)) {
+      event.preventDefault();  // Evita que se introduzcan caracteres no numéricos
+    }
+  }
+  
 }
