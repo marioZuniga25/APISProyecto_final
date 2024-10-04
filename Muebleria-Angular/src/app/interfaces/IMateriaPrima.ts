@@ -3,7 +3,6 @@ export interface IMateriaPrima {
     idMateriaPrima: number,
     nombreMateriaPrima: string,
     descripcion: string,
-    idInventario: number,
-    idProveedor: number
+    idInventario: number
 
 }

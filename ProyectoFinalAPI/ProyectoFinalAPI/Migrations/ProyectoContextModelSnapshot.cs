@@ -154,9 +154,6 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<int>("idInventario")
                         .HasColumnType("int");
 
-                    b.Property<int>("idProveedor")
-                        .HasColumnType("int");
-
                     b.Property<string>("nombreMateriaPrima")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

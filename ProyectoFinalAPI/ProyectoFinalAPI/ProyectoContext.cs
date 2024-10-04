@@ -86,7 +86,6 @@ namespace ProyectoFinalAPI
                 matPrim.Property(i => i.nombreMateriaPrima).IsRequired();
                 matPrim.Property(i => i.descripcion);
                 matPrim.Property(i => i.idInventario).IsRequired();
-                matPrim.Property(i => i.idProveedor).IsRequired();
 
             });
 

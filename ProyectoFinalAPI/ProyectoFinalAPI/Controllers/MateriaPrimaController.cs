@@ -54,7 +54,6 @@ namespace ProyectoFinalAPI.Controllers
             materiaModificar.nombreMateriaPrima = request.nombreMateriaPrima;
             materiaModificar.descripcion = request.descripcion;
             materiaModificar.idInventario = request.idInventario;
-            materiaModificar.idProveedor = request.idProveedor;
 
 
             try
@@ -85,15 +84,6 @@ namespace ProyectoFinalAPI.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
-
-        }
-
-
-        [HttpGet("ListadoProveedores")]
-        public async Task<ActionResult<IEnumerable<Proveedor>>> GetListadoProveedores()
-        {
-
-            return await _context.Proveedor.ToListAsync();
 
         }
 
