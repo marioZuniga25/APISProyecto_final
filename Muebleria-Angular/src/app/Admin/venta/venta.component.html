@@ -70,6 +70,7 @@
                             type="number" 
                             [(ngModel)]="selectedProduct.cantidad" 
                             (change)="actualizarSubtotal(i)"
+                            (keydown)="validarTecla($event)"
                             min="1"
                             [value]="selectedProduct.cantidad"
                             class="form-control w-25"
@@ -89,6 +90,6 @@
     <!-- Botones para acciones -->
     <div class="action-buttons">
         <button class="save-btn" (click)="guardarVenta();">Guardar Venta</button>
-        <button class="cancel-btn">Cancelar</button>
+       
     </div>
 </div>
