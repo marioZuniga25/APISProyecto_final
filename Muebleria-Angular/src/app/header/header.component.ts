@@ -57,6 +57,7 @@ export class HeaderComponent {
 
   logout(): void {
     this.authService.removeUser();
+    localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
 }

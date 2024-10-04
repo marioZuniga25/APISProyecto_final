@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group" style="width: calc(50% - 30px); margin: 0 10px; margin-bottom: 15px;text-align: left;">
                   <label for="numeroTarjeta">Número de Tarjeta</label>
-                  <input style="width: 100%;border: none; border-bottom: 1px solid grey; outline: none; padding: 8px 10px;" type="text" id="numeroTarjeta" [(ngModel)]="nuevaTarjeta.numeroTarjeta" name="numeroTarjeta" required minlength="16" maxlength="16">
+                  <input style="width: 100%;border: none; border-bottom: 1px solid grey; outline: none; padding: 8px 10px;" type="text" id="numeroTarjeta" [(ngModel)]="nuevaTarjeta.numeroTarjeta" name="numeroTarjeta" required minlength="16" maxlength="16" pattern="^[0-9]{16}$">
                 </div>
                 <div class="form-group" style="width: calc(50% - 30px); margin: 0 10px; margin-bottom: 15px;text-align: left;">
                   <label for="fechaVencimiento">Fecha de Vencimiento (MM/AA)</label>

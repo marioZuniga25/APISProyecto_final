@@ -55,8 +55,8 @@
 
 <!-- Modal para ver detalles -->
 <div class="modal" tabindex="-1" [ngClass]="{'show': isModalVerDetallesOpen}" style="display: block;" *ngIf="isModalVerDetallesOpen">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog corregir modal-lg">
+    <div class="modal-content corregir-content">
       <div class="modal-header">
         <h5 class="modal-title text-center">DETALLES DE LA RECETA</h5>
         <button type="button" class="btn-close" (click)="cerrarModalVerDetalles()"></button>
@@ -84,8 +84,8 @@
 
 <!-- Modal para agregar/modificar receta -->
 <div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
-  <div class="modal-dialog">
-    <div class="modal-content">
+  <div class="modal-dialog corregir">
+    <div class="modal-content corregir-content">
       <div class="modal-header">
         <h5 class="modal-title">{{ recetaActual.idReceta ? 'Modificar Receta' : 'Agregar Receta' }}</h5>
         <button type="button" class="btn-close" (click)="cerrarModal()"></button>
@@ -98,20 +98,23 @@
               <option *ngFor="let producto of productos" [value]="producto.idProducto">{{ producto.nombreProducto }}</option>
             </select>
           </div>
+  
           <div class="scrollable-details" style="max-height: 200px; overflow-y: auto;" #detallesContainer>
-            <div *ngFor="let detalle of recetaActual.detalles; let i = index" class="detalle-row p-3 mb-3" style="background-color: #f0f0f0; border-radius: 15px;">
-              <div class="form-group" style="margin-bottom: 10px;">
-                <label for="idMateriaPrima">Materia Prima:</label>
-                <select id="idMateriaPrima" [(ngModel)]="detalle.idMateriaPrima" name="idMateriaPrima_{{i}}" class="form-control" required>
-                  <option *ngFor="let materia of materiasPrimas" [value]="materia.idMateriaPrima">{{ materia.nombreMateriaPrima }}</option>
-                </select>
-              </div>
-              <div class="form-group d-flex justify-content-between align-items-center">
-                <div style="flex: 1; margin-right: 10px;">
-                  <label for="cantidad">Cantidad:</label>
-                  <input type="number" id="cantidad" [(ngModel)]="detalle.cantidad" name="cantidad_{{i}}" class="form-control" required style="width: 80px;">
-                </div>
-                <button (click)="eliminarDetalle(i)" class="btn btn-danger mt-3"><i class="fas fa-trash-alt"></i></button>
+            <div class="recetas-contenido">  
+                <div *ngFor="let detalle of recetaActual.detalles; let i = index" class="detalle-row p-3 mb-3 recetas-contenido-25" style="background-color: #f0f0f0; border-radius: 15px;">
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label for="idMateriaPrima">Materia Prima:</label>
+                    <select id="idMateriaPrima" [(ngModel)]="detalle.idMateriaPrima" name="idMateriaPrima_{{i}}" class="form-control" required>
+                      <option *ngFor="let materia of materiasPrimas" [value]="materia.idMateriaPrima">{{ materia.nombreMateriaPrima }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group d-flex justify-content-between align-items-center">
+                    <div style="flex: 1; margin-right: 10px;">
+                      <label for="cantidad">Cantidad:</label>
+                      <input type="number" id="cantidad" [(ngModel)]="detalle.cantidad" name="cantidad_{{i}}" class="form-control" required style="width: 80px;">
+                    </div>
+                    <button (click)="eliminarDetalle(i)" class="btn btn-danger mt-3"><i class="fas fa-trash-alt"></i></button>
+                  </div>
               </div>
             </div>
           </div>

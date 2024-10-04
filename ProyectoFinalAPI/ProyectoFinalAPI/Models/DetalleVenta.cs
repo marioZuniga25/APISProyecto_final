@@ -7,5 +7,8 @@
         public int idProducto { get; set;}
         public int cantidad { get; set; }
         public double precioUnitario { get;  set; }
+
+        // public Producto Producto { get; set; }
+
     }
 }

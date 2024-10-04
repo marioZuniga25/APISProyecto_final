@@ -107,32 +107,48 @@ export class ProductosComponent implements OnInit {
 
   modificarProducto(request: IProductoRequest): void {
     this.productosService.updateProducto(this.productoActual.idProducto, request).subscribe(
-      () => {
-        this.getProductos();
-        this.cerrarModal();
-        this.resetFormulario();
-        Swal.fire('Éxito', 'Producto modificado exitosamente.', 'success');
-      },
-      error => {
-        Swal.fire('Error', 'Error al modificar producto.', 'error');
-      }
+        (data: IProductoResponse) => {
+            const index = this.productos.findIndex(p => p.idProducto === data.idProducto);
+            if (index !== -1) {
+                this.productos[index] = data;
+                this.resultadosBusqueda = [...this.productos];
+            }
+            this.cerrarModal();
+            this.resetFormulario();
+            Swal.fire('Éxito', 'Producto modificado exitosamente.', 'success');
+        },
+        error => {
+            Swal.fire('Error', 'Error al modificar producto.', 'error');
+        }
     );
-  }
+}
+
 
   guardarProducto(request: IProductoRequest): void {
+    if (this.productoActual.imagen && this.productoActual.imagen.startsWith('data:image')) {
+        request.imagen = this.productoActual.imagen;
+    } else {
+        request.imagen = '';
+    }
+
+    console.log('Datos del producto a enviar:', request);
+
     this.productosService.addProducto(request).subscribe(
-      data => {
-        this.productos.push(this.mapToResponse(data));
-        this.resultadosBusqueda = this.productos;
-        this.cerrarModal();
-        this.resetFormulario();
-        Swal.fire('Éxito', 'Producto agregado exitosamente.', 'success');
-      },
-      error => {
-        Swal.fire('Error', 'Error al agregar producto.', 'error');
-      }
+        data => {
+            this.productos.push(this.mapToResponse(data));
+            this.resultadosBusqueda = this.productos;
+            this.cerrarModal();
+            this.resetFormulario();
+            Swal.fire('Éxito', 'Producto agregado exitosamente.', 'success');
+        },
+        error => {
+            console.error('Error al agregar producto:', error);
+            Swal.fire('Error', 'Error al agregar producto.', 'error');
+        }
     );
-  }
+}
+
+  
 
   eliminarProducto(id: number): void {
     Swal.fire({
@@ -215,7 +231,8 @@ export class ProductosComponent implements OnInit {
       descripcion: producto.descripcion,
       precio: producto.precio,
       stock: producto.stock,
-      imagen: producto.imagen
+      imagen: producto.imagen,
+      nombreCategoria: producto.nombreCategoria
     };
   }
 

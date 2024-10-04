@@ -1,58 +1,93 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import Swal from 'sweetalert2';
+
+export interface ProductoCarrito {
+  id: number;
+  nombre: string;
+  precio: number;
+  cantidad: number;
+  imagen:string;
+  stock: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
+  private carrito: ProductoCarrito[] = [];
   private mostrarBagSubject = new BehaviorSubject<boolean>(false);
   mostrarBag$ = this.mostrarBagSubject.asObservable();
-  private apiUrl = 'http://localhost:5194/api/Carrito';
-  private itemsCarritoSubject = new BehaviorSubject<any[]>([]);
-  itemsCarrito$ = this.itemsCarritoSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor() {
+    this.cargarCarrito();
+  }
+
+  agregarAlCarrito(producto: ProductoCarrito) {
+    const index = this.carrito.findIndex(item => item.id === producto.id);
+    if (index !== -1) {
+      this.carrito[index].cantidad += producto.cantidad;
+    } else {
+      this.carrito.push(producto);
+    }
+    this.guardarCarrito();
+  }
+
+  incrementarCantidad(productoId: number, maxStock: number) {
+    const index = this.carrito.findIndex(item => item.id === productoId);
+    if (index !== -1) {
+      if (this.carrito[index].cantidad < maxStock) {
+        this.carrito[index].cantidad++;
+        this.guardarCarrito();
+      } else {
+        Swal.fire('Error', 'No hay suficiente stock disponible', 'error');
+      }
+    }
+  }
+
+  decrementarCantidad(productoId: number) {
+    const index = this.carrito.findIndex(item => item.id === productoId);
+    if (index !== -1 && this.carrito[index].cantidad > 1) {
+      this.carrito[index].cantidad--;
+      this.guardarCarrito();
+    }
+  }
+
+  eliminarDelCarrito(productoId: number) {
+    this.carrito = this.carrito.filter(item => item.id !== productoId);
+    this.guardarCarrito();
+  }
+
+  obtenerCarrito() {
+    return this.carrito;
+  }
 
   toggleBag() {
     this.mostrarBagSubject.next(!this.mostrarBagSubject.value);
   }
 
-  setBagState(state: boolean) {
-    this.mostrarBagSubject.next(state);
+  private guardarCarrito() {
+    const userId = localStorage.getItem('userId');
+    console.log('user id' +  userId);
+
+    if (userId) {
+      localStorage.setItem(`carrito_${userId}`, JSON.stringify(this.carrito));
+    }
   }
 
-  getCarrito(): Observable<any[]> {
-    return this.itemsCarrito$;
+  cargarCarrito() {
+    const userId = localStorage.getItem('userId');
+    console.log('user id' +  userId);
+    if (userId) {
+      const carritoGuardado = localStorage.getItem(`carrito_${userId}`);
+      if (carritoGuardado) {
+        this.carrito = JSON.parse(carritoGuardado);
+      }
+    }
   }
-
-  agregarProductoAlCarrito(producto: any, cantidad: number): Observable<any> {
-    const carritoItem = {
-      productoId: producto.idProducto,
-      nombreProducto: producto.nombreProducto,
-      cantidad: cantidad,
-      precio: producto.precio,
-      imagen: producto.imagen 
-    };
-  
-    return this.http.post(`${this.apiUrl}/Agregar`, carritoItem);
-  }
-  
-
-  obtenerCarrito(): void {
-    this.http.get<any[]>(`${this.apiUrl}/Obtener`).subscribe(
-      (items) => {
-        this.itemsCarritoSubject.next(items || []);
-      },
-      (error) => console.error('Error al obtener el carrito', error)
-    );
-  }
-  
-  actualizarCantidadProducto(productId: number, cantidad: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Actualizar`, { idProducto: productId, cantidad });
-  }
-
-  eliminarProductoDelCarrito(productId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/Eliminar/${productId}`);
+  limpiarCarrito() {
+    const userId = localStorage.getItem('userId');
+    this.carrito = [];
+    localStorage.removeItem(`carrito_${userId}`); // Limpia el carrito del local storage si se usa
   }
 }

@@ -55,25 +55,38 @@ namespace ProyectoFinalAPI.Controllers
         [HttpPost("Agregar")]
         public async Task<ActionResult> AgregarProducto([FromBody] Producto request)
         {
-
-            var newProducto = new Producto
+            try
             {
-                idProducto = 0,
-                idCategoria = request.idCategoria,
-                idInventario = request.idInventario,
-                nombreProducto = request.nombreProducto,
-                descripcion = request.descripcion,
-                precio = request.precio,
-                stock = request.stock,
-                imagen = request.imagen
-            };
+                if (request.idCategoria <= 0)
+                {
+                    return BadRequest("El idCategoria es requerido y debe ser mayor a 0.");
+                }
 
-            await _context.Producto.AddAsync(newProducto);
-            await _context.SaveChangesAsync();
+                var categoria = await _context.Categorias.FirstOrDefaultAsync(c => c.idCategoria == request.idCategoria);
 
-            return Ok(newProducto);
+                if (categoria == null)
+                {
+                    return NotFound("Categoría no encontrada.");
+                }
 
+                request.NombreCategoria = categoria.nombreCategoria;
+
+                ModelState.Clear();
+
+                await _context.Producto.AddAsync(request);
+                await _context.SaveChangesAsync();
+
+                return Ok(request);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al agregar el producto: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+
+                return StatusCode(500, "Ocurrió un error al agregar el producto.");
+            }
         }
+
 
 
         [HttpPost("Modificar/{id}")]
@@ -86,7 +99,18 @@ namespace ProyectoFinalAPI.Controllers
                 return BadRequest("Producto no encontrado");
             }
 
-            // Actualizar los campos necesarios
+            if (request.idCategoria <= 0)
+            {
+                return BadRequest("El idCategoria es requerido y debe ser mayor a 0.");
+            }
+
+            var categoria = await _context.Categorias.FirstOrDefaultAsync(c => c.idCategoria == request.idCategoria);
+
+            if (categoria == null)
+            {
+                return NotFound("Categoría no encontrada.");
+            }
+
             productoModificar.nombreProducto = request.nombreProducto;
             productoModificar.descripcion = request.descripcion;
             productoModificar.precio = request.precio;
@@ -94,12 +118,13 @@ namespace ProyectoFinalAPI.Controllers
             productoModificar.idInventario = request.idInventario;
             productoModificar.idCategoria = request.idCategoria;
             productoModificar.imagen = request.imagen;
+            productoModificar.NombreCategoria = categoria.nombreCategoria;
 
-            // Guardar cambios
             await _context.SaveChangesAsync();
 
             return Ok(productoModificar);
         }
+
 
         [HttpGet("FiltrarProductos")]
         public async Task<ActionResult<IEnumerable<ProductoDto>>> FiltrarProductos([FromQuery] string term = null)
@@ -164,6 +189,34 @@ namespace ProyectoFinalAPI.Controllers
             _context.Producto.Remove(producto);
             await _context.SaveChangesAsync();
 
-        return Ok(new { mensaje = "Producto eliminado correctamente" });        }
+        return Ok(new { mensaje = "Producto eliminado correctamente" });        
+        }
+
+        [HttpGet("ProductoPorCategoria/{idCategoria}")]
+        public async Task<ActionResult<IEnumerable<ProductoDto>>> GetProductosPorCategoria(int idCategoria)
+        {
+            var productos = await (from p in _context.Producto
+                                   join c in _context.Categorias on p.idCategoria equals c.idCategoria
+                                   where p.idCategoria == idCategoria
+                                   select new ProductoDto
+                                   {
+                                       IdProducto = p.idProducto,
+                                       NombreProducto = p.nombreProducto,
+                                       Descripcion = p.descripcion,
+                                       Precio = p.precio,
+                                       Stock = p.stock,
+                                       IdInventario = p.idInventario,
+                                       Imagen = p.imagen,
+                                       NombreCategoria = c.nombreCategoria,
+                                       IdCategoria = p.idCategoria
+                                   }).ToListAsync();
+
+            if (productos == null || productos.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return productos;
+        }
     }
 }

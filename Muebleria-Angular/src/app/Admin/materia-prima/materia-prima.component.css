@@ -178,3 +178,11 @@
 .delete-btn:hover {
   background-color: #fd5353;
 }
+
+.corregir{
+  max-width: 1000px !important; 
+}
+.corregir-content{
+  max-width: 100% !important; 
+  width: 100% !important;
+}

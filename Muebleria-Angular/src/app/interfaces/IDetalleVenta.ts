@@ -1,3 +1,4 @@
+import { IProducto } from "./IProducto";
 
 export interface IDetalleVenta {
     idDetalleVenta: number;
@@ -5,5 +6,6 @@ export interface IDetalleVenta {
     idProducto: number;
     cantidad: number;
     precioUnitario: number;
+    producto?: IProducto;
 }
   

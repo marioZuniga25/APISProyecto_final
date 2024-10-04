@@ -21,6 +21,7 @@ import { BuscadorComponent } from './buscador/buscador.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ProductosComponent } from './Admin/productos/productos.component';
 import { ProduccionComponent } from './Admin/produccion/produccion.component';
+import { PedidosComponent } from './Admin/pedidos/pedidos.component';
 
 export const routes: Routes = [
   {
@@ -28,7 +29,7 @@ export const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'gracias',
+    path: 'gracias/:id',
     component: GraciasComponent,
   },
   {
@@ -53,10 +54,12 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: LoginComponent,
+    
   },
   {
     path: 'admin/dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'buscador',
@@ -70,7 +73,7 @@ export const routes: Routes = [
 
   {
     path: 'admin/pedidos',
-    component: InicioAdminComponent,
+    component: PedidosComponent,
     canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {

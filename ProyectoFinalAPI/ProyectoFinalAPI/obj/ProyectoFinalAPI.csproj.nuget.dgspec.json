@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\mazu1\\OneDrive\\Escritorio\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
   },
   "projects": {
@@ -16,12 +17,31 @@
         "configFilePaths": [
           "C:\\Users\\mazu1\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+    "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
+  },
+  "projects": {
+    "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "projectName": "ProyectoFinalAPI",
+        "projectPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "packagesPath": "/Users/cristianleyva/.nuget/packages/",
+        "outputPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/cristianleyva/.nuget/NuGet/NuGet.Config"
+>>>>>>> fc64562a5a977d490e0ebbbf5c74820953265f0e
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+<<<<<<< HEAD
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+=======
+>>>>>>> fc64562a5a977d490e0ebbbf5c74820953265f0e
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -85,7 +105,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.206/PortableRuntimeIdentifierGraph.json"
+>>>>>>> fc64562a5a977d490e0ebbbf5c74820953265f0e
         }
       }
     }
