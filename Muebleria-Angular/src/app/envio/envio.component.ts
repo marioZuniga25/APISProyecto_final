@@ -9,10 +9,11 @@ import { IDetalleVenta } from '../interfaces/IDetalleVenta';
 import { IVenta } from '../interfaces/IVenta';
 import { VentasService } from '../services/ventas.service';
 import Swal from 'sweetalert2';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-envio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './envio.component.html',
   styleUrl: './envio.component.css'
 })
@@ -61,6 +62,32 @@ export class EnvioComponent implements OnInit{
     this.total = this.subtotal; // Aquí puedes sumar impuestos o descuentos si es necesario
   }
   confirmarPedido() {
+    // Obtén el idTarjeta seleccionado
+    const idTarjeta = (document.querySelector('input[name="tarjeta"]:checked') as HTMLInputElement)?.value;
+
+    // Obtén los datos del formulario de envío
+    const nombre = (document.querySelector('input[name="nombre"]') as HTMLInputElement).value;
+    const apellidos = (document.querySelector('input[name="apellidos"]') as HTMLInputElement).value;
+    const telefono = (document.querySelector('input[name="telefono"]') as HTMLInputElement).value;
+    const correo = (document.querySelector('input[name="correo"]') as HTMLInputElement).value;
+    const calle = (document.querySelector('input[name="calle"]') as HTMLInputElement).value;
+    const numero = (document.querySelector('input[name="numero"]') as HTMLInputElement).value;
+    const colonia = (document.querySelector('input[name="colonia"]') as HTMLInputElement).value;
+    const ciudad = (document.querySelector('input[name="cuidad"]') as HTMLInputElement).value;
+    const estado = (document.querySelector('select[name="estado"]') as HTMLSelectElement).value;
+    const codigoPostal = (document.querySelector('input[name="codigo"]') as HTMLInputElement).value;
+
+    // Validar que todos los campos estén llenos
+    if (!nombre || !apellidos || !telefono || !correo || !calle || !numero || !colonia || !ciudad || !estado || !codigoPostal || !idTarjeta) {
+        Swal.fire({
+            title: 'Campos incompletos',
+            text: 'Por favor, llena todos los campos requeridos y selecciona una tarjeta.',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return; // Si algún campo está vacío, detenemos la ejecución
+    }
+
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¿Deseas confirmar tu compra?",
@@ -74,21 +101,6 @@ export class EnvioComponent implements OnInit{
             const idUsuario = localStorage.getItem('userId')!;
             const total = this.total;
 
-            // Obtén el idTarjeta seleccionado
-            const idTarjeta = (document.querySelector('input[name="tarjeta"]:checked') as HTMLInputElement)?.value;
-
-            // Obtén los datos del formulario de envío
-            const nombre = (document.querySelector('input[name="nombre"]') as HTMLInputElement).value;
-            const apellidos = (document.querySelector('input[name="apellidos"]') as HTMLInputElement).value;
-            const telefono = (document.querySelector('input[name="telefono"]') as HTMLInputElement).value;
-            const correo = (document.querySelector('input[name="correo"]') as HTMLInputElement).value;
-            const calle = (document.querySelector('input[name="calle"]') as HTMLInputElement).value;
-            const numero = (document.querySelector('input[name="numero"]') as HTMLInputElement).value;
-            const colonia = (document.querySelector('input[name="colonia"]') as HTMLInputElement).value;
-            const ciudad = (document.querySelector('input[name="cuidad"]') as HTMLInputElement).value;
-            const estado = (document.querySelector('select[name="estado"]') as HTMLSelectElement).value;
-            const codigoPostal = (document.querySelector('input[name="codigo"]') as HTMLInputElement).value;
-
             const nuevaVenta: IVenta = {
                 idUsuario: parseInt(idUsuario),
                 fechaVenta: new Date(),
@@ -99,16 +111,13 @@ export class EnvioComponent implements OnInit{
                 (idVentaGenerado) => {
                     // Inserción de los detalles de la venta
                     const detallesVenta: IDetalleVenta[] = this.carrito.map(producto => ({
-                      idDetalleVenta: 0,
-                      idVenta: idVentaGenerado,
-                      idProducto: producto.id,
-                      cantidad: producto.cantidad,
-                      precioUnitario: producto.precio
-                  }));
-                  
-                  // Imprimir todos los datos en la consola
-                  console.log('Detalles de la venta:', detallesVenta);
-                  
+                        idDetalleVenta: 0,
+                        idVenta: idVentaGenerado,
+                        idProducto: producto.id,
+                        cantidad: producto.cantidad,
+                        precioUnitario: producto.precio
+                    }));
+
                     this.ventasService.addDetalleVenta(detallesVenta).subscribe(
                         () => {
                             // Crear el objeto del pedido
@@ -116,7 +125,7 @@ export class EnvioComponent implements OnInit{
                                 idPedido: 0,
                                 idVenta: idVentaGenerado,
                                 idUsuario: parseInt(idUsuario),
-                                idTarjeta: parseInt(idTarjeta || '0'),
+                                idTarjeta: parseInt(idTarjeta),
                                 nombre: nombre,
                                 apellidos: apellidos,
                                 telefono: telefono,
@@ -127,7 +136,7 @@ export class EnvioComponent implements OnInit{
                                 ciudad: ciudad,
                                 estado: estado,
                                 codigoPostal: codigoPostal,
-                                estatus: 'Pedido' // El estatus siempre se guarda con el valor 'Pedido'
+                                estatus: 'Pedido'
                             };
 
                             // Insertar el nuevo pedido
@@ -141,7 +150,6 @@ export class EnvioComponent implements OnInit{
                                         }
                                     });
                                     this.carritoService.limpiarCarrito();
-                                    // Simulamos un procesamiento de transacción de 5 segundos
                                     setTimeout(() => {
                                         Swal.close();
                                         Swal.fire({
@@ -149,7 +157,6 @@ export class EnvioComponent implements OnInit{
                                             icon: 'success',
                                             showConfirmButton: true
                                         }).then(() => {
-                                            // Redirigimos a la vista de gracias
                                             window.location.href = `/gracias/${idVentaGenerado}`;
                                         });
                                     }, 5000);
@@ -161,23 +168,16 @@ export class EnvioComponent implements OnInit{
                             );
                         },
                         (error) => {
-                            Swal.fire('Error', 'Error al guardar detalles de venta', 'error');
-                            console.error('Error al guardar detalles de venta', error);
+                            Swal.fire('Error', 'Error al agregar los detalles de la venta', 'error');
+                            console.error('Error al agregar los detalles de la venta', error);
                         }
                     );
                 },
                 (error) => {
-                    Swal.fire('Error', 'Error al guardar la venta', 'error');
-                    console.error('Error al guardar la venta', error);
+                    Swal.fire('Error', 'Error al procesar la venta', 'error');
+                    console.error('Error al procesar la venta', error);
                 }
             );
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire({
-                title: 'Transacción cancelada',
-                icon: 'info',
-                timer: 2000,
-                showConfirmButton: false
-            });
         }
     });
 }

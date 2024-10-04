@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="datos-contenido">
-        <div class="datos-contenido-requerido" style="height: 750px !important; overflow-y: auto !important;">
+        <div class="datos-contenido-requerido" style="height: 975px !important; overflow-y: auto !important;">
             <div class="logo">
             </div>
             <div class="datos-contenido-requerido-form">
@@ -130,22 +130,32 @@
             </div>
             <div class="datos-contenido-requerido-form">
                 <h3>SELECCIONA TU TARJETA PARA PAGAR</h3>
-                <form action="">
-                    <div class="tarjetas-container">
-                        <label *ngFor="let tarjeta of tarjetas" class="tarjeta">
-                            <input type="radio" name="tarjeta" [value]="tarjeta.idTarjeta">
-                            <div class="tarjeta-info">
-                                <p style="margin: 0 0 5px 0;">{{tarjeta.nombrePropietario}}</p>
-                                <div class="tarjeta-numero">{{ formatCardNumber(tarjeta.numeroTarjeta) }}</div>
-                                <div class="tarjeta-detalle">
-                                    <span>Vence: {{tarjeta.fechaVencimiento}}</span>
-                                    <span>CCV: **{{ tarjeta.ccv.slice(-1) }}</span>
+                <div *ngIf="tarjetas && tarjetas.length > 0; else noTarjetas">
+                    <form action="">
+                        <div class="tarjetas-container">
+                            <label *ngFor="let tarjeta of tarjetas" class="tarjeta">
+                                <input type="radio" name="tarjeta" [value]="tarjeta.idTarjeta">
+                                <div class="tarjeta-info">
+                                    <p style="margin: 0 0 5px 0;">{{tarjeta.nombrePropietario}}</p>
+                                    <div class="tarjeta-numero">{{ formatCardNumber(tarjeta.numeroTarjeta) }}</div>
+                                    <div class="tarjeta-detalle">
+                                        <span>Vence: {{tarjeta.fechaVencimiento}}</span>
+                                        <span>CCV: **{{ tarjeta.ccv.slice(-1) }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </label>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            
+                <!-- Mostrar si no hay tarjetas -->
+                <ng-template #noTarjetas>
+                    <div class="no-tarjetas">
+                        <p>No tienes tarjetas guardadas. Necesitas ir a tu perfil a agregar alguna</p>
+                        <button style="border: none; border-radius: 12px; background-color: black; color: white; padding: 6px 30px; cursor: pointer;" [routerLink]="['/perfil', idUsuario]">Ir a mi perfil</button>
                     </div>
-                </form>
-            </div>            
+                </ng-template>
+            </div>                 
             <div class="datos-contenido-requerido-botones" style="position: relative !important;width: 100% !important; padding: 60px 0;">
                 <a href="/bag" class="boton-volver">
                     <span class="icon icon-anterior"></span>

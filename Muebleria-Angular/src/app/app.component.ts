@@ -8,11 +8,12 @@ import { BuscadorComponent } from './buscador/buscador.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { MenuComponent } from './Admin/menu/menu.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FooterComponent, HeaderComponent, BuscadorComponent, CarritoComponent, NgIf, FormsModule, MenuComponent],
+  imports: [RouterOutlet, FooterComponent, HeaderComponent, BuscadorComponent, CarritoComponent, NgIf, FormsModule, MenuComponent, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

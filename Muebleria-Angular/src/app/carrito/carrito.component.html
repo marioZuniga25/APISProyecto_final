@@ -31,8 +31,8 @@
       </div>
       
     </div>
-    <div class="boton">
-        <a href="/bag">TERMINAR COMPRA</a>
+    <div class="boton" *ngIf="carrito.length > 0">
+      <a href="/bag">TERMINAR COMPRA</a>
     </div>
 </div>
   </div>

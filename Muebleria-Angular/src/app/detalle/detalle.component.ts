@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../services/productos/productos.service';
 import { CommonModule } from '@angular/common';
 import { BuscadorService } from '../services/buscador.service';
@@ -20,6 +20,7 @@ export class DetalleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private productosService: ProductosService,
     private buscadorService: BuscadorService,
     private carritoService: CarritoService
@@ -47,16 +48,29 @@ export class DetalleComponent implements OnInit {
   }
   
   agregarAlCarrito() {
-    const productoCarrito: ProductoCarrito = {
-      id: this.producto.idProducto,
-      nombre: this.producto.nombreProducto,
-      precio: this.producto.precio,
-      cantidad: this.cantidad,
-      imagen: this.producto.imagen,
-      stock: this.producto.stock
-    };
-    console.log('carrito productos' + productoCarrito);
-    this.carritoService.agregarAlCarrito(productoCarrito);
-    Swal.fire('Exito', 'Se agrego al carrito el articulo', 'success');
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Inicia sesión',
+        text: 'Debes iniciar sesión para agregar productos al carrito.',
+        confirmButtonText: 'Ir al Login'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']); 
+        }
+      });
+    } else {
+      const productoCarrito: ProductoCarrito = {
+        id: this.producto.idProducto,
+        nombre: this.producto.nombreProducto,
+        precio: this.producto.precio,
+        cantidad: this.cantidad,
+        imagen: this.producto.imagen,
+        stock: this.producto.stock
+      };
+      this.carritoService.agregarAlCarrito(productoCarrito);
+      Swal.fire('Éxito', 'Se agregó el producto al carrito.', 'success');
+    }
   }
 }
