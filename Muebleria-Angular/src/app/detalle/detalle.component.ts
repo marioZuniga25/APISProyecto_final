@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../services/productos/productos.service';
 import { CommonModule } from '@angular/common';
-import { CarritoService } from '../services/carrito/carrito.service';
 import { BuscadorService } from '../services/buscador.service';
+import { CarritoService, ProductoCarrito } from '../services/carrito/carrito.service';
+import { IProductoResponse } from '../interfaces/IProductoResponse';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle',
@@ -13,45 +15,62 @@ import { BuscadorService } from '../services/buscador.service';
   styleUrl: './detalle.component.css'
 })
 export class DetalleComponent implements OnInit {
-  producto: any;
-  cantidad: number = 1;
+  producto!: IProductoResponse;
+    cantidad: number = 1;
 
   constructor(
     private route: ActivatedRoute,
-    private carritoService: CarritoService,
+    private router: Router,
     private productosService: ProductosService,
     private buscadorService: BuscadorService,
+    private carritoService: CarritoService
   ) {}
 
   ngOnInit(): void {
-    // Get the product ID from the route
+    // Obtén el ID del producto de la ruta
     this.route.paramMap.subscribe(params => {
       const idStr = params.get('id');
       const id = idStr ? +idStr : null;
       if (id !== null) {
         this.productosService.getProductoById(id).subscribe(producto => {
-          this.producto = producto;
-          
-          // Close the buscador after setting the product
-          this.buscadorService.closeBuscador();
+          if (producto) {
+            this.producto = producto;
+            // Cierra el buscador después de establecer el producto
+            this.buscadorService.closeBuscador();
+          } else {
+            console.error('Producto no encontrado');
+          }
         });
       } else {
-        console.error('Product ID is null or invalid');
+        console.error('El ID del producto es nulo o inválido');
       }
     });
   }
-
-  agregarAlCarrito(): void {
-    if (this.cantidad <= this.producto.stock) {
-      this.carritoService.agregarProductoAlCarrito(this.producto, this.cantidad).subscribe(
-        () => {
-          console.log('Producto agregado al carrito');
-          this.carritoService.obtenerCarrito(); // Actualiza el carrito después de agregar un producto
-        },
-        (error) => console.error('Error al agregar producto al carrito', error)
-      );
+  
+  agregarAlCarrito() {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Inicia sesión',
+        text: 'Debes iniciar sesión para agregar productos al carrito.',
+        confirmButtonText: 'Ir al Login'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']); 
+        }
+      });
     } else {
-      alert('No hay suficientes productos en stock');
+      const productoCarrito: ProductoCarrito = {
+        id: this.producto.idProducto,
+        nombre: this.producto.nombreProducto,
+        precio: this.producto.precio,
+        cantidad: this.cantidad,
+        imagen: this.producto.imagen,
+        stock: this.producto.stock
+      };
+      this.carritoService.agregarAlCarrito(productoCarrito);
+      Swal.fire('Éxito', 'Se agregó el producto al carrito.', 'success');
     }
   }
 }

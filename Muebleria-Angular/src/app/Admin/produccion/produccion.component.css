@@ -129,3 +129,21 @@
 hr {
   margin: 15px 0;
 }
+.recetas-contenido{
+  display: flex;
+  align-items: flex-start;
+  padding-top: 30px;
+}
+
+.recetas-contenido-25{
+  min-width: 250px !important;
+  margin-right: 10px;
+}
+.corregir{
+  max-width: 1000px !important; 
+  margin: 0 auto !important; 
+}
+.corregir-content{
+  max-width: 100% !important; 
+  width: 100% !important;
+}

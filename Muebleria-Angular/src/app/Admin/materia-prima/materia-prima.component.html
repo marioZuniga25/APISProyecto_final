@@ -40,7 +40,7 @@
 
   <!-- Modal para agregar materia prima -->
   <div class="modal" [ngClass]="{'show': isModalOpen}">
-    <div class="modal-content">
+    <div class="modal-content corregir">
       <div class="row">
         <div class="col">
           <h3>Agregar Materia Prima</h3>
@@ -57,7 +57,7 @@
         </div>
         <div class="form-group">
           <label for="descripcion">Descripción</label>
-          <textarea [(ngModel)]="nuevaMateriaPrima.descripcion" name="descripcion" id="descripcion"
+          <textarea [(ngModel)]="nuevaMateriaPrima.descripcion" name="descripcion" id="descripcion" style="resize: none;"
             placeholder="Descripción de Materia Prima" rows="3" required></textarea>
         </div>
         <div class="form-group">
@@ -72,7 +72,7 @@
 
   <!-- Modal para editar materia prima -->
   <div class="modal" [ngClass]="{'show': isEditModalOpen}">
-    <div class="modal-content">
+    <div class="modal-content corregir">
       <div class="row">
         <div class="col">
           <h3>Modificar Materia Prima</h3>
@@ -89,7 +89,7 @@
         </div>
         <div class="form-group">
           <label for="descripcion">Descripción</label>
-          <textarea [(ngModel)]="selectedMateriaPrima.descripcion" name="descripcion" id="descripcion" rows="3"
+          <textarea [(ngModel)]="selectedMateriaPrima.descripcion" name="descripcion" id="descripcion" rows="3" style="resize: none;"
             required></textarea>
         </div>
         <div class="form-group">

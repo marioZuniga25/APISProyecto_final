@@ -36,16 +36,34 @@ namespace ProyectoFinalAPI.Controllers
         [HttpPost("AgregarDetalleVenta")]
         public async Task<ActionResult> AddDetallesVenta([FromBody] List<DetalleVenta> detallesVenta)
         {
-            if (detallesVenta == null || !detallesVenta.Any())
-            {
-                return BadRequest("La lista de detalles de venta no puede estar vacía.");
-            }
+            
+                foreach (var detalle in detallesVenta)
+                {
+                    // Buscar el producto
+                    var producto = await _context.Producto
+                        .FirstOrDefaultAsync(p => p.idProducto == detalle.idProducto);
 
-            // Agregar lógica para guardar los detalles de venta
-            foreach (var detalle in detallesVenta)
-            {
-                _context.DetalleVenta.Add(detalle);
-            }
+                    if (producto == null)
+                    {
+                        return NotFound($"El producto con ID {detalle.idProducto} no se encontró.");
+                    }
+
+                    
+                    if (producto.stock < detalle.cantidad)
+                    {
+                        return BadRequest($"No hay suficiente stock del producto '{producto.nombreProducto}'. Stock disponible: {producto.stock}");
+                    }
+
+                    
+                    producto.stock -= detalle.cantidad;
+
+                    
+                    _context.DetalleVenta.Add(detalle);
+                }
+
+                
+                
+
 
             await _context.SaveChangesAsync();
 
@@ -53,6 +71,31 @@ namespace ProyectoFinalAPI.Controllers
         }
 
 
-       
+       [HttpGet("{id}")]
+        public async Task<ActionResult<Venta>> GetVentaById(int id)
+        {
+            var venta = await _context.Venta.FindAsync(id);
+            if (venta == null)
+            {
+                return NotFound();
+            }
+            return venta;
+        }
+
+        // Nuevo Endpoint para obtener los detalles de una venta por ID de la venta
+        [HttpGet("{id}/detalles")]
+        public async Task<ActionResult<IEnumerable<DetalleVenta>>> GetDetalleVentaByVentaId(int id)
+        {
+            var detallesVenta = await _context.DetalleVenta
+                .Where(dv => dv.idVenta == id)
+                .ToListAsync();
+
+            if (detallesVenta == null || !detallesVenta.Any())
+            {
+                return NotFound();
+            }
+
+            return detallesVenta;
+        }
     }
 }

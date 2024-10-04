@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { CarritoService } from '../services/carrito/carrito.service';
+import { CarritoService, ProductoCarrito } from '../services/carrito/carrito.service';
 
 @Component({
   selector: 'app-carrito',
@@ -10,26 +10,28 @@ import { CarritoService } from '../services/carrito/carrito.service';
   styleUrl: './carrito.component.css'
 })
 export class CarritoComponent implements OnInit{
+  carrito: ProductoCarrito[] = [];
   mostrarBag$ = this.carritoService.mostrarBag$;
-  itemsCarrito$ = this.carritoService.itemsCarrito$;
 
   constructor(private carritoService: CarritoService) {}
-
-  ngOnInit(): void {
-    this.carritoService.obtenerCarrito();
-  }
-
   toggleBag() {
+    this.carritoService.cargarCarrito(); 
     this.carritoService.toggleBag();
   }
-
-  eliminarDelCarrito(id: number) {
-    this.carritoService.eliminarProductoDelCarrito(id).subscribe(
-      () => {
-        console.log('Producto eliminado del carrito');
-        this.carritoService.obtenerCarrito(); // Actualiza la lista después de eliminar un producto
-      },
-      (error) => console.error('Error al eliminar producto del carrito', error)
-    );
+  ngOnInit(): void {
+    this.carrito = this.carritoService.obtenerCarrito();
+  }
+  eliminarDelCarrito(productoId: number) {
+    this.carritoService.eliminarDelCarrito(productoId);
+    this.carrito = this.carritoService.obtenerCarrito(); // Actualiza la vista
+  }
+  incrementarCantidad(productoId: number, maxStock: number) {
+    this.carritoService.incrementarCantidad(productoId, maxStock);
+    this.carrito = this.carritoService.obtenerCarrito(); // Actualiza la vista
+  }
+  
+  decrementarCantidad(productoId: number) {
+    this.carritoService.decrementarCantidad(productoId);
+    this.carrito = this.carritoService.obtenerCarrito(); // Actualiza la vista
   }
 }

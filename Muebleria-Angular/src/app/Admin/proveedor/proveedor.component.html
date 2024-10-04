@@ -48,8 +48,8 @@
 
 <!-- Modal para agregar/modificar proveedor -->
 <div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
-  <div class="modal-dialog">
-    <div class="modal-content">
+  <div class="modal-dialog corregir">
+    <div class="modal-content corregir-content">
       <div class="modal-header">
         <h5 class="modal-title">{{ esModificacion ? 'Modificar Proveedor' : 'Agregar Proveedor' }}</h5>
         <button type="button" class="btn-close" (click)="cerrarModal()"></button>
@@ -78,9 +78,9 @@
                 class="form-control" (keydown.enter)="agregarMateriaPrima()" placeholder="Agregar materia prima">
               <button class="btn btn-primary" type="button" (click)="agregarMateriaPrima()">Añadir</button>
             </div>
-            <div class="mt-2">
-              <span *ngFor="let mp of proveedorActual.materiaPrimaList; let i = index" class="badge bg-dark me-1">
-                <span style="margin-top: 100%;">{{ mp }}</span>
+            <div class="mt-2" style="padding: 20px 0 30px 0 !important; display: flex; align-items: center; flex-wrap: wrap !important;">
+              <span *ngFor="let mp of proveedorActual.materiaPrimaList; let i = index" class="badge bg-dark me-1" style="display: flex !important;align-items: center;width: max-content; margin-right: 10px !important;">
+                <span>{{ mp }}</span>
                 <button type="button" class="btn-close btn-close-white btn-sm ms-1" (click)="eliminarMateriaPrima(i)"></button>
               </span>
               </div>

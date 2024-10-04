@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Controllers"
   ],
-  "SelectedNode": "\\ProyectoFinalAPI.csproj.user",
+  "SelectedNode": "\\Controllers\\ProductoController.cs",
   "PreviewInSolutionExplorer": false
 }

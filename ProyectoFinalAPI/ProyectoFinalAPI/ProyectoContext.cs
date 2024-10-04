@@ -22,11 +22,9 @@ namespace ProyectoFinalAPI
         public DbSet<Tarjetas> Tarjetas { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
-        public DbSet<CarritoItem> CarritoItems { get; set; }
         public DbSet<Receta> Recetas { get; set; }
         public DbSet<Contacto> Contactos { get; set; }
-
-
+        public DbSet<Pedidos> Pedidos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,7 +49,11 @@ namespace ProyectoFinalAPI
                 dVenta.Property(dv => dv.idVenta).IsRequired();
                 dVenta.Property(dv => dv.precioUnitario).IsRequired();
 
-
+                  // Configuración de la relación con Producto
+                // dVenta.HasOne(dv => dv.Producto)
+                //     .WithMany() // No necesitamos la colección inversa en Producto
+                //     .HasForeignKey(dv => dv.idProducto)
+                //     .OnDelete(DeleteBehavior.Restrict);
                 //Agregar datos iniciales
                 //empleado.HasData(empleadoInit);
             });
@@ -161,19 +163,26 @@ namespace ProyectoFinalAPI
                 venta.Property(i => i.idUsuario).IsRequired();
 
             });
-
-            modelBuilder.Entity<CarritoItem>(carritoItem =>
+            modelBuilder.Entity<Pedidos>(pedido =>
             {
-                carritoItem.ToTable("CarritoItem");
-                carritoItem.HasKey(i => i.id);
-                carritoItem.Property(i => i.id).ValueGeneratedOnAdd().UseIdentityColumn();
-                carritoItem.Property(i => i.productoId).IsRequired();
-                carritoItem.Property(i => i.nombreProducto).IsRequired();
-                carritoItem.Property(i => i.cantidad).IsRequired();
-                carritoItem.Property(i => i.precio).IsRequired();
-                carritoItem.Property(i => i.imagen).IsRequired();
+                pedido.ToTable("Pedidos");
+                pedido.HasKey(p => p.idPedido);
+                pedido.Property(p => p.idPedido).ValueGeneratedOnAdd().UseIdentityColumn();
+                pedido.Property(p => p.idVenta).IsRequired();
+                pedido.Property(p => p.idUsuario).IsRequired();
+                pedido.Property(p => p.idTarjeta).IsRequired();
+                pedido.Property(p => p.nombre).IsRequired();
+                pedido.Property(p => p.apellidos).IsRequired();
+                pedido.Property(p => p.telefono).IsRequired();
+                pedido.Property(p => p.correo).IsRequired();
+                pedido.Property(p => p.calle).IsRequired();
+                pedido.Property(p => p.numero).IsRequired();
+                pedido.Property(p => p.colonia).IsRequired();
+                pedido.Property(p => p.ciudad).IsRequired();
+                pedido.Property(p => p.estado).IsRequired();
+                pedido.Property(p => p.codigoPostal).IsRequired();
+                pedido.Property(p => p.estatus).IsRequired();
             });
-
             modelBuilder.Entity<Receta>()
     .HasOne(r => r.Producto)
     .WithMany()
@@ -193,6 +202,7 @@ namespace ProyectoFinalAPI
                 .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.Cascade, dependiendo de tus necesidades
 
         }
+
     }
 
 }

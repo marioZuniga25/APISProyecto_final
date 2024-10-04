@@ -34,9 +34,18 @@ export class VentasService {
       const headers = new HttpHeaders({
         'Content-Type': 'application/json'
       });
-  
       return this._http.post<void>(`${this._apiUrlV}AgregarDetalleVenta`, request);
     }
+    // Método para obtener una venta por ID
+    getVentaById(id: number): Observable<IVenta> {
+      return this._http.get<IVenta>(`${this._apiUrlV}${id}`);
+    }
+
+    // Método para obtener los detalles de una venta por ID de venta
+    getDetalleVentaByVentaId(idVenta: number): Observable<IDetalleVenta[]> {
+      return this._http.get<IDetalleVenta[]>(`${this._apiUrlV}${idVenta}/detalles`);
+    }
+
 
     filtrarProductos(request: string): Observable<IProductoResponse[]> {
       return this._http.get<IProductoResponse[]>(`${this._apiUrlP}FiltrarProductos?term=${request}`);

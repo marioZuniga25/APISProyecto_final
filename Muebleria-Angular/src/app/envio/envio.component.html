@@ -14,9 +14,8 @@
         </div>
     </div>
     <div class="datos-contenido">
-        <div class="datos-contenido-requerido">
+        <div class="datos-contenido-requerido" style="height: 975px !important; overflow-y: auto !important;">
             <div class="logo">
-                <img src="images/logo" alt="logo de la muebleria">
             </div>
             <div class="datos-contenido-requerido-form">
                 <h3>ESCRIBE LOS DATOS DEL ENVÍO</h3>
@@ -25,13 +24,13 @@
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="nombre">Nombre</label>
-                                <input type="text" name="nombre" data-validation-engine="validate[required]">
+                                <input type="text" name="nombre" >
                             </div>
                         </div>
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="apellidos">Apellidos</label>
-                                <input type="text" name="apellidos" data-validation-engine="validate[required]">
+                                <input type="text" name="apellidos" >
                             </div>
                         </div>
                     </div>
@@ -39,13 +38,13 @@
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="telefono">Teléfono</label>
-                                <input type="text" name="telefono" data-validation-engine="validate[required,minSize[10],maxSize[10]]">
+                                <input type="text" name="telefono">
                             </div>
                         </div>
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="correo">Correo</label>
-                                <input type="email" name="correo" data-validation-engine="validate[required,custom[email]]">
+                                <input type="email" name="correo" >
                             </div>
                         </div>
                     </div>
@@ -54,13 +53,13 @@
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="calle">Calle</label>
-                                <input type="text" name="calle" data-validation-engine="validate[required]">
+                                <input type="text" name="calle" >
                             </div>
                         </div>
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="numero">Número</label>
-                                <input type="text" name="numero" data-validation-engine="validate[required]">
+                                <input type="text" name="numero" >
                             </div>
                         </div>
                     </div>
@@ -68,13 +67,13 @@
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="colonia">Colonia</label>
-                                <input type="text" name="colonia" data-validation-engine="validate[required]">
+                                <input type="text" name="colonia" >
                             </div>
                         </div>
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="cuidad">Cuidad</label>
-                                <input type="text" name="cuidad" data-validation-engine="validate[required]">
+                                <input type="text" name="cuidad" >
                             </div>
                         </div>
                     </div>
@@ -82,25 +81,88 @@
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="estado">Estado</label>
-                                <input type="text" name="estado" data-validation-engine="validate[required]">
+                                <select name="estado" id="estado">
+                                    <option value="">Selecciona el estado</option>
+                                    <option value="aguascalientes">Aguascalientes</option>
+                                    <option value="baja_california">Baja California</option>
+                                    <option value="baja_california_sur">Baja California Sur</option>
+                                    <option value="campeche">Campeche</option>
+                                    <option value="chiapas">Chiapas</option>
+                                    <option value="chihuahua">Chihuahua</option>
+                                    <option value="coahuila">Coahuila</option>
+                                    <option value="colima">Colima</option>
+                                    <option value="durango">Durango</option>
+                                    <option value="guanajuato">Guanajuato</option>
+                                    <option value="guerrero">Guerrero</option>
+                                    <option value="hidalgo">Hidalgo</option>
+                                    <option value="jalisco">Jalisco</option>
+                                    <option value="mexico">México</option>
+                                    <option value="mexico_df">Ciudad de México</option>
+                                    <option value="michoacan">Michoacán</option>
+                                    <option value="morelos">Morelos</option>
+                                    <option value="nayarit">Nayarit</option>
+                                    <option value="nuevo_leon">Nuevo León</option>
+                                    <option value="oaxaca">Oaxaca</option>
+                                    <option value="puebla">Puebla</option>
+                                    <option value="queretaro">Querétaro</option>
+                                    <option value="quintana_roo">Quintana Roo</option>
+                                    <option value="san_luis_potosi">San Luis Potosí</option>
+                                    <option value="sinaloa">Sinaloa</option>
+                                    <option value="sonora">Sonora</option>
+                                    <option value="tabasco">Tabasco</option>
+                                    <option value="tamaulipas">Tamaulipas</option>
+                                    <option value="tlaxcala">Tlaxcala</option>
+                                    <option value="veracruz">Veracruz</option>
+                                    <option value="yucatan">Yucatán</option>
+                                    <option value="zacatecas">Zacatecas</option>
+                                </select>
                             </div>
                         </div>
+                        
                         <div class="formulario-50">
                             <div class="input">
                                 <label for="codigo">Código Postal</label>
-                                <input type="text" name="codigo" data-validation-engine="validate[required]">
+                                <input type="text" name="codigo" >
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="datos-contenido-requerido-botones">
-                <a href="home" class="boton-volver">
+            <div class="datos-contenido-requerido-form">
+                <h3>SELECCIONA TU TARJETA PARA PAGAR</h3>
+                <div *ngIf="tarjetas && tarjetas.length > 0; else noTarjetas">
+                    <form action="">
+                        <div class="tarjetas-container">
+                            <label *ngFor="let tarjeta of tarjetas" class="tarjeta">
+                                <input type="radio" name="tarjeta" [value]="tarjeta.idTarjeta">
+                                <div class="tarjeta-info">
+                                    <p style="margin: 0 0 5px 0;">{{tarjeta.nombrePropietario}}</p>
+                                    <div class="tarjeta-numero">{{ formatCardNumber(tarjeta.numeroTarjeta) }}</div>
+                                    <div class="tarjeta-detalle">
+                                        <span>Vence: {{tarjeta.fechaVencimiento}}</span>
+                                        <span>CCV: **{{ tarjeta.ccv.slice(-1) }}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            
+                <!-- Mostrar si no hay tarjetas -->
+                <ng-template #noTarjetas>
+                    <div class="no-tarjetas">
+                        <p>No tienes tarjetas guardadas. Necesitas ir a tu perfil a agregar alguna</p>
+                        <button style="border: none; border-radius: 12px; background-color: black; color: white; padding: 6px 30px; cursor: pointer;" [routerLink]="['/perfil', idUsuario]">Ir a mi perfil</button>
+                    </div>
+                </ng-template>
+            </div>                 
+            <div class="datos-contenido-requerido-botones" style="position: relative !important;width: 100% !important; padding: 60px 0;">
+                <a href="/bag" class="boton-volver">
                     <span class="icon icon-anterior"></span>
                     <p>Volver al carrito</p>
                 </a>
                 <div class="boton">
-                    <button id="continuarBtn">CONFIRMAR PEDIDO</button>
+                    <button (click)="confirmarPedido()">CONFIRMAR PEDIDO</button>
                 </div>
             </div>
         </div>
@@ -108,106 +170,32 @@
             <div class="datos-contenido-bag-descripcion">
                 <div class="descripcion">
                     <div class="descripcion-titulo">
-                        <h2 class="title">BAG</h2>
-                        <span class="title">6</span>
+                        <h2 class="title">CARRITO</h2>
                     </div>
-                    <div class="descripcion-producto">
+                    <div class="descripcion-producto" *ngFor="let producto of carrito">
                         <div class="producto-item">
                             <div class="producto-item-img">
-                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
+                                <img [src]="producto.imagen" [alt]="producto.nombre">
                                 <div class="compras-item-datos">
                                     <div class="dato-historico">
-                                        <p class="titulo">Vestido negro</p>
+                                        <p class="titulo">{{producto.nombre}}</p>
                                     </div>
                                     <div class="dato-historico">
                                         <div class="dato-historico-item">
                                             <p>Cantidad:</p>
-                                            <p>1</p>
+                                            <p>{{producto.cantidad}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="producto-item-precio">
-                                <p>$1,200.00</p>
-                            </div>
-                        </div>
-                        <div class="producto-item">
-                            <div class="producto-item-img">
-                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
-                                <div class="compras-item-datos">
-                                    <div class="dato-historico">
-                                        <p class="titulo">Vestido negro</p>
-                                    </div>
-                                    <div class="dato-historico">
-                                        <div class="dato-historico-item">
-                                            <p>Cantidad:</p>
-                                            <p>1</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="producto-item-precio">
-                                <p>$1,200.00</p>
-                            </div>
-                        </div>
-                        <div class="producto-item">
-                            <div class="producto-item-img">
-                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
-                                <div class="compras-item-datos">
-                                    <div class="dato-historico">
-                                        <p class="titulo">Vestido negro</p>
-                                    </div>
-                                    <div class="dato-historico">
-                                        <div class="dato-historico-item">
-                                            <p>Cantidad:</p>
-                                            <p>1</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="producto-item-precio">
-                                <p>$1,200.00</p>
-                            </div>
-                        </div>
-                        <div class="producto-item">
-                            <div class="producto-item-img">
-                                <img src="/assets/images/imagen1.jpeg" alt="MUEBLES TRONCOSO">
-                                <div class="compras-item-datos">
-                                    <div class="dato-historico">
-                                        <p class="titulo">Vestido negro</p>
-                                    </div>
-                                    <div class="dato-historico">
-                                        <div class="dato-historico-item">
-                                            <p>Cantidad:</p>
-                                            <p>1</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="producto-item-precio">
-                                <p>$1,200.00</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="descripcion-descuento">
-                        <div class="descripcion-descuento-total">
-                            <div class="total-item">
-                                <p>Subtotal:</p>
-                                <p>$10,500.00</p>
-                            </div>
-                            <div class="total-item">
-                                <p>Descuento:</p>
-                                <p>$0.00</p>
-                            </div>
-                            <div class="total-item">
-                                <p>Envío:</p>
-                                <p>$0.00</p>
+                                <p>${{ producto.precio | number:'1.2-2' }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="descripcion-total">
                         <p>TOTAL:</p>
-                        <p>$10,500.00</p>
+                        <p>${{ total | number:'1.2-2' }}</p>
                     </div>
                 </div>
             </div>
