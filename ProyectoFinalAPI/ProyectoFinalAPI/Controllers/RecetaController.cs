@@ -52,41 +52,49 @@ namespace ProyectoFinalAPI.Controllers
         }
 
         [HttpPost("Agregar")]
-        public async Task<ActionResult> AgregarReceta([FromBody] RecetaDto request)
+public async Task<ActionResult> AgregarReceta([FromBody] RecetaDto request)
+{
+    var recetaExistente = await _context.Recetas
+        .FirstOrDefaultAsync(r => r.idProducto == request.IdProducto);
+
+    if (recetaExistente != null)
+    {
+        return BadRequest("Ya existe una receta para este producto.");
+    }
+
+    var producto = await _context.Producto.FindAsync(request.IdProducto);
+    if (producto == null)
+    {
+        return BadRequest("Producto no encontrado");
+    }
+
+    var detalles = new List<RecetaDetalle>();
+    foreach (var detalleDto in request.Detalles)
+    {
+        var materiaPrima = await _context.MateriasPrimas.FindAsync(detalleDto.IdMateriaPrima);
+        if (materiaPrima == null)
         {
-            var producto = await _context.Producto.FindAsync(request.IdProducto);
-            if (producto == null)
-            {
-                return BadRequest("Producto no encontrado");
-            }
-
-            var detalles = new List<RecetaDetalle>();
-            foreach (var detalleDto in request.Detalles)
-            {
-                var materiaPrima = await _context.MateriasPrimas.FindAsync(detalleDto.IdMateriaPrima);
-                if (materiaPrima == null)
-                {
-                    return BadRequest($"Materia Prima con ID {detalleDto.IdMateriaPrima} no encontrada");
-                }
-
-                detalles.Add(new RecetaDetalle
-                {
-                    idMateriaPrima = detalleDto.IdMateriaPrima,
-                    cantidad = detalleDto.Cantidad,
-                });
-            }
-
-            var newReceta = new Receta
-            {
-                idProducto = request.IdProducto,
-                Detalles = detalles
-            };
-
-            await _context.Recetas.AddAsync(newReceta);
-            await _context.SaveChangesAsync();
-
-            return Ok(newReceta);
+            return BadRequest($"Materia Prima con ID {detalleDto.IdMateriaPrima} no encontrada");
         }
+
+        detalles.Add(new RecetaDetalle
+        {
+            idMateriaPrima = detalleDto.IdMateriaPrima,
+            cantidad = detalleDto.Cantidad,
+        });
+    }
+
+    var newReceta = new Receta
+    {
+        idProducto = request.IdProducto,
+        Detalles = detalles
+    };
+
+    await _context.Recetas.AddAsync(newReceta);
+    await _context.SaveChangesAsync();
+
+    return Ok(newReceta);
+}
 
 
         [HttpPut("Modificar/{id}")]

@@ -44,5 +44,6 @@ export class MenuComponent implements OnInit {
     this.authService.removeUser();
     this.user = null;
     this.router.navigate(['/admin']);
+    localStorage.removeItem('userId');
   }
 }

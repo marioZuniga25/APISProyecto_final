@@ -26,5 +26,9 @@ export class PerfilService {
   deleteCard(cardId: number): Observable<void> {
     return this.http.delete<void>(`${this.tarjetas}/${cardId}`);
   }
+
+  updateUser(id: number, usuario: IUsuarioDetalle): Observable<IUsuarioDetalle> {
+    return this.http.put<IUsuarioDetalle>(`${this.apiUrl}/ModificarUsuario/${id}`, usuario);
+  }
   
 }
