@@ -116,6 +116,7 @@ namespace ProyectoFinalAPI
                 producto.Property(i => i.stock).IsRequired();
                 producto.Property(i => i.idCategoria).IsRequired();
                 producto.Property(i => i.idInventario).IsRequired();
+                producto.Property(i => i.NombreCategoria).IsRequired();
 
             });
 
