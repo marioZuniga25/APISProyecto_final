@@ -1,91 +1,107 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProyectoFinalAPI.Dto;
 using ProyectoFinalAPI.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProyectoFinalAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MateriaPrimaController : ControllerBase
-    {
-        private readonly ProyectoContext _context;
-        public MateriaPrimaController(ProyectoContext context)
-        {
-            _context = context;
-        }
+ [Route("api/[controller]")]
+ [ApiController]
+ public class MateriasPrimasController : ControllerBase
+ {
+  private readonly ProyectoContext _context;
+
+  public MateriasPrimasController(ProyectoContext context)
+  {
+   _context = context;
+  }
+
+  // GET: api/MateriasPrimas
+  [HttpGet]
+  public async Task<ActionResult<IEnumerable<MateriaPrimaDTO>>> GetMateriasPrimas()
+  {
+   var materiasPrimas = await _context.MateriasPrimas
+       .ToListAsync();
+
+   // Convertimos cada entidad MateriaPrima a MateriaPrimaDTO
+   var materiasPrimasDto = materiasPrimas.Select(mp => new MateriaPrimaDTO
+   {
+    NombreMateriaPrima = mp.nombreMateriaPrima,
+    Descripcion = mp.descripcion,
+    Precio = mp.precio,
+    Stock = mp.stock,
+    idUnidad = mp.idUnidad
+   }).ToList();
+
+   return Ok(materiasPrimasDto);
+  }
+
+  // GET: api/MateriasPrimas/5
+  [HttpGet("{id}")]
+  public async Task<ActionResult<MateriaPrimaDTO>> GetMateriaPrima(int id)
+  {
+   var materiaPrima = await _context.MateriasPrimas
+       .Include(mp => mp.idUnidad)
+       .FirstOrDefaultAsync(mp => mp.idMateriaPrima == id);
+
+   if (materiaPrima == null)
+   {
+    return NotFound();
+   }
+
+   var materiaPrimaDto = new MateriaPrimaDTO
+   {
+    NombreMateriaPrima = materiaPrima.nombreMateriaPrima,
+    Descripcion = materiaPrima.descripcion,
+    Precio = materiaPrima.precio,
+    Stock = materiaPrima.stock,
+    idUnidad = materiaPrima.idUnidad
+   };
+
+   return Ok(materiaPrimaDto);
+  }
+
+  // POST: api/MateriasPrimas
+  [HttpPost]
+  public async Task<ActionResult<MateriaPrima>> PostMateriaPrima(MateriaPrima materiaPrima)
+  {
+   _context.MateriasPrimas.Add(materiaPrima);
+   await _context.SaveChangesAsync();
+
+   return CreatedAtAction("GetMateriaPrima", new { id = materiaPrima.idMateriaPrima }, materiaPrima);
+  }
+
+  // DELETE: api/MateriasPrimas/5
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteMateriaPrima(int id)
+  {
+   var materiaPrima = await _context.MateriasPrimas.FindAsync(id);
+   if (materiaPrima == null)
+   {
+    return NotFound();
+   }
+
+   _context.MateriasPrimas.Remove(materiaPrima);
+   await _context.SaveChangesAsync();
+
+   return NoContent();
+  }
+
+  private bool MateriaPrimaExists(int id)
+  {
+   return _context.MateriasPrimas.Any(e => e.idMateriaPrima == id);
+  }
 
 
-        [HttpGet("ListadoMateriasP")]
-        public async Task<ActionResult<IEnumerable<MateriaPrima>>> GetListadoMateriasPrimas()
-        {
 
-            return await _context.MateriasPrimas.ToListAsync();
-
-        }
-
-        [HttpGet("BuscarMateriaP")]
-        public async Task<ActionResult<IEnumerable<MateriaPrima>>> SearchMateriaPrima(string materia)
-        {
-            return await _context.MateriasPrimas.Where(u => u.nombreMateriaPrima.Contains(materia)).ToListAsync();
-        }
-
-        [HttpPost("AgregarMateriaP")]
-        public async Task<ActionResult> AddMateriaPrima([FromBody] MateriaPrima request)
-        {
-
-            await _context.MateriasPrimas.AddAsync(request);
-            await _context.SaveChangesAsync();
-
-            return Ok(request);
-        }
-
-
-        [HttpPut("ModificarMateriaP")]
-        public async Task<IActionResult> updateMateriaPrima(int id, [FromBody] MateriaPrima request)
-        {
-            var materiaModificar = await _context.MateriasPrimas.FindAsync(id);
-
-            if (materiaModificar == null)
-            {
-                return BadRequest("No existe la Materia Prima");
-            }
-
-            materiaModificar.nombreMateriaPrima = request.nombreMateriaPrima;
-            materiaModificar.descripcion = request.descripcion;
-            materiaModificar.idInventario = request.idInventario;
-
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch
-            {
-                return NotFound();
-
-            }
-
-            return Ok();
-        }
-
-        [HttpDelete]
-        [Route("EliminarMateriaP/{id:int}")]
-        public async Task<IActionResult> deleteUsuario(int id)
-        {
-            var materiaEliminar = await _context.MateriasPrimas.FindAsync(id);
-
-            if (materiaEliminar == null)
-            {
-                return BadRequest("No se encontro la Materia Prima.");
-            }
-            _context.MateriasPrimas.Remove(materiaEliminar);
-
-            await _context.SaveChangesAsync();
-
-            return Ok();
-
-        }
-
-    }
+  [HttpGet("ListarMateriasPrimas")]
+  public async Task<ActionResult<IEnumerable<MateriaPrima>>> ListarMateriasPrimas()
+  {
+   var materiasPrimas = await _context.MateriasPrimas.ToListAsync();
+   return Ok(materiasPrimas);
+  }
+ }
 }

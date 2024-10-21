@@ -1,26 +1,34 @@
 {
   "format": 1,
   "restore": {
-    "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
+    "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
   },
   "projects": {
-    "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
+    "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "projectUniqueName": "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
         "projectName": "ProyectoFinalAPI",
-        "projectPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
-        "packagesPath": "/Users/cristianleyva/.nuget/packages/",
-        "outputPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
+        "projectPath": "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "packagesPath": "C:\\Users\\tidesarrollo4\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/cristianleyva/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tidesarrollo4\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "http://nuget.grapecity.com/nuget": {},
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "net8.0": {
@@ -83,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.206/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -14,7 +14,6 @@ namespace ProyectoFinalAPI
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<DetalleVenta> DetalleVenta { get; set; }
         public DbSet<InstructivoProducto> instructivoProductos { get; set; }
-        public DbSet<Inventario> Inventarios { get; set; }
         public DbSet<MateriaPrima> MateriasPrimas { get; set; }
         public DbSet<Produccion> Produccion { get; set; }
         public DbSet<Producto> Producto { get; set; }
@@ -23,13 +22,20 @@ namespace ProyectoFinalAPI
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
         public DbSet<Receta> Recetas { get; set; }
+        public DbSet<RecetaDetalle> RecetaDetalles { get; set; }
         public DbSet<Contacto> Contactos { get; set; }
-        public DbSet<Pedidos> Pedidos { get; set; }
+  public DbSet<UnidadMedida> UnidadesMedida { get; set; }
+  public DbSet<Pedidos> Pedidos { get; set; }
+  public DbSet<OrdenCompra> OrdenesCompra { get; set; }
+  public DbSet<DetalleOrdenCompra> DetallesOrdenCompra { get; set; }
+  public DbSet<UnidadMedida> UnidadMedidas { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<Categoria>(categoria =>
+  
+   modelBuilder.Entity<Categoria>(categoria =>
             {
                 categoria.ToTable("Categoria");
                 categoria.HasKey(c => c.idCategoria);
@@ -67,29 +73,38 @@ namespace ProyectoFinalAPI
 
             });
 
-            modelBuilder.Entity<Inventario>(inventario =>
-            {
-                inventario.ToTable("Inventario");
-                inventario.HasKey(i => i.idInventario);
-                inventario.Property(i => i.idInventario).ValueGeneratedOnAdd().UseIdentityColumn();
-                inventario.Property(i => i.nombre).IsRequired();
-                inventario.Property(i => i.cantidad);
+        
 
-            });
+   modelBuilder.Entity<MateriaPrima>(matPrim =>
+   {
+    matPrim.ToTable("MateriaPrima");
+    matPrim.HasKey(i => i.idMateriaPrima);
+    matPrim.Property(i => i.idMateriaPrima).ValueGeneratedOnAdd();
+    matPrim.Property(i => i.nombreMateriaPrima).IsRequired();
+    matPrim.Property(i => i.descripcion);
+    matPrim.Property(i => i.precio)
+           .IsRequired()
+           .HasColumnType("decimal(18,2)");
+    matPrim.Property(i => i.stock).IsRequired();
+    matPrim.Property(i => i.idUnidad).IsRequired();
+    
 
 
-            modelBuilder.Entity<MateriaPrima>(matPrim =>
-            {
-                matPrim.ToTable("MateriaPrima");
-                matPrim.HasKey(i => i.idMateriaPrima);
-                matPrim.Property(i => i.idMateriaPrima).ValueGeneratedOnAdd().UseIdentityColumn();
-                matPrim.Property(i => i.nombreMateriaPrima).IsRequired();
-                matPrim.Property(i => i.descripcion);
-                matPrim.Property(i => i.idInventario).IsRequired();
+   });
 
-            });
+   modelBuilder.Entity<UnidadMedida>(unidad =>
+   {
+    unidad.ToTable("UnidadMedida");
+    unidad.HasKey(u => u.idUnidad);
+    unidad.Property(u => u.idUnidad).ValueGeneratedOnAdd().UseIdentityColumn();
+    unidad.Property(u => u.nombreUnidad).IsRequired();
+   });
 
-            modelBuilder.Entity<Produccion>(produccion =>
+
+
+
+
+   modelBuilder.Entity<Produccion>(produccion =>
             {
                 produccion.ToTable("Produccion");
                 produccion.HasKey(p => p.idProduccion);
@@ -148,8 +163,39 @@ namespace ProyectoFinalAPI
                 usuario.Property(i => i.rol).IsRequired();
 
             });
+   modelBuilder.Entity<OrdenCompra>(ordenCompra =>
+   {
+    ordenCompra.ToTable("OrdenCompra");
+    ordenCompra.HasKey(o => o.idOrdenCompra);
+    ordenCompra.Property(o => o.idOrdenCompra).ValueGeneratedOnAdd().UseIdentityColumn();
+    ordenCompra.Property(o => o.fechaCompra).IsRequired();
 
-            modelBuilder.Entity<Venta>(venta =>
+   });
+
+   modelBuilder.Entity<DetalleOrdenCompra>(detalle =>
+   {
+    detalle.ToTable("DetalleOrdenCompra");
+    detalle.HasKey(d => d.idDetalleOrdenCompra);
+    detalle.Property(d => d.idDetalleOrdenCompra).ValueGeneratedOnAdd().UseIdentityColumn();
+    detalle.Property(d => d.cantidad).IsRequired();
+    detalle.Property(d => d.precioUnitario).IsRequired();
+
+    // Relación con OrdenCompra
+    detalle.HasOne(d => d.OrdenCompra)
+           .WithMany(o => o.Detalles)
+           .HasForeignKey(d => d.idOrdenCompra)
+           .OnDelete(DeleteBehavior.Cascade);
+
+    // Relación con MateriaPrima
+    detalle.HasOne(d => d.MateriaPrima)
+           .WithMany()
+           .HasForeignKey(d => d.idMateriaPrima)
+           .OnDelete(DeleteBehavior.Restrict);
+   });
+
+
+
+   modelBuilder.Entity<Venta>(venta =>
             {
                 venta.ToTable("Venta");
                 venta.HasKey(i => i.idVenta);
@@ -179,27 +225,34 @@ namespace ProyectoFinalAPI
                 pedido.Property(p => p.codigoPostal).IsRequired();
                 pedido.Property(p => p.estatus).IsRequired();
             });
-            modelBuilder.Entity<Receta>()
-    .HasOne(r => r.Producto)
-    .WithMany()
-    .HasForeignKey(r => r.idProducto)
-    .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.Cascade, dependiendo de tus necesidades
+   modelBuilder.Entity<Receta>()
+.HasKey(r => r.idReceta);
 
-            modelBuilder.Entity<RecetaDetalle>()
-                .HasOne(rd => rd.Receta)
-                .WithMany(r => r.Detalles)
-                .HasForeignKey(rd => rd.idReceta)
-                .OnDelete(DeleteBehavior.Cascade);
+   modelBuilder.Entity<Receta>()
+       .HasOne(r => r.Producto)
+       .WithMany()
+       .HasForeignKey(r => r.idProducto)
+       .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<RecetaDetalle>()
-                .HasOne(rd => rd.MateriaPrima)
-                .WithMany()
-                .HasForeignKey(rd => rd.idMateriaPrima)
-                .OnDelete(DeleteBehavior.Restrict); // O DeleteBehavior.Cascade, dependiendo de tus necesidades
+   modelBuilder.Entity<RecetaDetalle>()
+       .HasKey(rd => rd.idRecetaDetalle);
 
-        }
+   modelBuilder.Entity<RecetaDetalle>()
+       .HasOne(rd => rd.Receta)
+       .WithMany(r => r.Detalles)
+       .HasForeignKey(rd => rd.idReceta)
+       .OnDelete(DeleteBehavior.Cascade);
 
-    }
+   modelBuilder.Entity<RecetaDetalle>()
+       .HasOne(rd => rd.MateriaPrima)
+       .WithMany()
+       .HasForeignKey(rd => rd.idMateriaPrima)
+       .OnDelete(DeleteBehavior.Restrict);
+
+
+  }
+
+ }
 
 }
 

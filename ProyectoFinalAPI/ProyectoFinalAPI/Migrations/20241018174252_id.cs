@@ -5,7 +5,7 @@
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class updateProyectos : Migration
+    public partial class id : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

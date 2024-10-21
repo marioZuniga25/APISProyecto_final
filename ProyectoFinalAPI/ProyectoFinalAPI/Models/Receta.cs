@@ -10,10 +10,10 @@ namespace ProyectoFinalAPI.Models
         public int idReceta { get; set; }
 
         public int idProducto { get; set; }
-        public Producto Producto { get; set; } 
-        
-        public List<RecetaDetalle> Detalles { get; set; } = new List<RecetaDetalle>();
-    }
+        public Producto Producto { get; set; }
+
+  public ICollection<RecetaDetalle> Detalles { get; set; }
+ }
 
     public class RecetaDetalle
     {

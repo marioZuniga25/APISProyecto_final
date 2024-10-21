@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class updateProyetos : Migration
+    public partial class ActualizarModelos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -87,21 +87,6 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MateriaPrima",
-                columns: table => new
-                {
-                    idMateriaPrima = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nombreMateriaPrima = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    idInventario = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MateriaPrima", x => x.idMateriaPrima);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Pedidos",
                 columns: table => new
                 {
@@ -169,8 +154,7 @@ namespace ProyectoFinalAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombreProveedor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    materiaPrima = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    correo = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,6 +176,19 @@ namespace ProyectoFinalAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tarjetas", x => x.idTarjeta);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UnidadMedida",
+                columns: table => new
+                {
+                    idUnidad = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombreUnidad = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnidadMedida", x => x.idUnidad);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,7 +242,91 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecetaDetalle",
+                name: "OrdenCompra",
+                columns: table => new
+                {
+                    idOrdenCompra = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idProveedor = table.Column<int>(type: "int", nullable: false),
+                    fechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrdenCompra", x => x.idOrdenCompra);
+                    table.ForeignKey(
+                        name: "FK_OrdenCompra_Proovedor_idProveedor",
+                        column: x => x.idProveedor,
+                        principalTable: "Proovedor",
+                        principalColumn: "idProveedor",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MateriaPrima",
+                columns: table => new
+                {
+                    idMateriaPrima = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombreMateriaPrima = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    idProveedor = table.Column<int>(type: "int", nullable: false),
+                    idUnidad = table.Column<int>(type: "int", nullable: false),
+                    precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    stock = table.Column<double>(type: "float", nullable: false),
+                    InventarioidInventario = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MateriaPrima", x => x.idMateriaPrima);
+                    table.ForeignKey(
+                        name: "FK_MateriaPrima_Inventario_InventarioidInventario",
+                        column: x => x.InventarioidInventario,
+                        principalTable: "Inventario",
+                        principalColumn: "idInventario");
+                    table.ForeignKey(
+                        name: "FK_MateriaPrima_Proovedor_idProveedor",
+                        column: x => x.idProveedor,
+                        principalTable: "Proovedor",
+                        principalColumn: "idProveedor",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MateriaPrima_UnidadMedida_idUnidad",
+                        column: x => x.idUnidad,
+                        principalTable: "UnidadMedida",
+                        principalColumn: "idUnidad",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DetalleOrdenCompra",
+                columns: table => new
+                {
+                    idDetalleOrdenCompra = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idOrdenCompra = table.Column<int>(type: "int", nullable: false),
+                    idMateriaPrima = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<double>(type: "float", nullable: false),
+                    precioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetalleOrdenCompra", x => x.idDetalleOrdenCompra);
+                    table.ForeignKey(
+                        name: "FK_DetalleOrdenCompra_MateriaPrima_idMateriaPrima",
+                        column: x => x.idMateriaPrima,
+                        principalTable: "MateriaPrima",
+                        principalColumn: "idMateriaPrima",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DetalleOrdenCompra_OrdenCompra_idOrdenCompra",
+                        column: x => x.idOrdenCompra,
+                        principalTable: "OrdenCompra",
+                        principalColumn: "idOrdenCompra",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecetaDetalles",
                 columns: table => new
                 {
                     idRecetaDetalle = table.Column<int>(type: "int", nullable: false)
@@ -256,15 +337,15 @@ namespace ProyectoFinalAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecetaDetalle", x => x.idRecetaDetalle);
+                    table.PrimaryKey("PK_RecetaDetalles", x => x.idRecetaDetalle);
                     table.ForeignKey(
-                        name: "FK_RecetaDetalle_MateriaPrima_idMateriaPrima",
+                        name: "FK_RecetaDetalles_MateriaPrima_idMateriaPrima",
                         column: x => x.idMateriaPrima,
                         principalTable: "MateriaPrima",
                         principalColumn: "idMateriaPrima",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RecetaDetalle_Recetas_idReceta",
+                        name: "FK_RecetaDetalles_Recetas_idReceta",
                         column: x => x.idReceta,
                         principalTable: "Recetas",
                         principalColumn: "idReceta",
@@ -272,13 +353,43 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecetaDetalle_idMateriaPrima",
-                table: "RecetaDetalle",
+                name: "IX_DetalleOrdenCompra_idMateriaPrima",
+                table: "DetalleOrdenCompra",
                 column: "idMateriaPrima");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecetaDetalle_idReceta",
-                table: "RecetaDetalle",
+                name: "IX_DetalleOrdenCompra_idOrdenCompra",
+                table: "DetalleOrdenCompra",
+                column: "idOrdenCompra");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MateriaPrima_idProveedor",
+                table: "MateriaPrima",
+                column: "idProveedor");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MateriaPrima_idUnidad",
+                table: "MateriaPrima",
+                column: "idUnidad");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MateriaPrima_InventarioidInventario",
+                table: "MateriaPrima",
+                column: "InventarioidInventario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdenCompra_idProveedor",
+                table: "OrdenCompra",
+                column: "idProveedor");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecetaDetalles_idMateriaPrima",
+                table: "RecetaDetalles",
+                column: "idMateriaPrima");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecetaDetalles_idReceta",
+                table: "RecetaDetalles",
                 column: "idReceta");
 
             migrationBuilder.CreateIndex(
@@ -297,13 +408,13 @@ namespace ProyectoFinalAPI.Migrations
                 name: "Contactos");
 
             migrationBuilder.DropTable(
+                name: "DetalleOrdenCompra");
+
+            migrationBuilder.DropTable(
                 name: "DetalleVenta");
 
             migrationBuilder.DropTable(
                 name: "instructivoProductos");
-
-            migrationBuilder.DropTable(
-                name: "Inventario");
 
             migrationBuilder.DropTable(
                 name: "Pedidos");
@@ -312,10 +423,7 @@ namespace ProyectoFinalAPI.Migrations
                 name: "Produccion");
 
             migrationBuilder.DropTable(
-                name: "Proovedor");
-
-            migrationBuilder.DropTable(
-                name: "RecetaDetalle");
+                name: "RecetaDetalles");
 
             migrationBuilder.DropTable(
                 name: "Tarjetas");
@@ -327,10 +435,22 @@ namespace ProyectoFinalAPI.Migrations
                 name: "Venta");
 
             migrationBuilder.DropTable(
+                name: "OrdenCompra");
+
+            migrationBuilder.DropTable(
                 name: "MateriaPrima");
 
             migrationBuilder.DropTable(
                 name: "Recetas");
+
+            migrationBuilder.DropTable(
+                name: "Inventario");
+
+            migrationBuilder.DropTable(
+                name: "Proovedor");
+
+            migrationBuilder.DropTable(
+                name: "UnidadMedida");
 
             migrationBuilder.DropTable(
                 name: "Producto");
