@@ -22,6 +22,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { ProductosComponent } from './Admin/productos/productos.component';
 import { ProduccionComponent } from './Admin/produccion/produccion.component';
 import { PedidosComponent } from './Admin/pedidos/pedidos.component';
+import { ForgotPasswordComponent } from './Usuario/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './Usuario/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -113,6 +115,14 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginUsuarioComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
   },
   {
     path: 'perfil/:id',
