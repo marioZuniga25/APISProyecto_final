@@ -31,3 +31,13 @@
     border-radius: 15px;
   
   }
+  .hover-row {
+    cursor: pointer; /* Cambia el cursor a pointer */
+    transition: background-color 0.3s; /* Suaviza el cambio de color */
+  }
+  
+  .hover-row:hover {
+    background-color: #000000; /* Cambia el color de fondo al pasar el mouse */
+    color: white;
+  }
+  

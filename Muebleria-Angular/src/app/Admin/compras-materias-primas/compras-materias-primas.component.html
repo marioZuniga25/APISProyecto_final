@@ -14,23 +14,22 @@
   <table class="table table-bordered table-hover mt-3">
     <thead class="table-dark">
       <tr>
-        <th>ID Proveedor</th>
-        <th>ID Materia Prima</th>
-        <th>Cantidad</th>
+        <th>Folio Orden</th>
+        <th>Proveedor</th>
         <th>Fecha de Compra</th>
+        <th>Usuario</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let orden of ordenesCompra">
-        <td>{{ orden.idProveedor }}</td>
-        <td>{{ orden.idMateriaPrima }}</td>
-        <td>{{ orden.cantidad }}</td>
+      <tr *ngFor="let orden of ordenesCompra" (click)="mostrarDetalles(orden)" [ngClass]="{'hover-row': true}">
+        <td>{{ orden.idOrdenCompra }}</td>
+        <td>{{ orden.nombreProveedor }}</td>
         <td>{{ orden.fechaCompra | date:'short' }}</td>
+        <td>{{ orden.usuario || 'No asignado' }}</td>
       </tr>
     </tbody>
   </table>
 </div>
-
 <!-- Modal para agregar nueva orden -->
 <div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
   <div class="modal-dialog modal-lg">
@@ -76,6 +75,26 @@
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let detalle of detallesOrdenCompra">
             <strong>{{ detalle.idMateriaPrima }}</strong> - Cantidad: {{ detalle.cantidad }} - Total: {{ detalle.precioUnitario | currency }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para mostrar detalles de la orden -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': ordenSeleccionada}" style="display: block;" *ngIf="ordenSeleccionada">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalles de la Orden {{ ordenSeleccionada.idOrdenCompra }}</h5>
+        <button type="button" class="btn-close" (click)="ordenSeleccionada = null"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Detalles:</h6>
+        <ul>
+          <li *ngFor="let detalle of ordenSeleccionada.detalles">
+            Materia Prima ID: {{ detalle.idMateriaPrima }} - Cantidad: {{ detalle.cantidad }} - Precio Unitario: ${{ detalle.precioUnitario }}
           </li>
         </ul>
       </div>
