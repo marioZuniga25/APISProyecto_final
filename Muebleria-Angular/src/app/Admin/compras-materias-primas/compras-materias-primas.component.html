@@ -1,0 +1,84 @@
+<div class="card-compra">
+  <div class="card-header bg-dark text-white" style="border-radius: 15px 15px 0px 0px;">
+    <div class="row">
+      <div class="col-9">
+        <h4 class="mt-2 text-center">Órdenes de Compra</h4>
+      </div>
+      <div class="col">
+        <button class="btn btn-primary" (click)="abrirModalOrden()">Nueva Orden</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Listado de órdenes de compra -->
+  <table class="table table-bordered table-hover mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>ID Proveedor</th>
+        <th>ID Materia Prima</th>
+        <th>Cantidad</th>
+        <th>Fecha de Compra</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let orden of ordenesCompra">
+        <td>{{ orden.idProveedor }}</td>
+        <td>{{ orden.idMateriaPrima }}</td>
+        <td>{{ orden.cantidad }}</td>
+        <td>{{ orden.fechaCompra | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal para agregar nueva orden -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Nueva Orden de Compra</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="crearOrdenCompra()" class="mt-4">
+          <div class="form-group mb-3">
+            <label for="proveedor">Proveedor</label>
+            <select [(ngModel)]="selectedProveedor" (change)="onProveedorChange()" name="proveedor" required>
+              <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor">{{ proveedor.nombreProveedor }}</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="materiaPrima">Materia Prima</label>
+            <select [(ngModel)]="selectedMateriaPrima" (change)="onMateriaPrimaChange()" name="materiaPrima" required>
+              <option *ngFor="let materia of materiasPrimas" [ngValue]="materia">{{ materia.nombreMateriaPrima }}</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" class="form-control" id="cantidad" [(ngModel)]="nuevaOrdenCompra.cantidad" name="cantidad" min="1" required (input)="calcularPrecioTotal()">
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="precioTotal">Precio Total</label>
+            <input type="text" class="form-control" id="precioTotal" [value]="precioTotal | currency" disabled>
+          </div>
+
+          <button type="button" class="btn btn-primary" (click)="agregarDetalle()">Agregar a la Orden</button>
+          <button type="submit" class="btn btn-success w-100 mt-2">Realizar Compra</button>
+        </form>
+
+        <hr>
+
+        <!-- Detalles de la orden en formato de ticket -->
+        <h3 class="mt-4">Detalles de la Orden</h3>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let detalle of detallesOrdenCompra">
+            <strong>{{ detalle.idMateriaPrima }}</strong> - Cantidad: {{ detalle.cantidad }} - Total: {{ detalle.precioUnitario | currency }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

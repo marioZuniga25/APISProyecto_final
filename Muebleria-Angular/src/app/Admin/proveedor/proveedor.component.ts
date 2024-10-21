@@ -3,64 +3,99 @@ import { IProveedorResponse, IProveedorRequest } from '../../interfaces/IProveed
 import { ProveedoresService } from '../../services/proveedores.service';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { BuscadorCompartidoComponent } from '../shared/buscador-compartido/buscador-compartido.component';
-// Importa Swal de SweetAlert2
 import Swal from 'sweetalert2';
+import { IUnidadMedida } from '../../interfaces/IUnidadMedida';
 
 @Component({
   selector: 'app-proveedor',
   standalone: true,
-  imports: [NgForOf, NgClass, FormsModule, NgIf, BuscadorCompartidoComponent],
+  imports: [NgForOf, NgClass, FormsModule, NgIf],
   templateUrl: './proveedor.component.html',
   styleUrls: ['./proveedor.component.css']
 })
 export class ProveedorComponent implements OnInit {
 
   proveedores: IProveedorResponse[] = [];
-  resultadosBusqueda: IProveedorResponse[] = []; // Propiedad para almacenar los resultados de la búsqueda
+  unidadesMedida: IUnidadMedida[] = [];
+  resultadosBusqueda: IProveedorResponse[] = [];
   isModalOpen: boolean = false;
   esModificacion: boolean = false;
-  materiaPrimaInput: string = ''; 
-  proveedorActual: IProveedorResponse & { materiaPrimaList: string[] } = {
-    idProveedor: 0,
-    nombreProveedor: '',
-    telefono: '',
-    correo: '',
-    materiaPrima: '',
-    materiaPrimaList: []  // Nueva propiedad que gestionará la lista de materias primas
-  };  
+
+  // Modelo del proveedor actual con la lista de materias primas
+proveedorActual: IProveedorRequest & {
+  materiasPrimas: {
+    idMateriaPrima: number;
+    nombreMateriaPrima: string;
+    descripcion: string;
+    idProveedor: number;
+    precio: number;
+    stock: number;
+    idUnidad: number;
+  }[];
+} = {
+  idProveedor: 0,
+  nombreProveedor: '',
+  telefono: '',
+  correo: '',
+  materiasPrimas: [] // Inicialización correcta del array
+};
+
+// Inputs para agregar nueva materia prima
+materiaPrimaInput = {
+  nombreMateriaPrima: '',
+  descripcion: '',
+  precio: 0,
+  stock: 0,
+  idUnidad: 0
+};
+
 
   constructor(private proveedoresService: ProveedoresService) { }
 
   ngOnInit(): void {
     this.getProveedores();
+    this.getUnidadesMedida();
   }
 
+  // Obtener todos los proveedores de la API
   getProveedores(): void {
     this.proveedoresService.getProveedores().subscribe(
       (data: IProveedorResponse[]) => {
-        this.proveedores = data.map(proveedor => ({
-          ...proveedor,
-          materiaPrimaList: proveedor.materiaPrima.split(',').map(mp => mp.trim())
-        }));
+        this.proveedores = data;
         this.resultadosBusqueda = this.proveedores;
+        console.log('Proveedores obtenidos:', this.proveedores);
+        
       },
       (error) => {
         Swal.fire('Error', 'Error al obtener los proveedores.', 'error');
       }
     );
   }
+  
 
+  // Función para manejar resultados de búsqueda
   onSearchResults(resultados: IProveedorResponse[]): void {
     this.resultadosBusqueda = resultados;
   }
 
+  // Agregar un proveedor a la base de datos
   agregarProveedor(): void {
-    const proveedorToSave: IProveedorResponse = {
-      ...this.proveedorActual,
-      materiaPrima: this.proveedorActual.materiaPrimaList.join(', ')
+    const proveedorToSave: IProveedorRequest = {
+      idProveedor: this.proveedorActual.idProveedor,
+      nombreProveedor: this.proveedorActual.nombreProveedor,
+      telefono: this.proveedorActual.telefono,
+      correo: this.proveedorActual.correo,
+      materiasPrimas: this.proveedorActual.materiasPrimas.map(mp => ({
+        nombreMateriaPrima: mp.nombreMateriaPrima,
+        descripcion: mp.descripcion,
+        idProveedor: this.proveedorActual.idProveedor,
+        idUnidad: mp.idUnidad,
+        precio: mp.precio,
+        stock: mp.stock
+      }))
     };
-
+    
+  
     this.proveedoresService.addProveedor(proveedorToSave).subscribe(
       data => {
         this.proveedores.push(data);
@@ -74,98 +109,53 @@ export class ProveedorComponent implements OnInit {
       }
     );
   }
+  
+  
+  
 
+  // Función para obtener el nombre de la unidad de medida
+  obtenerNombreUnidad(idUnidad: number): string {
+  const unidad = this.unidadesMedida.find(u => u.idUnidad === idUnidad);
+  return unidad ? unidad.nombreUnidad : 'Sin Unidad';
+}
+
+
+  // Modificar un proveedor
   modificarProveedor(): void {
-    if (this.proveedorActual.idProveedor !== undefined) {
-      const proveedorToUpdate: IProveedorResponse = {
-        ...this.proveedorActual,
-        materiaPrima: this.proveedorActual.materiaPrimaList.join(', ')
-      };
+    const proveedorToUpdate: IProveedorRequest = {
+      idProveedor: this.proveedorActual.idProveedor,
+      nombreProveedor: this.proveedorActual.nombreProveedor,
+      telefono: this.proveedorActual.telefono,
+      correo: this.proveedorActual.correo,
+      materiasPrimas: this.proveedorActual.materiasPrimas.map(mp => ({
+        nombreMateriaPrima: mp.nombreMateriaPrima,
+        descripcion: mp.descripcion,
+        idProveedor: mp.idProveedor,        
+        idUnidad: mp.idUnidad,
+        precio: mp.precio,
+        stock: mp.stock
+      }))
+      
+    
+    };
 
-      this.proveedoresService.updateProveedor(proveedorToUpdate.idProveedor, proveedorToUpdate).subscribe(
-        () => {
-          this.getProveedores();
-          this.cerrarModal();
-          this.resetFormulario();
-          Swal.fire('Éxito', 'Proveedor modificado exitosamente.', 'success');
-        },
-        error => {
-          Swal.fire('Error', 'Error al modificar proveedor.', 'error');
-        }
-      );
-    } else {
-      Swal.fire('Error', 'No se puede modificar el proveedor: idProveedor es undefined.', 'error');
-    }
-  }
-
-  eliminarProveedor(id: number): void {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: "No podrás revertir esto",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.proveedoresService.deleteProveedor(id).subscribe(
-          () => {
-            this.proveedores = this.proveedores.filter(p => p.idProveedor !== id);
-            this.resultadosBusqueda = this.proveedores;
-            Swal.fire('Eliminado', 'El proveedor ha sido eliminado.', 'success');
-          },
-          error => {
-            Swal.fire('Error', 'Error al eliminar proveedor.', 'error');
-          }
-        );
+    this.proveedoresService.updateProveedor(proveedorToUpdate.idProveedor, proveedorToUpdate).subscribe(
+      () => {
+        this.getProveedores();
+        this.cerrarModal();
+        this.resetFormulario();
+        Swal.fire('Éxito', 'Proveedor modificado exitosamente.', 'success');
+      },
+      error => {
+        Swal.fire('Error', 'Error al modificar proveedor.', 'error');
       }
-    });
+    );
   }
 
-  eliminarProveedorDesdeModal(): void {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: "No podrás revertir esto",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if (this.proveedorActual.idProveedor !== undefined) {
-          this.proveedoresService.deleteProveedor(this.proveedorActual.idProveedor).subscribe(
-            () => {
-              this.proveedores = this.proveedores.filter(p => p.idProveedor !== this.proveedorActual.idProveedor);
-              this.resultadosBusqueda = this.proveedores;
-              this.cerrarModal();
-              this.resetFormulario();
-              Swal.fire('Eliminado', 'El proveedor ha sido eliminado.', 'success');
-            },
-            error => {
-              Swal.fire('Error', 'Error al eliminar proveedor.', 'error');
-            }
-          );
-        }
-      }
-    });
-  }
-
+  // Modal para agregar un proveedor
   abrirModalAgregar(): void {
     this.resetFormulario();
     this.esModificacion = false;
-    this.isModalOpen = true;
-  }
-
-  abrirModalModificar(proveedor: IProveedorResponse): void {
-    this.proveedorActual = {
-      idProveedor: proveedor.idProveedor,
-      nombreProveedor: proveedor.nombreProveedor,
-      telefono: proveedor.telefono,
-      correo: proveedor.correo,
-      materiaPrima: proveedor.materiaPrima,
-      materiaPrimaList: proveedor.materiaPrima.split(',').map(mp => mp.trim())
-    };
-    this.esModificacion = true;
     this.isModalOpen = true;
   }
 
@@ -173,34 +163,84 @@ export class ProveedorComponent implements OnInit {
     this.isModalOpen = false;
   }
 
+  // Resetear el formulario
   resetFormulario(): void {
     this.proveedorActual = {
       idProveedor: 0,
       nombreProveedor: '',
       telefono: '',
       correo: '',
-      materiaPrima: '',
-      materiaPrimaList: [],
+      materiasPrimas: [],
     };
-    this.materiaPrimaInput = '';
+    this.materiaPrimaInput = {
+      nombreMateriaPrima: '',
+      descripcion: '',
+      precio: 0,
+      stock: 0,
+      idUnidad: this.unidadesMedida.length > 0 ? this.unidadesMedida[0].idUnidad : 0
+    };
   }
 
+  // Agregar materia prima al proveedor actual
   agregarMateriaPrima(): void {
-    if (this.materiaPrimaInput.trim() !== '') {
-      this.proveedorActual.materiaPrimaList.push(this.materiaPrimaInput.trim());
-      this.materiaPrimaInput = '';
+    if (this.materiaPrimaInput.nombreMateriaPrima.trim() !== '' && this.materiaPrimaInput.precio > 0) {
+      const unidadSeleccionada = this.unidadesMedida.find(u => u.idUnidad === this.materiaPrimaInput.idUnidad);
+
+      this.proveedorActual.materiasPrimas.push({
+        nombreMateriaPrima: this.materiaPrimaInput.nombreMateriaPrima,
+        descripcion: this.materiaPrimaInput.descripcion,
+        precio: this.materiaPrimaInput.precio,
+        stock: this.materiaPrimaInput.stock,
+        idProveedor: this.proveedorActual.idProveedor,        
+        idUnidad: unidadSeleccionada?.idUnidad || 0,
+       
+      });
+
+      this.resetMateriaPrimaInput();
+    } else {
+      Swal.fire('Error', 'El nombre de la materia prima y el precio son obligatorios.', 'error');
     }
   }
 
-  eliminarMateriaPrima(index: number): void {
-    this.proveedorActual.materiaPrimaList.splice(index, 1);
+  // Resetear los campos de materia prima
+  resetMateriaPrimaInput(): void {
+    this.materiaPrimaInput = {
+      nombreMateriaPrima: '',
+      descripcion: '',
+      precio: 0,
+      stock: 0,
+      idUnidad: 0
+    };
   }
 
+  // Eliminar materia prima
+  eliminarMateriaPrima(index: number): void {
+    this.proveedorActual.materiasPrimas.splice(index, 1);
+  }
+
+  // Guardar el proveedor
   guardarProveedor(): void {
+    if (this.proveedorActual.materiasPrimas.length === 0) {
+      Swal.fire('Error', 'Debes agregar al menos una materia prima.', 'error');
+      return;
+    }
+
     if (this.esModificacion) {
       this.modificarProveedor();
     } else {
       this.agregarProveedor();
     }
+  }
+
+  // Obtener unidades de medida
+  getUnidadesMedida(): void {
+    this.proveedoresService.getUnidadesMedida().subscribe(
+      (data: IUnidadMedida[]) => {
+        this.unidadesMedida = data;
+      },
+      (error) => {
+        Swal.fire('Error', 'Error al obtener las unidades de medida.', 'error');
+      }
+    );
   }
 }

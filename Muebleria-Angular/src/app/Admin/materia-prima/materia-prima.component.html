@@ -18,7 +18,10 @@
           <th class="d-none">ID Materia Prima</th>
           <th>Nombre Materia Prima</th>
           <th>Descripción</th>
-          <th>Cantidad</th>
+          <th>Medida</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          
         </tr>
       </thead>
       <tbody>
@@ -26,7 +29,9 @@
           <td class="d-none">{{ materiaPrima.idMateriaPrima }}</td>
           <td>{{ materiaPrima.nombreMateriaPrima }}</td>
           <td>{{ materiaPrima.descripcion }}</td>
-          <td>{{ materiaPrima.cantidad }}</td>
+          <td>{{ materiaPrima.medida }}</td>
+          <td>{{ materiaPrima.precio }}</td>
+          <td>{{ materiaPrima.stock }}</td>
         </tr>
       </tbody>
     </table>
@@ -34,74 +39,7 @@
   <ng-template #noMaterias>
     <p class="mt-2 text-muted text-center">No hay materias primas disponibles.</p>
   </ng-template>
-
-  <!-- Modal para agregar nueva materia prima -->
-  <button class="add-btn mt-5" (click)="openModal()">Agregar Materia Prima</button>
-
-  <!-- Modal para agregar materia prima -->
-  <div class="modal" [ngClass]="{'show': isModalOpen}">
-    <div class="modal-content corregir">
-      <div class="row">
-        <div class="col">
-          <h3>Agregar Materia Prima</h3>
-        </div>
-        <div class="col-1">
-          <span class="close" (click)="closeModal()">&times;</span>
-        </div>
-      </div>
-      <form (ngSubmit)="addMateriaPrima()">
-        <div class="form-group">
-          <label for="nombreMateriaPrima">Nombre de Materia Prima</label>
-          <input type="text" [(ngModel)]="nuevaMateriaPrima.nombreMateriaPrima" name="nombreMateriaPrima"
-            id="nombreMateriaPrima" placeholder="Nombre de Materia Prima" required />
-        </div>
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea [(ngModel)]="nuevaMateriaPrima.descripcion" name="descripcion" id="descripcion" style="resize: none;"
-            placeholder="Descripción de Materia Prima" rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="idInventario">ID Inventario</label>
-          <input type="number" [(ngModel)]="nuevaMateriaPrima.idInventario" name="idInventario" id="idInventario"
-            required />
-        </div>
-        <button type="submit" class="submit-btn">Agregar</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal para editar materia prima -->
-  <div class="modal" [ngClass]="{'show': isEditModalOpen}">
-    <div class="modal-content corregir">
-      <div class="row">
-        <div class="col">
-          <h3>Modificar Materia Prima</h3>
-        </div>
-        <div class="col-1">
-          <span class="close" (click)="closeModal()">&times;</span>
-        </div>
-      </div>
-      <form (ngSubmit)="saveChanges()">
-        <div class="form-group">
-          <label for="nombreMateriaPrima">Nombre de Materia Prima</label>
-          <input type="text" [(ngModel)]="selectedMateriaPrima.nombreMateriaPrima" name="nombreMateriaPrima"
-            id="nombreMateriaPrima" required />
-        </div>
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea [(ngModel)]="selectedMateriaPrima.descripcion" name="descripcion" id="descripcion" rows="3" style="resize: none;"
-            required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="idInventario">ID Inventario</label>
-          <input type="number" [(ngModel)]="selectedMateriaPrima.idInventario" name="idInventario" id="idInventario"
-            required />
-          <input type="text" disabled name="idMateriaPrima" [(ngModel)]="selectedMateriaPrima.idMateriaPrima"
-            style="display: none;" />
-        </div>
-        <button type="submit" class="submit-btn">Guardar Cambios</button>
-        <button class="delete-btn mt-2" (click)="deleteMateria()">Eliminar</button>
-      </form>
-    </div>
-  </div>
 </div>
+
+
+
