@@ -8,5 +8,11 @@
         public string contrasenia { get; set;}
         public int rol { get; set;}
 
+        public int type { get; set; }
+
+
+        // // Recuperación de contraseña
+        public string? ResetToken { get; set; }
+        public DateTime? ResetTokenExpires { get; set; }
     }
 }

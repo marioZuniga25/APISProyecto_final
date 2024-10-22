@@ -1,8 +1,9 @@
 export interface IUsuarioDetalle{
-    idUsuario: number,
+    idUsuario: number | null;
     nombreUsuario:string,
     correo:string,
     contrasenia:string,
     rol:number,
-    confirmPassword?: string;
+    confirmPassword?: string,
+    type:number,
 }

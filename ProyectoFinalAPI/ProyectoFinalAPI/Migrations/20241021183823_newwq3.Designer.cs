@@ -12,8 +12,13 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
+<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021183823_newwq3.Designer.cs
     [Migration("20241021183823_newwq3")]
     partial class newwq3
+========
+    [Migration("20241021182657_Octubre")]
+    partial class Octubre
+>>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,7 +184,11 @@ namespace ProyectoFinalAPI.Migrations
 
                     b.HasKey("idMateriaPrima");
 
+<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021183823_newwq3.Designer.cs
                     b.HasIndex("ProveedoridProveedor");
+========
+                    b.HasIndex("idInventario");
+>>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.Designer.cs
 
                     b.ToTable("MateriaPrima", (string)null);
                 });
@@ -455,6 +464,12 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idUsuario"));
 
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("contrasenia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -468,6 +483,9 @@ namespace ProyectoFinalAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("rol")
+                        .HasColumnType("int");
+
+                    b.Property<int>("type")
                         .HasColumnType("int");
 
                     b.HasKey("idUsuario");
@@ -497,6 +515,7 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Venta", (string)null);
                 });
 
+<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021183823_newwq3.Designer.cs
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
                 {
                     b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", null)
@@ -509,6 +528,17 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasOne("ProyectoFinalAPI.Models.Proveedor", null)
                         .WithMany("MateriasPrimas")
                         .HasForeignKey("ProveedoridProveedor");
+========
+            modelBuilder.Entity("ProyectoFinalAPI.Models.MateriaPrima", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.Inventario", "Inventario")
+                        .WithMany()
+                        .HasForeignKey("idInventario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inventario");
+>>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.Designer.cs
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>

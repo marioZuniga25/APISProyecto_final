@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
         "packagesPath": "C:\\Users\\tidesarrollo4\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
+=======
+    "C:\\Users\\tidesarrollo4\\Desktop\\Nueva carpeta (2)\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\tidesarrollo4\\Desktop\\Nueva carpeta (2)\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\tidesarrollo4\\Desktop\\Nueva carpeta (2)\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "projectName": "ProyectoFinalAPI",
+        "projectPath": "C:\\Users\\tidesarrollo4\\Desktop\\Nueva carpeta (2)\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "packagesPath": "C:\\Users\\tidesarrollo4\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tidesarrollo4\\Desktop\\Nueva carpeta (2)\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
+>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

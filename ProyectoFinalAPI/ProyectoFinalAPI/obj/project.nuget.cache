@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "3HgayRs2xpw=",
   "success": true,
   "projectFilePath": "C:\\Users\\tidesarrollo4\\Desktop\\PLTP\\ProyectoIntegrador\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+=======
+  "dgSpecHash": "4mtbW1TLOKg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\tidesarrollo4\\Desktop\\Nueva carpeta (2)\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec
   "expectedPackageFiles": [
     "C:\\Users\\tidesarrollo4\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\tidesarrollo4\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

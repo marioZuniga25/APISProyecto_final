@@ -5,18 +5,23 @@ import { ActivatedRoute } from '@angular/router';
 import { IUtarjetas } from '../interfaces/ITarjetas';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.css'
+  styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
   user: IUsuarioDetalle | null = null;
   tarjetas: IUtarjetas[] = [];
+  isModalOpen = false;
+  userEdit: IUsuarioDetalle | null = null;
+  contraseniaActual: string = ''; // Variable para la contraseña actual
+  nuevaContrasenia: string = ''; // Variable para la nueva contraseña
+  mostrarErrorContrasenia: boolean = false; // Nueva variable para mostrar el mensaje de error
   nuevaTarjeta: IUtarjetas = {
     idTarjeta: 0,
     idUsuario: 0,
@@ -48,6 +53,7 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
+
   agregarTarjeta(): void {
     console.log('Datos de la nueva tarjeta:', this.nuevaTarjeta);
     this.perfilService.addCard(this.nuevaTarjeta).subscribe(
@@ -92,5 +98,67 @@ export class PerfilComponent implements OnInit {
         );
       }
     });
+  }
+
+  abrirModalModificar(idUsuario: number | undefined): void {
+    console.log('Abrir modal llamado con idUsuario:', idUsuario);
+    if (idUsuario) {
+      this.perfilService.getUserDetails(idUsuario).subscribe(
+        (data: IUsuarioDetalle) => {
+          this.userEdit = data;
+          this.isModalOpen = true;
+          console.log('Datos del usuario cargados para editar:', this.userEdit);
+        },
+        (error) => {
+          console.error('Error fetching user details for edit', error);
+        }
+      );
+    }
+  }
+
+  cerrarModal(): void {
+    this.isModalOpen = false;
+    this.userEdit = null; // Limpiar userEdit al cerrar el modal
+  }
+
+  onSubmit(): void {
+    // Validación de la contraseña actual
+    if (!this.contraseniaActual) {
+      this.mostrarErrorContrasenia = true; // Muestra el error si la contraseña está vacía
+      return;
+    }
+
+    this.mostrarErrorContrasenia = false; // Oculta el error si la contraseña no está vacía
+
+    // Lógica para enviar los datos
+    if (this.userEdit?.idUsuario == null) {
+      console.error("El ID del usuario no puede estar vacío.");
+      return;
+    }
+
+    const usuarioDetalle: IUsuarioDetalle = {
+      idUsuario: this.userEdit.idUsuario,
+      nombreUsuario: this.userEdit.nombreUsuario,
+      correo: this.userEdit.correo,
+      contrasenia: this.nuevaContrasenia,
+      rol: this.userEdit.rol,
+      confirmPassword: this.nuevaContrasenia,
+      type: this.userEdit.type
+    };
+
+    // Llama al servicio para actualizar el usuario
+    this.perfilService.updateUser(usuarioDetalle.idUsuario || 0, { ...usuarioDetalle, contrasenia: this.contraseniaActual })
+      .subscribe(
+        respuesta => {
+          console.log("Usuario actualizado exitosamente:", respuesta);
+          Swal.fire('Éxito', 'Usuario actualizado exitosamente.', 'success');
+          this.cerrarModal();
+          this.ngOnInit();
+        },
+        error => {
+          console.error("Error al actualizar el usuario:", error);
+          Swal.fire('Error', 'Hubo un problema al actualizar el usuario.', 'error');
+        }
+      );
   }
 }

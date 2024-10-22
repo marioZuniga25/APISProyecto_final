@@ -189,7 +189,13 @@ export class ProduccionComponent implements OnInit {
           this.cerrarModal();
           Swal.fire('Éxito', 'Receta agregada exitosamente', 'success');
         },
-        error => Swal.fire('Error', 'Error al agregar receta', 'error')
+        error => {
+          if (error.error === 'Ya existe una receta para este producto.') {
+            Swal.fire('Error', 'Ya existe una receta para este producto', 'error');
+          } else {
+            Swal.fire('Error', 'Error al agregar receta', 'error');
+          }
+        }
       );
     }
   }

@@ -456,6 +456,12 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idUsuario"));
 
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("contrasenia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -469,6 +475,9 @@ namespace ProyectoFinalAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("rol")
+                        .HasColumnType("int");
+
+                    b.Property<int>("type")
                         .HasColumnType("int");
 
                     b.HasKey("idUsuario");

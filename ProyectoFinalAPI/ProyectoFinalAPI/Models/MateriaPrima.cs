@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace ProyectoFinalAPI.Models
 {
  // En MateriaPrima.cs
