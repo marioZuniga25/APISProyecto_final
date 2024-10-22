@@ -300,7 +300,7 @@
               "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\PedidoController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-17T10:29:11.967Z",
+              "WhenOpened": "2024-08-03T22:50:07.031Z",
               "EditorCaption": ""
             },
             {
@@ -364,7 +364,8 @@
               "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\UsuarioController.cs",
               "ViewState": "AQIAAFIAAAAAAAAAAAAAwGQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-10T18:04:59.238Z"
+              "WhenOpened": "2024-10-17T20:03:39.332Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -376,7 +377,8 @@
               "RelativeToolTip": "ProyectoFinalAPI\\Models\\Producto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-06T01:53:20.396Z"
+              "WhenOpened": "2024-10-17T19:34:24.016Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -388,7 +390,8 @@
               "RelativeToolTip": "ProyectoFinalAPI\\Controllers\\VentasController.cs",
               "ViewState": "AQIAACwAAAAAAAAAAAAgwDcAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-29T21:59:06.417Z"
+              "WhenOpened": "2024-10-17T19:59:32.541Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

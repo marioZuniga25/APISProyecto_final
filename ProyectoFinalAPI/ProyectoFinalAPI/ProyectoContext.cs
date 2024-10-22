@@ -31,18 +31,38 @@ namespace ProyectoFinalAPI
   public DbSet<UnidadMedida> UnidadMedidas { get; set; }
 
 
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<DetalleVenta> DetalleVenta { get; set; }
+        public DbSet<InstructivoProducto> instructivoProductos { get; set; }
+        public DbSet<MateriaPrima> MateriasPrimas { get; set; }
+        public DbSet<Produccion> Produccion { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
+        public DbSet<Tarjetas> Tarjetas { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Venta> Venta { get; set; }
+        public DbSet<Receta> Recetas { get; set; }
+        public DbSet<RecetaDetalle> RecetaDetalles { get; set; }
+        public DbSet<Contacto> Contactos { get; set; }
+  public DbSet<UnidadMedida> UnidadesMedida { get; set; }
+  public DbSet<Pedidos> Pedidos { get; set; }
+  public DbSet<OrdenCompra> OrdenesCompra { get; set; }
+  public DbSet<DetalleOrdenCompra> DetallesOrdenCompra { get; set; }
+  public DbSet<UnidadMedida> UnidadMedidas { get; set; }
+
+
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
-  {
-
+        {
+  
    modelBuilder.Entity<Categoria>(categoria =>
-   {
-    categoria.ToTable("Categoria");
-    categoria.HasKey(c => c.idCategoria);
-    categoria.Property(c => c.idCategoria).ValueGeneratedOnAdd().UseIdentityColumn();
-    categoria.Property(c => c.nombreCategoria).IsRequired();
-    categoria.Property(c => c.descripcion).IsRequired();
-    //ciudad.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
+            {
+                categoria.ToTable("Categoria");
+                categoria.HasKey(c => c.idCategoria);
+                categoria.Property(c => c.idCategoria).ValueGeneratedOnAdd().UseIdentityColumn();
+                categoria.Property(c => c.nombreCategoria).IsRequired();
+                categoria.Property(c => c.descripcion).IsRequired();
+                //ciudad.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
 
    });
 
@@ -73,7 +93,7 @@ namespace ProyectoFinalAPI
 
    });
 
-
+        
 
    modelBuilder.Entity<MateriaPrima>(matPrim =>
    {
@@ -87,7 +107,7 @@ namespace ProyectoFinalAPI
            .HasColumnType("decimal(18,2)");
     matPrim.Property(i => i.stock).IsRequired();
     matPrim.Property(i => i.idUnidad).IsRequired();
-
+    
 
 
    });
@@ -105,12 +125,12 @@ namespace ProyectoFinalAPI
 
 
    modelBuilder.Entity<Produccion>(produccion =>
-   {
-    produccion.ToTable("Produccion");
-    produccion.HasKey(p => p.idProduccion);
-    produccion.Property(p => p.idProduccion).ValueGeneratedOnAdd().UseIdentityColumn();
-    produccion.Property(p => p.cantidad).IsRequired();
-    produccion.Property(p => p.idProducto).IsRequired();
+            {
+                produccion.ToTable("Produccion");
+                produccion.HasKey(p => p.idProduccion);
+                produccion.Property(p => p.idProduccion).ValueGeneratedOnAdd().UseIdentityColumn();
+                produccion.Property(p => p.cantidad).IsRequired();
+                produccion.Property(p => p.idProducto).IsRequired();
 
    });
 
@@ -162,7 +182,7 @@ namespace ProyectoFinalAPI
     usuario.Property(i => i.contrasenia).IsRequired();
     usuario.Property(i => i.rol).IsRequired();
 
-   });
+            });
    modelBuilder.Entity<OrdenCompra>(ordenCompra =>
    {
     ordenCompra.ToTable("OrdenCompra");
@@ -196,35 +216,35 @@ namespace ProyectoFinalAPI
 
 
    modelBuilder.Entity<Venta>(venta =>
-   {
-    venta.ToTable("Venta");
-    venta.HasKey(i => i.idVenta);
-    venta.Property(i => i.idVenta).ValueGeneratedOnAdd().UseIdentityColumn();
-    venta.Property(i => i.total).IsRequired();
-    venta.Property(i => i.fechaVenta).IsRequired();
-    venta.Property(i => i.idUsuario).IsRequired();
+            {
+                venta.ToTable("Venta");
+                venta.HasKey(i => i.idVenta);
+                venta.Property(i => i.idVenta).ValueGeneratedOnAdd().UseIdentityColumn();
+                venta.Property(i => i.total).IsRequired();
+                venta.Property(i => i.fechaVenta).IsRequired();
+                venta.Property(i => i.idUsuario).IsRequired();
 
-   });
-   modelBuilder.Entity<Pedidos>(pedido =>
-   {
-    pedido.ToTable("Pedidos");
-    pedido.HasKey(p => p.idPedido);
-    pedido.Property(p => p.idPedido).ValueGeneratedOnAdd().UseIdentityColumn();
-    pedido.Property(p => p.idVenta).IsRequired();
-    pedido.Property(p => p.idUsuario).IsRequired();
-    pedido.Property(p => p.idTarjeta).IsRequired();
-    pedido.Property(p => p.nombre).IsRequired();
-    pedido.Property(p => p.apellidos).IsRequired();
-    pedido.Property(p => p.telefono).IsRequired();
-    pedido.Property(p => p.correo).IsRequired();
-    pedido.Property(p => p.calle).IsRequired();
-    pedido.Property(p => p.numero).IsRequired();
-    pedido.Property(p => p.colonia).IsRequired();
-    pedido.Property(p => p.ciudad).IsRequired();
-    pedido.Property(p => p.estado).IsRequired();
-    pedido.Property(p => p.codigoPostal).IsRequired();
-    pedido.Property(p => p.estatus).IsRequired();
-   });
+            });
+            modelBuilder.Entity<Pedidos>(pedido =>
+            {
+                pedido.ToTable("Pedidos");
+                pedido.HasKey(p => p.idPedido);
+                pedido.Property(p => p.idPedido).ValueGeneratedOnAdd().UseIdentityColumn();
+                pedido.Property(p => p.idVenta).IsRequired();
+                pedido.Property(p => p.idUsuario).IsRequired();
+                pedido.Property(p => p.idTarjeta).IsRequired();
+                pedido.Property(p => p.nombre).IsRequired();
+                pedido.Property(p => p.apellidos).IsRequired();
+                pedido.Property(p => p.telefono).IsRequired();
+                pedido.Property(p => p.correo).IsRequired();
+                pedido.Property(p => p.calle).IsRequired();
+                pedido.Property(p => p.numero).IsRequired();
+                pedido.Property(p => p.colonia).IsRequired();
+                pedido.Property(p => p.ciudad).IsRequired();
+                pedido.Property(p => p.estado).IsRequired();
+                pedido.Property(p => p.codigoPostal).IsRequired();
+                pedido.Property(p => p.estatus).IsRequired();
+            });
    modelBuilder.Entity<Receta>()
 .HasKey(r => r.idReceta);
 
@@ -242,6 +262,17 @@ namespace ProyectoFinalAPI
        .WithMany(r => r.Detalles)
        .HasForeignKey(rd => rd.idReceta)
        .OnDelete(DeleteBehavior.Cascade);
+   modelBuilder.Entity<RecetaDetalle>()
+       .HasOne(rd => rd.Receta)
+       .WithMany(r => r.Detalles)
+       .HasForeignKey(rd => rd.idReceta)
+       .OnDelete(DeleteBehavior.Cascade);
+
+   modelBuilder.Entity<RecetaDetalle>()
+       .HasOne(rd => rd.MateriaPrima)
+       .WithMany()
+       .HasForeignKey(rd => rd.idMateriaPrima)
+       .OnDelete(DeleteBehavior.Restrict);
 
    modelBuilder.Entity<RecetaDetalle>()
        .HasOne(rd => rd.MateriaPrima)
@@ -251,7 +282,9 @@ namespace ProyectoFinalAPI
 
 
   }
+  }
 
+ }
  }
 
 }

@@ -12,13 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021183823_newwq3.Designer.cs
-    [Migration("20241021183823_newwq3")]
-    partial class newwq3
-========
-    [Migration("20241021182657_Octubre")]
-    partial class Octubre
->>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.Designer.cs
+    [Migration("20241018191609_id4")]
+    partial class id4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,13 +83,13 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idDetalleOrdenCompra"));
 
-                    b.Property<int?>("OrdenCompraidOrdenCompra")
-                        .HasColumnType("int");
-
-                    b.Property<int>("cantidad")
-                        .HasColumnType("int");
+                    b.Property<double>("cantidad")
+                        .HasColumnType("float");
 
                     b.Property<int>("idMateriaPrima")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idOrdenCompra")
                         .HasColumnType("int");
 
                     b.Property<decimal>("precioUnitario")
@@ -102,7 +97,9 @@ namespace ProyectoFinalAPI.Migrations
 
                     b.HasKey("idDetalleOrdenCompra");
 
-                    b.HasIndex("OrdenCompraidOrdenCompra");
+                    b.HasIndex("idMateriaPrima");
+
+                    b.HasIndex("idOrdenCompra");
 
                     b.ToTable("DetalleOrdenCompra", (string)null);
                 });
@@ -169,6 +166,9 @@ namespace ProyectoFinalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("idProveedor")
+                        .HasColumnType("int");
+
                     b.Property<int>("idUnidad")
                         .HasColumnType("int");
 
@@ -184,11 +184,7 @@ namespace ProyectoFinalAPI.Migrations
 
                     b.HasKey("idMateriaPrima");
 
-<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021183823_newwq3.Designer.cs
                     b.HasIndex("ProveedoridProveedor");
-========
-                    b.HasIndex("idInventario");
->>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.Designer.cs
 
                     b.ToTable("MateriaPrima", (string)null);
                 });
@@ -208,6 +204,8 @@ namespace ProyectoFinalAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("idOrdenCompra");
+
+                    b.HasIndex("idProveedor");
 
                     b.ToTable("OrdenCompra", (string)null);
                 });
@@ -464,12 +462,6 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idUsuario"));
 
-                    b.Property<string>("ResetToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetTokenExpires")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("contrasenia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -483,9 +475,6 @@ namespace ProyectoFinalAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("rol")
-                        .HasColumnType("int");
-
-                    b.Property<int>("type")
                         .HasColumnType("int");
 
                     b.HasKey("idUsuario");
@@ -515,12 +504,23 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Venta", (string)null);
                 });
 
-<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021183823_newwq3.Designer.cs
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
                 {
-                    b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", null)
+                    b.HasOne("ProyectoFinalAPI.Models.MateriaPrima", "MateriaPrima")
+                        .WithMany()
+                        .HasForeignKey("idMateriaPrima")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", "OrdenCompra")
                         .WithMany("Detalles")
-                        .HasForeignKey("OrdenCompraidOrdenCompra");
+                        .HasForeignKey("idOrdenCompra")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MateriaPrima");
+
+                    b.Navigation("OrdenCompra");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.MateriaPrima", b =>
@@ -528,17 +528,17 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasOne("ProyectoFinalAPI.Models.Proveedor", null)
                         .WithMany("MateriasPrimas")
                         .HasForeignKey("ProveedoridProveedor");
-========
-            modelBuilder.Entity("ProyectoFinalAPI.Models.MateriaPrima", b =>
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>
                 {
-                    b.HasOne("ProyectoFinalAPI.Models.Inventario", "Inventario")
+                    b.HasOne("ProyectoFinalAPI.Models.Proveedor", "Proveedor")
                         .WithMany()
-                        .HasForeignKey("idInventario")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("idProveedor")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Inventario");
->>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.Designer.cs
+                    b.Navigation("Proveedor");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>

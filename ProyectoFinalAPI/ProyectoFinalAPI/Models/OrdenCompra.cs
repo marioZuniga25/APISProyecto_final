@@ -6,12 +6,10 @@ namespace ProyectoFinalAPI.Models
  {
   public int idOrdenCompra { get; set; }
   public int idProveedor { get; set; }
-  [ForeignKey("idProveedor")]
-  public Proveedor Proveedor { get; set; }
   public DateTime fechaCompra { get; set; }
-
-  // Lista de detalles de la orden
+public string usuario { get; set; }
   public ICollection<DetalleOrdenCompra> Detalles { get; set; }
  }
+
 
 }
