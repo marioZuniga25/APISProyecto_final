@@ -1,17 +1,16 @@
-.card-ventas{
-    background-color: #F2F2F2;
-    border-radius:20px; 
+.card-ventas {
+    background-color: #fff;
+    border-radius: 20px; 
     margin: 4%;
-    -webkit-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
-    -moz-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
-    box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
-    padding: 1% 4% 4% 4%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 2% 4%;
 }
 
 h1, h2 {
     text-transform: capitalize;
     text-align: center;
     color: #333;
+    margin-bottom: 10px;
 }
 
 .search-bar {
@@ -20,71 +19,31 @@ h1, h2 {
     justify-content: center;
 }
 
-.selected-producto{
-    background-color: red;
+.venta-container {
+    display: flex;
+    justify-content: space-between;
 }
 
-#search {
-    width: 100%;
-    max-width: 400px;
+.productos-disponibles, .productos-seleccionados {
+    width: 45%; /* Ajusta el ancho como desees */
     padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 16px;
 }
 
-.products-table {
-    margin-bottom: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-
+.product-card {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.products-table table {
-    width: 100%;
-    border-collapse: collapse;
+.product-image {
+    width: 100px;
+    height: auto;
 }
 
-.products-table th {
-    background-color: #f2f2f2;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-.selected-products-table {
-    margin-bottom: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-}
-
-.selected-products-table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-.selected-products-table th{
-    background-color: #f2f2f2;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-
-.add-btn, .remove-btn, .save-btn, .cancel-btn {
+.btn-agregar, .btn-eliminar, .save-btn {
     padding: 8px 12px;
     font-size: 14px;
     border: none;
@@ -93,62 +52,15 @@ th, td {
     color: #fff;
 }
 
-.add-btn {
+.btn-agregar {
     background-color: #28a745;
 }
 
-.remove-btn {
+.btn-eliminar {
     background-color: #dc3545;
 }
 
 .save-btn {
     background-color: #007bff;
-}
-
-.cancel-btn {
-    background-color: #6c757d;
-    margin-left: 10px;
-}
-
-.action-buttons {
-    display: flex;
-    justify-content: center;
-}
-
-.btn-agregar {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.btn-agregar:hover {
-    background-color: #158a30;
-    scale: 1.1;
-    cursor: pointer;
-}
-
-.btn-agregar:active {
-    background-color: #28a745;
-    scale: 1.0;
-}
-
-.btn-eliminar {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.btn-eliminar:hover {
-    background-color: #9c2834;
-    scale: 1.1;
-    cursor: pointer;
-}
-
-.btn-eliminar:active {
-    background-color: #9c2834;
-    scale: 1.0;
+    margin-top: 20px;
 }
