@@ -10,7 +10,6 @@ namespace ProyectoFinalAPI.Models
   public int idMateriaPrima { get; set; }
   public int cantidad { get; set; }
   public decimal precioUnitario { get; set; }
-
  
  }
 }

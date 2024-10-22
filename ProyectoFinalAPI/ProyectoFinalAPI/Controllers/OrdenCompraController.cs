@@ -108,6 +108,4 @@ public class OrdenCompraController : ControllerBase
 
   return Ok(result);
  }
-
-
 }

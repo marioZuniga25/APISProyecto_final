@@ -80,13 +80,13 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idDetalleOrdenCompra"));
 
-                    b.Property<double>("cantidad")
-                        .HasColumnType("float");
-
-                    b.Property<int>("idMateriaPrima")
+                    b.Property<int?>("OrdenCompraidOrdenCompra")
                         .HasColumnType("int");
 
-                    b.Property<int>("idOrdenCompra")
+                    b.Property<int>("cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idMateriaPrima")
                         .HasColumnType("int");
 
                     b.Property<decimal>("precioUnitario")
@@ -94,9 +94,7 @@ namespace ProyectoFinalAPI.Migrations
 
                     b.HasKey("idDetalleOrdenCompra");
 
-                    b.HasIndex("idMateriaPrima");
-
-                    b.HasIndex("idOrdenCompra");
+                    b.HasIndex("OrdenCompraidOrdenCompra");
 
                     b.ToTable("DetalleOrdenCompra", (string)null);
                 });
@@ -197,9 +195,11 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<int>("idProveedor")
                         .HasColumnType("int");
 
-                    b.HasKey("idOrdenCompra");
+                    b.Property<string>("usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("idProveedor");
+                    b.HasKey("idOrdenCompra");
 
                     b.ToTable("OrdenCompra", (string)null);
                 });
@@ -509,21 +509,9 @@ namespace ProyectoFinalAPI.Migrations
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
                 {
-                    b.HasOne("ProyectoFinalAPI.Models.MateriaPrima", "MateriaPrima")
-                        .WithMany()
-                        .HasForeignKey("idMateriaPrima")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", "OrdenCompra")
+                    b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", null)
                         .WithMany("Detalles")
-                        .HasForeignKey("idOrdenCompra")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MateriaPrima");
-
-                    b.Navigation("OrdenCompra");
+                        .HasForeignKey("OrdenCompraidOrdenCompra");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.MateriaPrima", b =>
@@ -531,17 +519,6 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasOne("ProyectoFinalAPI.Models.Proveedor", null)
                         .WithMany("MateriasPrimas")
                         .HasForeignKey("ProveedoridProveedor");
-                });
-
-            modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>
-                {
-                    b.HasOne("ProyectoFinalAPI.Models.Proveedor", "Proveedor")
-                        .WithMany()
-                        .HasForeignKey("idProveedor")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Proveedor");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>

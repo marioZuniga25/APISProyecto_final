@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241017195932_ActualizarModelos.cs
-    public partial class ActualizarModelos : Migration
-========
-    public partial class Octubre : Migration
->>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.cs
+    public partial class newMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,17 +73,18 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Inventario",
+                name: "OrdenCompra",
                 columns: table => new
                 {
-                    idInventario = table.Column<int>(type: "int", nullable: false)
+                    idOrdenCompra = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cantidad = table.Column<double>(type: "float", nullable: false)
+                    idProveedor = table.Column<int>(type: "int", nullable: false),
+                    fechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    usuario = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Inventario", x => x.idInventario);
+                    table.PrimaryKey("PK_OrdenCompra", x => x.idOrdenCompra);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,24 +227,24 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MateriaPrima",
+                name: "DetalleOrdenCompra",
                 columns: table => new
                 {
-                    idMateriaPrima = table.Column<int>(type: "int", nullable: false)
+                    idDetalleOrdenCompra = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombreMateriaPrima = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    idInventario = table.Column<int>(type: "int", nullable: false)
+                    idMateriaPrima = table.Column<int>(type: "int", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    precioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OrdenCompraidOrdenCompra = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MateriaPrima", x => x.idMateriaPrima);
+                    table.PrimaryKey("PK_DetalleOrdenCompra", x => x.idDetalleOrdenCompra);
                     table.ForeignKey(
-                        name: "FK_MateriaPrima_Inventario_idInventario",
-                        column: x => x.idInventario,
-                        principalTable: "Inventario",
-                        principalColumn: "idInventario",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_DetalleOrdenCompra_OrdenCompra_OrdenCompraidOrdenCompra",
+                        column: x => x.OrdenCompraidOrdenCompra,
+                        principalTable: "OrdenCompra",
+                        principalColumn: "idOrdenCompra");
                 });
 
             migrationBuilder.CreateTable(
@@ -270,26 +267,6 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrdenCompra",
-                columns: table => new
-                {
-                    idOrdenCompra = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    idProveedor = table.Column<int>(type: "int", nullable: false),
-                    fechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrdenCompra", x => x.idOrdenCompra);
-                    table.ForeignKey(
-                        name: "FK_OrdenCompra_Proovedor_idProveedor",
-                        column: x => x.idProveedor,
-                        principalTable: "Proovedor",
-                        principalColumn: "idProveedor",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MateriaPrima",
                 columns: table => new
                 {
@@ -297,60 +274,19 @@ namespace ProyectoFinalAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombreMateriaPrima = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    idProveedor = table.Column<int>(type: "int", nullable: false),
                     idUnidad = table.Column<int>(type: "int", nullable: false),
                     precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     stock = table.Column<double>(type: "float", nullable: false),
-                    InventarioidInventario = table.Column<int>(type: "int", nullable: true)
+                    ProveedoridProveedor = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MateriaPrima", x => x.idMateriaPrima);
                     table.ForeignKey(
-                        name: "FK_MateriaPrima_Inventario_InventarioidInventario",
-                        column: x => x.InventarioidInventario,
-                        principalTable: "Inventario",
-                        principalColumn: "idInventario");
-                    table.ForeignKey(
-                        name: "FK_MateriaPrima_Proovedor_idProveedor",
-                        column: x => x.idProveedor,
+                        name: "FK_MateriaPrima_Proovedor_ProveedoridProveedor",
+                        column: x => x.ProveedoridProveedor,
                         principalTable: "Proovedor",
-                        principalColumn: "idProveedor",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MateriaPrima_UnidadMedida_idUnidad",
-                        column: x => x.idUnidad,
-                        principalTable: "UnidadMedida",
-                        principalColumn: "idUnidad",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DetalleOrdenCompra",
-                columns: table => new
-                {
-                    idDetalleOrdenCompra = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    idOrdenCompra = table.Column<int>(type: "int", nullable: false),
-                    idMateriaPrima = table.Column<int>(type: "int", nullable: false),
-                    cantidad = table.Column<double>(type: "float", nullable: false),
-                    precioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DetalleOrdenCompra", x => x.idDetalleOrdenCompra);
-                    table.ForeignKey(
-                        name: "FK_DetalleOrdenCompra_MateriaPrima_idMateriaPrima",
-                        column: x => x.idMateriaPrima,
-                        principalTable: "MateriaPrima",
-                        principalColumn: "idMateriaPrima",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DetalleOrdenCompra_OrdenCompra_idOrdenCompra",
-                        column: x => x.idOrdenCompra,
-                        principalTable: "OrdenCompra",
-                        principalColumn: "idOrdenCompra",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "idProveedor");
                 });
 
             migrationBuilder.CreateTable(
@@ -381,44 +317,14 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241017195932_ActualizarModelos.cs
-                name: "IX_DetalleOrdenCompra_idMateriaPrima",
+                name: "IX_DetalleOrdenCompra_OrdenCompraidOrdenCompra",
                 table: "DetalleOrdenCompra",
-========
-                name: "IX_MateriaPrima_idInventario",
+                column: "OrdenCompraidOrdenCompra");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MateriaPrima_ProveedoridProveedor",
                 table: "MateriaPrima",
-                column: "idInventario");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RecetaDetalle_idMateriaPrima",
-                table: "RecetaDetalle",
->>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.cs
-                column: "idMateriaPrima");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetalleOrdenCompra_idOrdenCompra",
-                table: "DetalleOrdenCompra",
-                column: "idOrdenCompra");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MateriaPrima_idProveedor",
-                table: "MateriaPrima",
-                column: "idProveedor");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MateriaPrima_idUnidad",
-                table: "MateriaPrima",
-                column: "idUnidad");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MateriaPrima_InventarioidInventario",
-                table: "MateriaPrima",
-                column: "InventarioidInventario");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrdenCompra_idProveedor",
-                table: "OrdenCompra",
-                column: "idProveedor");
+                column: "ProveedoridProveedor");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecetaDetalles_idMateriaPrima",
@@ -467,6 +373,9 @@ namespace ProyectoFinalAPI.Migrations
                 name: "Tarjetas");
 
             migrationBuilder.DropTable(
+                name: "UnidadMedida");
+
+            migrationBuilder.DropTable(
                 name: "Usuario");
 
             migrationBuilder.DropTable(
@@ -482,18 +391,9 @@ namespace ProyectoFinalAPI.Migrations
                 name: "Recetas");
 
             migrationBuilder.DropTable(
-                name: "Inventario");
-
-            migrationBuilder.DropTable(
-<<<<<<<< HEAD:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241017195932_ActualizarModelos.cs
                 name: "Proovedor");
 
             migrationBuilder.DropTable(
-                name: "UnidadMedida");
-
-            migrationBuilder.DropTable(
-========
->>>>>>>> 02434e5d497cce5f41e0612ebf6cd5f3fe74cbec:ProyectoFinalAPI/ProyectoFinalAPI/Migrations/20241021182657_Octubre.cs
                 name: "Producto");
         }
     }
