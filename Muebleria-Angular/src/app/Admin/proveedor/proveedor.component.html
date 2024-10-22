@@ -5,40 +5,40 @@
         <h4 class="mt-2 text-center">PROVEEDORES</h4>
       </div>
       <div class="col">
-        <app-buscador-compartido [items]="proveedores" searchProperty="nombreProveedor"
-          placeholder="Buscar proveedor..." (searchResults)="onSearchResults($event)">
-        </app-buscador-compartido>
+        <input type="text" class="form-control" placeholder="Buscar proveedor..." [(ngModel)]="resultadosBusqueda">
       </div>
     </div>
   </div>
 
   <div class="table-container" *ngIf="resultadosBusqueda.length > 0; else noProveedores">
     <table class="table table-hover">
-      <thead class="">
+      <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Nombre</th>
           <th scope="col">Teléfono</th>
           <th scope="col">Correo</th>
-          <th scope="col">Materia Prima</th>
+          <th scope="col">Materias Primas</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let proveedor of resultadosBusqueda" (click)="abrirModalModificar(proveedor)">
-          <!-- Mostrar los resultados de búsqueda -->
+        <tr *ngFor="let proveedor of proveedores" (click)="modificarProveedor()">
           <td>{{ proveedor.idProveedor }}</td>
           <td>{{ proveedor.nombreProveedor }}</td>
           <td>{{ proveedor.telefono }}</td>
           <td>{{ proveedor.correo }}</td>
           <td>
-            <span *ngFor="let mp of proveedor.materiaPrimaList" class="badge bg-dark me-1">
-              {{ mp }}
-            </span>
+            <ul>
+              <li *ngFor="let materia of proveedor.nombresMateriasPrimas">
+                {{ materia }} <!-- Cambié 'materia' a 'materia.nombreMateriaPrima' -->
+              </li>
+            </ul>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
   <ng-template #noProveedores>
     <p class="mt-2 text-muted text-center">No hay proveedores disponibles.</p>
   </ng-template>
@@ -48,49 +48,94 @@
 
 <!-- Modal para agregar/modificar proveedor -->
 <div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
-  <div class="modal-dialog corregir">
-    <div class="modal-content corregir-content">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{ esModificacion ? 'Modificar Proveedor' : 'Agregar Proveedor' }}</h5>
         <button type="button" class="btn-close" (click)="cerrarModal()"></button>
       </div>
       <div class="modal-body">
         <form #proveedorForm="ngForm" (ngSubmit)="guardarProveedor()">
-          <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" [(ngModel)]="proveedorActual.nombreProveedor" name="nombre"
-              class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" [(ngModel)]="proveedorActual.telefono" name="telefono" class="form-control"
-              required>
-          </div>
-          <div class="form-group">
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo" [(ngModel)]="proveedorActual.correo" name="correo" class="form-control"
-              required>
-          </div>
-          <div class="form-group">
-            <label for="materiaPrima">Materia Prima:</label>
-            <div class="input-group">
-              <input type="text" id="materiaPrimaInput" [(ngModel)]="materiaPrimaInput" name="materiaPrimaInput"
-                class="form-control" (keydown.enter)="agregarMateriaPrima()" placeholder="Agregar materia prima">
-              <button class="btn btn-primary" type="button" (click)="agregarMateriaPrima()">Añadir</button>
-            </div>
-            <div class="mt-2" style="padding: 20px 0 30px 0 !important; display: flex; align-items: center; flex-wrap: wrap !important;">
-              <span *ngFor="let mp of proveedorActual.materiaPrimaList; let i = index" class="badge bg-dark me-1" style="display: flex !important;align-items: center;width: max-content; margin-right: 10px !important;">
-                <span>{{ mp }}</span>
-                <button type="button" class="btn-close btn-close-white btn-sm ms-1" (click)="eliminarMateriaPrima(i)"></button>
-              </span>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" [(ngModel)]="proveedorActual.nombreProveedor" [ngModelOptions]="{standalone: true}" class="form-control" required>
               </div>
-            <input type="hidden" [(ngModel)]="proveedorActual.idProveedor" name="materiaPrima">
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" [(ngModel)]="proveedorActual.telefono" [ngModelOptions]="{standalone: true}" class="form-control" required>
+              </div>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="add-btn-modal w-100">{{ esModificacion ? 'Guardar Cambios' : 'Agregar
-              Proveedor' }}</button>
-            <button *ngIf="esModificacion" type="button" class="delete-btn w-100"
-              (click)="eliminarProveedorDesdeModal()">Eliminar Proveedor</button>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group mb-3">
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" [(ngModel)]="proveedorActual.correo" [ngModelOptions]="{standalone: true}" class="form-control" required>
+              </div>
+            </div>
+          </div>
+
+          <h5 class="mb-3">Agregar Materia Prima</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="nombreMateriaPrima">Nombre de Materia Prima:</label>
+                <input type="text" id="nombreMateriaPrima" [(ngModel)]="materiaPrimaInput.nombreMateriaPrima" name="nombreMateriaPrima" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" [(ngModel)]="materiaPrimaInput.descripcion" name="descripcion" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" [(ngModel)]="materiaPrimaInput.precio" name="precio" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-md-4 d-none">
+              <div class="form-group mb-3">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" [(ngModel)]="materiaPrimaInput.stock" name="stock" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                  <label for="unidadMedida">Unidad de Medida:</label>
+                  <select id="unidadMedida" [(ngModel)]="materiaPrimaInput.idUnidad" name="unidadMedida" class="form-control" required>
+                    <option *ngFor="let unidad of unidadesMedida" [value]="unidad.idUnidad">
+                        {{ unidad.nombreUnidad }}
+                    </option>
+                </select>
+                
+              </div>
+          </div>
+          
+          </div>
+
+          <button type="button" class="btn btn-primary" (click)="agregarMateriaPrima()">Añadir Materia Prima</button>
+
+          <!-- Lista de Materias Primas Agregadas -->
+          <div class="mt-3">
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let mp of proveedorActual.materiasPrimas; let i = index">
+                {{ mp.nombreMateriaPrima }} - {{ mp.descripcion }} - ${{ mp.precio }}  - {{ obtenerNombreUnidad(mp.idUnidad.toString()) }}                <button class="btn btn-danger btn-sm float-end" (click)="eliminarMateriaPrima(i)">Eliminar</button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="modal-footer mt-4">
+            <button type="submit" class="btn btn-success w-100">{{ esModificacion ? 'Guardar Cambios' : 'Agregar Proveedor' }}</button>
           </div>
         </form>
       </div>
