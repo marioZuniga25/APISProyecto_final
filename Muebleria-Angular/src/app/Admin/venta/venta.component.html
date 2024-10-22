@@ -2,93 +2,62 @@
     <h1>Punto de Venta</h1>
     <div class="search-bar">
         <input 
-        type="text" 
-        id="search" 
-        placeholder="Buscar productos..." 
-        [(ngModel)]="terminoBusqueda" 
-        (input)="buscarProductos()"
-        style="border-radius: 15px;"
+            type="text" 
+            id="search" 
+            placeholder="Buscar productos..." 
+            [(ngModel)]="terminoBusqueda" 
+            (input)="buscarProductos()"
+            class="form-control" 
         />
     </div>
 
-    <h2>Productos Disponibles</h2>
+    <div class="venta-container d-flex">
+        <div class="productos-disponibles">
+            <h2>Productos Disponibles</h2>
+            <div *ngIf="products.length > 0; else noProductos" class="products-table">
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let product of products" (click)="agregarProducto(product)">
+                        <div class="product-card">
+                            <img src="{{product.imagen}}" class="product-image" alt="Imagen de producto {{product.nombreProducto}}">
+                            <h3>{{product.nombreProducto}}</h3>
+                            <p>Precio: ${{product.precio}}</p>
+                            <p>Stock: {{product.stock}}</p>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noProductos>
+                <p class="text-muted text-center">No hay productos disponibles.</p>
+            </ng-template>
+        </div>
+    
+        
 
-    <!-- Lista de productos o mensaje cuando no hay productos -->
-    <div *ngIf="products.length > 0; else noProductos" class="products-table">
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr >
-                    <th class="d-none">ID</th>
-                    <th style="width: 150px;">Imagen</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Categoria</th>
-                    <th>Stock</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let product of products">
-                    <td style="width: 150px;"><img src="{{product.imagen}}" style="width: 100px; border-radius: 15px;" alt="Imagen de producto {{product.nombreProducto}}"></td>
-                    <td class="d-none">{{product.idProducto}}</td>
-                    <td>{{product.nombreProducto}}</td>
-                    <td>{{product.precio}}</td>
-                    <td>{{product.nombreCategoria}}</td>
-                    <td>{{product.stock}}</td>
-                    <td><button class="btn-agregar" (click)="agregarProducto(product)">Agregar</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Mensaje cuando no hay productos -->
-    <ng-template #noProductos>
-        <p class="text-muted text-center">No hay productos disponibles.</p>
-    </ng-template>
-
-    <h2>Productos Seleccionados</h2>
-    <!-- Tabla de productos seleccionados -->
-    <div class="selected-products-table">
-        <table class="table hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Precio Unitario</th>
-                    <th class="w-25">Cantidad</th>
-                    <th>Subtotal</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let selectedProduct of selectedProducts; let i = index">
-                    <td>{{ selectedProduct.producto.idProducto }}</td>
-                    <td>{{ selectedProduct.producto.nombreProducto }}</td>
-                    <td>{{ selectedProduct.producto.precio }}</td>
-                    <td>
-                        <input 
-                            type="number" 
-                            [(ngModel)]="selectedProduct.cantidad" 
-                            (change)="actualizarSubtotal(i)"
-                            min="1"
-                            [value]="selectedProduct.cantidad"
-                            class="form-control w-25"
-                        />
-                    </td>
-                    <td>{{ selectedProduct.subtotal | currency }}</td>
-                    <td>
-                        <button class="btn-eliminar" (click)="eliminarProducto(selectedProduct.producto.idProducto)">Eliminar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <h1>Total: ${{calcularTotal()}}</h1>
-
-    <!-- Botones para acciones -->
-    <div class="action-buttons">
-        <button class="save-btn" (click)="guardarVenta();">Guardar Venta</button>
-        <button class="cancel-btn">Cancelar</button>
+        <div class="productos-seleccionados">
+            <h2>Productos Seleccionados</h2>
+            <div class="productos-seleccionados">
+                <div *ngFor="let selectedProduct of selectedProducts; let i = index" class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ selectedProduct.producto.nombreProducto }}</h5>
+                        <p class="card-text">Precio Unitario: ${{ selectedProduct.producto.precio }}</p>
+                        <p class="card-text">Cantidad: 
+                            <input 
+                                type="number" 
+                                [(ngModel)]="selectedProduct.cantidad" 
+                                (change)="actualizarSubtotal(i)"
+                                min="1"
+                                class="form-control d-inline w-25"
+                            />
+                        </p>
+                        <p class="card-text">Subtotal: {{ selectedProduct.subtotal | currency }}</p>
+                        <button class="btn btn-danger" (click)="eliminarProducto(selectedProduct.producto.idProducto)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+            <h1>Total: ${{ calcularTotal() }}</h1>
+            <button class="btn btn-primary" (click)="guardarVenta();">Guardar Venta</button>
+        </div>
+        
     </div>
 </div>

@@ -113,11 +113,26 @@ materiaPrimaInput = {
   
   
 
-  // Función para obtener el nombre de la unidad de medida
-  obtenerNombreUnidad(idUnidad: number): string {
-  const unidad = this.unidadesMedida.find(u => u.idUnidad === idUnidad);
-  return unidad ? unidad.nombreUnidad : 'Sin Unidad';
+  obtenerNombreUnidad(idUnidad: string): string {
+    console.log('ID Unidad recibida:', idUnidad);
+    console.log('Unidades de Medida disponibles:', this.unidadesMedida);
+
+    // Convertir idUnidad a número
+    const idUnidadNum = parseInt(idUnidad, 10);
+    console.log('ID Unidad convertido a número:', idUnidadNum);
+
+    const unidad = this.unidadesMedida.find(u => {
+        console.log(`Comparando con idUnidad: ${u.idUnidad} (tipo: ${typeof u.idUnidad})`);
+        console.log(`Contra idUnidad recibido: ${idUnidadNum} (tipo: ${typeof idUnidadNum})`);
+        return u.idUnidad === idUnidadNum; // Comparar ambos como números
+    });
+
+    console.log('Resultado de la búsqueda:', unidad);
+
+    return unidad ? unidad.nombreUnidad : 'Sin Unidad';
 }
+
+
 
 
   // Modificar un proveedor
@@ -185,14 +200,16 @@ materiaPrimaInput = {
   agregarMateriaPrima(): void {
     if (this.materiaPrimaInput.nombreMateriaPrima.trim() !== '' && this.materiaPrimaInput.precio > 0) {
       const unidadSeleccionada = this.unidadesMedida.find(u => u.idUnidad === this.materiaPrimaInput.idUnidad);
-
+      console.log('Materia Prima Input:', this.materiaPrimaInput);
+      console.log('Unidades de Medida:', this.unidadesMedida);
+      
       this.proveedorActual.materiasPrimas.push({
         nombreMateriaPrima: this.materiaPrimaInput.nombreMateriaPrima,
         descripcion: this.materiaPrimaInput.descripcion,
         precio: this.materiaPrimaInput.precio,
         stock: this.materiaPrimaInput.stock,
         idProveedor: this.proveedorActual.idProveedor,        
-        idUnidad: unidadSeleccionada?.idUnidad || 0,
+        idUnidad: this.materiaPrimaInput.idUnidad
        
       });
 

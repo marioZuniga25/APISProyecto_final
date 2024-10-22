@@ -41,7 +41,8 @@ public class OrdenCompraController : ControllerBase
   {
    idProveedor = request.idProveedor,
    fechaCompra = DateTime.Now,
-   Detalles = new List<DetalleOrdenCompra>()
+   Detalles = new List<DetalleOrdenCompra>(),
+   usuario = request.usuario
   };
 
   // Procesar cada detalle
@@ -53,6 +54,7 @@ public class OrdenCompraController : ControllerBase
     return BadRequest($"La materia prima con ID {detalleRequest.idMateriaPrima} no existe.");
    }
 
+   // Crear el detalle de la orden
    var detalleOrden = new DetalleOrdenCompra
    {
     idMateriaPrima = detalleRequest.idMateriaPrima,
@@ -60,8 +62,13 @@ public class OrdenCompraController : ControllerBase
     precioUnitario = materiaPrima.precio
    };
 
+   // Actualizar el stock de la materia prima
+   materiaPrima.stock += detalleRequest.cantidad; // Sumar la cantidad comprada al stock actual
+
+   // Agregar el detalle a la orden
    nuevaOrden.Detalles.Add(detalleOrden);
   }
+
 
   // Guardar la orden de compra
   await _context.OrdenesCompra.AddAsync(nuevaOrden);
@@ -71,16 +78,36 @@ public class OrdenCompraController : ControllerBase
  }
 
 
+
+ // GET: api/OrdenCompra/ListadoOrdenes
  // GET: api/OrdenCompra/ListadoOrdenes
  [HttpGet("ListadoOrdenes")]
- public async Task<ActionResult<IEnumerable<OrdenCompra>>> GetListadoOrdenesCompra()
+ public async Task<ActionResult<IEnumerable<object>>> GetListadoOrdenesCompra()
  {
   var ordenesCompra = await _context.OrdenesCompra
-      .Include(o => o.idProveedor)
-      .Include(o => o.Detalles)
-          .ThenInclude(d => d.MateriaPrima)
+      .Include(o => o.Detalles) // Incluye los detalles de la orden
       .ToListAsync();
 
-  return Ok(ordenesCompra);
+  var result = new List<object>();
+
+  foreach (var orden in ordenesCompra)
+  {
+   // Obtener el nombre del proveedor usando el idProveedor
+   var proveedor = await _context.Proveedor.FindAsync(orden.idProveedor);
+
+   result.Add(new
+   {
+    orden.idOrdenCompra,
+    orden.idProveedor,
+    NombreProveedor = proveedor?.nombreProveedor ?? "No asignado", // Nombre del proveedor
+    orden.fechaCompra,
+    orden.usuario,
+    Detalles = orden.Detalles
+   });
+  }
+
+  return Ok(result);
  }
+
+
 }

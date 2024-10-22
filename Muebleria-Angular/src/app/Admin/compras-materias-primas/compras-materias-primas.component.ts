@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IProveedorResponse } from '../../interfaces/IProveedorResponse';
 import { IMateriaPrima } from '../../interfaces/IMateriaPrima';
-
+import { User } from '../../interfaces/AuthResponse';
+import { AuthService } from '../../services/auth.service';
 @Component({
   standalone: true,
   imports: [FormsModule, CommonModule],
@@ -16,6 +17,8 @@ import { IMateriaPrima } from '../../interfaces/IMateriaPrima';
 })
 export class ComprasMateriasPrimasComponent implements OnInit {
   ordenesCompra: any[] = [];
+  user: User | null = null;
+  ordenSeleccionada: any;
   selectedProveedor: IProveedorResponse | null = null;
   selectedMateriaPrima: IMateriaPrima | null = null;
   proveedores: any[] = []; // Lista de proveedores
@@ -34,13 +37,15 @@ export class ComprasMateriasPrimasComponent implements OnInit {
   constructor(
     private ordenCompraService: OrdenCompraService,
     private materiaPrimaService: MateriaprimaService,
-    private proveedorService: ProveedoresService
+    private proveedorService: ProveedoresService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.obtenerOrdenes();
     this.cargarProveedores();
     this.cargarMateriasPrimas();
+    this.user = this.authService.getUser();
   }
    // Modal para agregar un proveedor
    abrirModalOrden(): void {
@@ -67,6 +72,7 @@ export class ComprasMateriasPrimasComponent implements OnInit {
   obtenerOrdenes() {
     this.ordenCompraService.obtenerOrdenesCompra().subscribe(data => {
       this.ordenesCompra = data;
+      console.log("El usuario es: ", this.user);
     });
   }
 
@@ -147,10 +153,12 @@ crearOrdenCompra() {
   const ordenCompra = {
       idProveedor: this.selectedProveedor?.idProveedor, // Asegúrate de que esto sea correcto
       fechaCompra: new Date(),
+      usuario: this.user?.nombreUsuario,
       Detalles: this.detallesOrdenCompra.map(detalle => ({
           idMateriaPrima: detalle.idMateriaPrima, // Asegúrate de que idMateriaPrima esté definido
           cantidad: detalle.cantidad, // Asegúrate de que cantidad esté definida
-          precioUnitario: detalle.precioUnitario // Asegúrate de que precioUnitario esté definido
+          precioUnitario: detalle.precioUnitario,
+          // Asigna el usuario actual
       }))
   };
 
@@ -180,7 +188,9 @@ crearOrdenCompra() {
       }
   }
 }
-
+mostrarDetalles(orden: any): void {
+  this.ordenSeleccionada = orden; // Almacena la orden seleccionada
+}
 
 
 
