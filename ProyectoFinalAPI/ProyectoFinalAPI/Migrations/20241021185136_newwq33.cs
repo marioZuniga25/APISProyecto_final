@@ -5,25 +5,25 @@
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class SegmentarUsuarios : Migration
+    public partial class newwq33 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "type",
-                table: "Usuario",
-                type: "int",
+            migrationBuilder.AddColumn<string>(
+                name: "usuario",
+                table: "OrdenCompra",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "type",
-                table: "Usuario");
+                name: "usuario",
+                table: "OrdenCompra");
         }
     }
 }

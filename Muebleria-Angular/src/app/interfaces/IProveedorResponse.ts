@@ -3,14 +3,23 @@ export interface IProveedorResponse {
   nombreProveedor: string;
   telefono: string;
   correo: string;
-  materiaPrima: string;
-  materiaPrimaList?: string[];  // Añadir esta propiedad
+  nombresMateriasPrimas: string[]; // Verifica que el nombre aquí coincida
 }
+
 
 export interface IProveedorRequest {
   idProveedor: number;
   nombreProveedor: string;
   telefono: string;
   correo: string;
-  materiaPrimaList: string[]; // Este es un array de strings
+  materiasPrimas: {
+    nombreMateriaPrima: string;
+    descripcion: string;
+    idProveedor: number;
+    idUnidad: number;
+    
+    precio: number;
+    stock: number;
+  }[];
 }
+

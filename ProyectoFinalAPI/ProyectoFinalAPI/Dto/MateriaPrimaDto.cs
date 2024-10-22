@@ -1,11 +1,13 @@
-namespace ProyectoFinalAPI.DTOs
+namespace ProyectoFinalAPI.Dto
 {
-    public class MateriaPrimaDto
-    {
-        public int idMateriaPrima { get; set; }
-        public string nombreMateriaPrima { get; set; }
-        public string descripcion { get; set; }
-        public int idInventario { get; set; }
-        public double cantidad { get; set; }  // Propiedad de cantidad
-    }
+ public class MateriaPrimaDTO
+ {
+  public string NombreMateriaPrima { get; set; }
+  public string Descripcion { get; set; }
+  public int idUnidad { get; set; }
+  public decimal Precio { get; set; }
+  public double Stock { get; set; }
+ }
+
+
 }

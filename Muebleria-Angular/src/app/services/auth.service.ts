@@ -35,6 +35,14 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}usuario/registrarInterno`, usuario);
   }
   
+  resetPassword(token: string, nuevaContrasenia: string): Observable<any> {
+    const body = { token, nuevaContrasenia };
+    return this.http.post(`${this.apiUrl}usuario/reset-password`, body);
+  }
+  
+  validateToken(token: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}usuario/validate-token?token=${token}`);
+  }
 
   //Saber si es admin
   isAdmin(): boolean {
@@ -53,6 +61,10 @@ export class AuthService {
 
   registerUsuario (data: IUsuarioDetalle): Observable<any>{
     return this.http.post<any>(`${this.apiUrl}usuario/registrar`, data);
+  }
+
+  forgotPassword(correo: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}usuario/forgot-password`, { correo });
   }
 
   getUser(): User | null {

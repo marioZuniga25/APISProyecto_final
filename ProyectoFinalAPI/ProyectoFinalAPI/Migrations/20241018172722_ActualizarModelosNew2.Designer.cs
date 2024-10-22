@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20240816205751_updateProyetos")]
-    partial class updateProyetos
+    [Migration("20241018172722_ActualizarModelosNew2")]
+    partial class ActualizarModelosNew2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,35 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Contactos");
                 });
 
+            modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
+                {
+                    b.Property<int>("idDetalleOrdenCompra")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idDetalleOrdenCompra"));
+
+                    b.Property<double>("cantidad")
+                        .HasColumnType("float");
+
+                    b.Property<int>("idMateriaPrima")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idOrdenCompra")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("precioUnitario")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("idDetalleOrdenCompra");
+
+                    b.HasIndex("idMateriaPrima");
+
+                    b.HasIndex("idOrdenCompra");
+
+                    b.ToTable("DetalleOrdenCompra", (string)null);
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleVenta", b =>
                 {
                     b.Property<int>("idDetalleVenta")
@@ -122,26 +151,6 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("instructivoProductos");
                 });
 
-            modelBuilder.Entity("ProyectoFinalAPI.Models.Inventario", b =>
-                {
-                    b.Property<int>("idInventario")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idInventario"));
-
-                    b.Property<double>("cantidad")
-                        .HasColumnType("float");
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("idInventario");
-
-                    b.ToTable("Inventario", (string)null);
-                });
-
             modelBuilder.Entity("ProyectoFinalAPI.Models.MateriaPrima", b =>
                 {
                     b.Property<int>("idMateriaPrima")
@@ -150,20 +159,52 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idMateriaPrima"));
 
+                    b.Property<int?>("ProveedoridProveedor")
+                        .HasColumnType("int");
+
                     b.Property<string>("descripcion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("idInventario")
+                    b.Property<int>("idUnidad")
                         .HasColumnType("int");
 
                     b.Property<string>("nombreMateriaPrima")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("stock")
+                        .HasColumnType("float");
+
                     b.HasKey("idMateriaPrima");
 
+                    b.HasIndex("ProveedoridProveedor");
+
                     b.ToTable("MateriaPrima", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>
+                {
+                    b.Property<int>("idOrdenCompra")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idOrdenCompra"));
+
+                    b.Property<DateTime>("fechaCompra")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("idProveedor")
+                        .HasColumnType("int");
+
+                    b.HasKey("idOrdenCompra");
+
+                    b.HasIndex("idProveedor");
+
+                    b.ToTable("OrdenCompra", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Pedidos", b =>
@@ -304,10 +345,6 @@ namespace ProyectoFinalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("materiaPrima")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("nombreProveedor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -362,7 +399,7 @@ namespace ProyectoFinalAPI.Migrations
 
                     b.HasIndex("idReceta");
 
-                    b.ToTable("RecetaDetalle");
+                    b.ToTable("RecetaDetalles");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Tarjetas", b =>
@@ -395,6 +432,23 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasKey("idTarjeta");
 
                     b.ToTable("Tarjetas", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.UnidadMedida", b =>
+                {
+                    b.Property<int>("idUnidad")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idUnidad"));
+
+                    b.Property<string>("nombreUnidad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("idUnidad");
+
+                    b.ToTable("UnidadMedida", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Usuario", b =>
@@ -447,6 +501,43 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Venta", (string)null);
                 });
 
+            modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.MateriaPrima", "MateriaPrima")
+                        .WithMany()
+                        .HasForeignKey("idMateriaPrima")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", "OrdenCompra")
+                        .WithMany("Detalles")
+                        .HasForeignKey("idOrdenCompra")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MateriaPrima");
+
+                    b.Navigation("OrdenCompra");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.MateriaPrima", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.Proveedor", null)
+                        .WithMany("MateriasPrimas")
+                        .HasForeignKey("ProveedoridProveedor");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.Proveedor", "Proveedor")
+                        .WithMany()
+                        .HasForeignKey("idProveedor")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Proveedor");
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
                 {
                     b.HasOne("ProyectoFinalAPI.Models.Producto", "Producto")
@@ -475,6 +566,16 @@ namespace ProyectoFinalAPI.Migrations
                     b.Navigation("MateriaPrima");
 
                     b.Navigation("Receta");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>
+                {
+                    b.Navigation("Detalles");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Proveedor", b =>
+                {
+                    b.Navigation("MateriasPrimas");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>

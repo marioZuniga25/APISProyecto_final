@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { IProveedorResponse } from '../interfaces/IProveedorResponse';
+import { IProveedorResponse, IProveedorRequest } from '../interfaces/IProveedorResponse';
 import { environment } from '../../environments/environment.development';
-
+import { IUnidadMedida } from '../interfaces/IUnidadMedida';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,12 +18,19 @@ export class ProveedoresService {
   getProveedores(): Observable<IProveedorResponse[]> {
     return this.http.get<IProveedorResponse[]>(`${this.apiUrl}proveedores`)
       .pipe(
-        retry(1), // Reintenta la solicitud una vez en caso de error
+        retry(1), 
         catchError(this.handleError)
       );
   }
+  getUnidadesMedida(): Observable<IUnidadMedida[]> {
+    return this.http.get<IUnidadMedida[]>(`${this.apiUrl}UnidadMedida`)
+    .pipe(
+      retry(1), 
+      catchError(this.handleError)
+    );
+  }
 
-  // Obtener un proveedor por ID
+  // Obtener un proveedor por su ID
   getProveedor(id: number): Observable<IProveedorResponse> {
     const url = `${this.apiUrl}proveedores/${id}`;
     return this.http.get<IProveedorResponse>(url)
@@ -34,7 +41,7 @@ export class ProveedoresService {
   }
 
   // Crear un nuevo proveedor
-  addProveedor(proveedor: IProveedorResponse): Observable<IProveedorResponse> {
+  addProveedor(proveedor: IProveedorRequest): Observable<IProveedorResponse> {
     return this.http.post<IProveedorResponse>(`${this.apiUrl}proveedores`, proveedor, this.httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -42,13 +49,10 @@ export class ProveedoresService {
   }
 
   // Actualizar un proveedor existente
-  updateProveedor(id: number, proveedor: IProveedorResponse): Observable<any> {
-    const url = `${this.apiUrl}proveedores/${id}`;
-    return this.http.put(url, proveedor, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
+  // En el servicio ProveedoresService
+    updateProveedor(id: number, proveedor: IProveedorRequest): Observable<IProveedorResponse> {
+      return this.http.put<IProveedorResponse>(`/api/Proveedores/${id}`, proveedor);
+    }
 
   // Eliminar un proveedor
   deleteProveedor(id: number): Observable<any> {
@@ -58,22 +62,20 @@ export class ProveedoresService {
         catchError(this.handleError)
       );
   }
+ 
 
   // Manejo de errores
   private handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
-      // Error del lado del cliente
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Error del lado del servidor
       errorMessage = `Código de error: ${error.status}\nMensaje: ${error.message}`;
     }
     window.alert(errorMessage);
     return throwError(errorMessage);
   }
 
-  // Opciones de cabecera para solicitudes HTTP
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

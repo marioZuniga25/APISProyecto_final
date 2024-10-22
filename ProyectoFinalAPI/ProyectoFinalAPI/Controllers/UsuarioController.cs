@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinalAPI.Models;
 using System.Threading;
+using System.Security.Cryptography;
 
 namespace ProyectoFinalAPI.Controllers
 {
@@ -177,10 +178,99 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(usuarios); // Devuelve 200 OK con una lista (posiblemente vacía)
         }
 
+        [HttpPost]
+        [Route("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request, [FromServices] EmailService emailService)
+        {
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.correo == request.Correo);
+
+            if (usuario == null)
+            {
+                return BadRequest(new { message = "El correo no está registrado." });
+            }
+
+            // Verificar si ya hay un token activo y no ha expirado
+            if (usuario.ResetTokenExpires > DateTime.UtcNow)
+            {
+                return BadRequest(new { message = "Ya se ha iniciado un proceso de recuperación. Inténtalo más tarde." });
+            }
+
+            // Generar un nuevo token y establecer su fecha de expiración
+            var token = GenerateResetToken();
+            usuario.ResetToken = token;
+            usuario.ResetTokenExpires = DateTime.UtcNow.AddMinutes(5);
+
+            await _context.SaveChangesAsync();
+
+            // Preparar el correo con el template
+            var resetLink = $"http://localhost:4200/reset-password?token={token}";
+            var body = System.IO.File.ReadAllText("Templates/ForgotPassword.html")
+                       .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
+                       .Replace("[RESET_LINK]", resetLink);
+
+            await emailService.SendEmailAsync(usuario.correo, "Recuperación de contraseña", body);
+
+            return Ok(new { message = "Correo de recuperación enviado." });
+        }
+
+
+        private string GenerateResetToken()
+        {
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                var tokenData = new byte[32]; // Generar 32 bytes aleatorios
+                rng.GetBytes(tokenData);
+
+                // Convertir a Base64 y reemplazar caracteres problemáticos
+                return Convert.ToBase64String(tokenData)
+                              .Replace("+", "-")
+                              .Replace("/", "_")
+                              .Replace("=", ""); // Eliminar relleno
+            }
+        }
+
+        [HttpGet]
+        [Route("validate-token")]
+        public async Task<IActionResult> ValidateToken(string token)
+        {
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.ResetToken == token && u.ResetTokenExpires > DateTime.UtcNow);
+            if (usuario == null)
+            {
+                return BadRequest(new { message = "El token es inválido o ha expirado." });
+            }
+
+            return Ok(true);
+        }
+
+        [HttpPost]
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, [FromServices] EmailService emailService)
+        {
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(
+                u => u.ResetToken == request.Token && u.ResetTokenExpires > DateTime.UtcNow);
+
+            if (usuario == null)
+            {
+                return BadRequest(new { message = "El token es inválido o ha expirado." });
+            }
+
+            // Actualizar la contraseña y limpiar el token
+            usuario.contrasenia = request.NuevaContrasenia;
+            usuario.ResetToken = null;
+            usuario.ResetTokenExpires = null;
+
+            await _context.SaveChangesAsync();
+
+            // Preparar y enviar el correo con el template "PasswordUpdated.html"
+            var body = System.IO.File.ReadAllText("Templates/PasswordUpdated.html")
+                       .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png");
+
+            await emailService.SendEmailAsync(usuario.correo, "Tu contraseña ha sido actualizada", body);
+
+            return Ok(new { message = "Contraseña restablecida con éxito." });
+        }
+
 
     }
-
-    
-
 }
 

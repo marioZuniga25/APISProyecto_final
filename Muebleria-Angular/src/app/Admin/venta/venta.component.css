@@ -1,17 +1,29 @@
-.card-ventas{
+.card-ventas {
     background-color: #F2F2F2;
-    border-radius:20px; 
-    margin: 4%;
-    -webkit-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
-    -moz-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
-    box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
-    padding: 1% 4% 4% 4%;
+    border-radius: 20px; 
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-h1, h2 {
-    text-transform: capitalize;
+
+
+.product-image {
+    height: 250px; /* Altura ajustada para que las imágenes sean más pequeñas */
+    object-fit: cover; /* Mantiene la relación de aspecto */
+    border-radius: 10px; /* Borde redondeado */
+    margin-bottom: 10px; /* Espacio entre las imágenes */
+    width: 100%; /* Ajusta el ancho de la imagen */
+    cursor: pointer; /* Permite que la imagen sea clickeable */
+    background-color: white;
+   
+
+}
+.h1{
+    font-size: 30px;
+    font-weight: bold;
     text-align: center;
-    color: #333;
+    margin-top: 20px;
 }
 
 .search-bar {
@@ -20,135 +32,60 @@ h1, h2 {
     justify-content: center;
 }
 
-.selected-producto{
-    background-color: red;
-}
-
-#search {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-}
-
-.products-table {
-    margin-bottom: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-
-}
-
-.products-table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.products-table th {
-    background-color: #f2f2f2;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-.selected-products-table {
-    margin-bottom: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-}
-
-.selected-products-table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-.selected-products-table th{
-    background-color: #f2f2f2;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-
-.add-btn, .remove-btn, .save-btn, .cancel-btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #fff;
-}
-
-.add-btn {
-    background-color: #28a745;
-}
-
-.remove-btn {
-    background-color: #dc3545;
-}
-
-.save-btn {
-    background-color: #007bff;
-}
-
-.cancel-btn {
-    background-color: #6c757d;
-    margin-left: 10px;
-}
-
-.action-buttons {
+.venta-container {
     display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.productos-disponibles {
+    flex: 3;
+    padding: 20px;
+    background-color: #f8f9fa; /* Fondo claro para resaltar */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.productos-seleccionados {
+    flex: 1;
+    background-color: #f8f9fa; /* Fondo claro para resaltar */
+    border-radius: 10px;
+    padding: 20px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-}
-
-.btn-agregar {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
+    margin: 10px;
+    background-color: #ffffff; /* Fondo blanco para las tarjetas */
+    border: 1px solid #e0e0e0; /* Añade un borde sutil */
     border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+    height: 100%; /* Mantiene la altura uniforme */
+    margin-bottom: 10%;
+
+}
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.btn-agregar:hover {
-    background-color: #158a30;
-    scale: 1.1;
-    cursor: pointer;
+.selected-products-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 }
 
-.btn-agregar:active {
-    background-color: #28a745;
-    scale: 1.0;
-}
 
-.btn-eliminar {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-}
 
-.btn-eliminar:hover {
-    background-color: #9c2834;
-    scale: 1.1;
-    cursor: pointer;
-}
-
-.btn-eliminar:active {
-    background-color: #9c2834;
-    scale: 1.0;
+.card-body {
+    display: flex;
+    justify-content: space-between; /* Distribuye el contenido horizontalmente */
+    align-items: center; /* Alinea verticalmente en el centro */
 }
