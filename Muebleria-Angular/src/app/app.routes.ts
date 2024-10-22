@@ -23,6 +23,9 @@ import { ProductosComponent } from './Admin/productos/productos.component';
 import { ProduccionComponent } from './Admin/produccion/produccion.component';
 import { PedidosComponent } from './Admin/pedidos/pedidos.component';
 import { ComprasMateriasPrimasComponent } from './Admin/compras-materias-primas/compras-materias-primas.component';
+import { ForgotPasswordComponent } from './Usuario/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './Usuario/reset-password/reset-password.component';
+
 export const routes: Routes = [
   {
     path: '',
@@ -113,6 +116,14 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginUsuarioComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
   },
   {
     path: 'perfil/:id',
