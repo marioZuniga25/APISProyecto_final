@@ -17,15 +17,15 @@
           <a href="../catalogo">Ver todos</a>
         </div>
         <div class="buscador-producto" *ngIf="productos.length > 0">
-          <div *ngFor="let producto of productos" class="buscador-producto-result">
-            <a class="buscador-producto-result-img" [routerLink]="['/detalle', producto.idProducto]">
+          <a [routerLink]="['/detalle', producto.idProducto]" *ngFor="let producto of productos" class="buscador-producto-result">
+            <div class="buscador-producto-result-img" >
               <img [src]="producto.imagen" style="width: 100px;" [alt]="producto.nombre">
-            </a>
+            </div>
             <div class="buscador-producto-result-text">
               <p>{{ producto.nombreProducto }}</p>
               <p>{{ producto.precio | currency }}</p>
             </div>
-          </div>
+          </a>
         </div>
         <ng-template #noResults>
           <div class="no-results">

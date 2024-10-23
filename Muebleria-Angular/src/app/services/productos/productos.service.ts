@@ -42,4 +42,10 @@ export class ProductosService {
   deleteProducto(id: number): Observable<any> {
     return this.http.delete<any>(`${this._apiUrl}Producto/Eliminar/${id}`);
   }
+  validarStock(id: number): Observable<number> {
+    return this.http.get<{ mensaje: string }>(`${this._apiUrl}Producto/ValidarStock/${id}`)
+      .pipe(
+        map(response => parseInt(response.mensaje, 10)) 
+      );
+  }
 }

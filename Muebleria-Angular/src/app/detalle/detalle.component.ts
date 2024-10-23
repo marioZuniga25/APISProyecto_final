@@ -61,16 +61,22 @@ export class DetalleComponent implements OnInit {
         }
       });
     } else {
-      const productoCarrito: ProductoCarrito = {
-        id: this.producto.idProducto,
-        nombre: this.producto.nombreProducto,
-        precio: this.producto.precio,
-        cantidad: this.cantidad,
-        imagen: this.producto.imagen,
-        stock: this.producto.stock
-      };
-      this.carritoService.agregarAlCarrito(productoCarrito);
-      Swal.fire('Éxito', 'Se agregó el producto al carrito.', 'success');
+      this.productosService.validarStock(this.producto.idProducto).subscribe(stockDisponible => {
+        if (stockDisponible === 1) {
+          const productoCarrito: ProductoCarrito = {
+            id: this.producto.idProducto,
+            nombre: this.producto.nombreProducto,
+            precio: this.producto.precio,
+            cantidad: this.cantidad,
+            imagen: this.producto.imagen,
+            stock: this.producto.stock
+          };
+          this.carritoService.agregarAlCarrito(productoCarrito);
+          Swal.fire('Éxito', 'Se agregó el producto al carrito.', 'success');
+        } else {
+          Swal.fire('Error', 'Este producto está agotado.', 'error');
+        }
+      });
     }
   }
 }

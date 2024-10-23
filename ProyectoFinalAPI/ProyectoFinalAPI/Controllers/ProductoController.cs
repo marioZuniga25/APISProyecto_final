@@ -218,5 +218,24 @@ namespace ProyectoFinalAPI.Controllers
 
             return productos;
         }
+        [HttpGet("ValidarStock/{id}")]
+            public async Task<ActionResult> ValidarStock(int id)
+            {
+                var producto = await _context.Producto.FindAsync(id);
+
+                if (producto == null)
+                {
+                    return NotFound(new { mensaje = "Producto no encontrado" });
+                }
+
+                if (producto.stock > 0)
+                {
+                    return Ok(new { mensaje = "1"});
+                }
+                else
+                {
+                   return Ok(new { mensaje = "0"});
+                }
+            }
     }
 }

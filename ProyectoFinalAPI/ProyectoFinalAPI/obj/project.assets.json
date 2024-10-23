@@ -4523,25 +4523,24 @@
     ]
   },
   "packageFolders": {
-    "/Users/angelroberto/.nuget/packages/": {}
+    "/Users/cristianleyva/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+      "projectUniqueName": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
       "projectName": "ProyectoFinalAPI",
-      "projectPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
-      "packagesPath": "/Users/angelroberto/.nuget/packages/",
-      "outputPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
+      "projectPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+      "packagesPath": "/Users/cristianleyva/.nuget/packages/",
+      "outputPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/angelroberto/.nuget/NuGet/NuGet.Config"
+        "/Users/cristianleyva/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4605,16 +4604,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.206/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problema al leer el archivo de caché /Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }
