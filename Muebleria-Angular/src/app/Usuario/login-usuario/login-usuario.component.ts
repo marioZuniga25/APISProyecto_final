@@ -1,6 +1,7 @@
+import { NgxCaptchaModule } from 'ngx-captcha';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IUsuarioDetalle } from '../../interfaces/IUsuarioDetalle';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -9,11 +10,13 @@ import { AuthResponse } from '../../interfaces/AuthResponse';
 @Component({
   selector: 'app-login-usuario',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxCaptchaModule],
   templateUrl: './login-usuario.component.html',
-  styleUrl: './login-usuario.component.css'
+  styleUrls: ['./login-usuario.component.css']
 })
-export class LoginUsuarioComponent {
+export class LoginUsuarioComponent implements OnInit {
+  protected aFormGroup!: FormGroup;
+  siteKey: string = "6LcPr2sqAAAAAOXw944gf7A7U8gd2KvcwouZBnGz";
   loginData: IUsuarioDetalle = {
     idUsuario: 0,
     nombreUsuario: '',
@@ -24,12 +27,23 @@ export class LoginUsuarioComponent {
   };
   errorMessage: string = '';
   idUsuarioLocal: string = '';
-  constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit(form: NgForm): void {
-    if (form.invalid) {
+  constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
+    this.aFormGroup = this.formBuilder.group({
+      correo: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      recaptcha: ['', Validators.required]
+    });
+  }
+
+  ngOnInit() {}
+
+  onSubmit(): void {
+    if (this.aFormGroup.invalid) {
       return;
     }
+    this.loginData.correo = this.aFormGroup.value.correo;
+    this.loginData.contrasenia = this.aFormGroup.value.password;
 
     this.authService.login(this.loginData).subscribe(
       (response: AuthResponse) => {
@@ -37,7 +51,6 @@ export class LoginUsuarioComponent {
           this.idUsuarioLocal = response.user.idUsuario.toString();
           console.log(this.idUsuarioLocal);
           localStorage.setItem('userId', this.idUsuarioLocal);
-          // Redirigir a la página principal después de iniciar sesión
           this.router.navigate(['/']);
         }
       },
@@ -48,4 +61,3 @@ export class LoginUsuarioComponent {
     );
   }
 }
-
