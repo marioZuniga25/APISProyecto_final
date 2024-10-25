@@ -16,11 +16,46 @@ namespace ProyectoFinalAPI.Controllers
         }
 
         [HttpGet("ventas-totales")]
-        public async Task<IActionResult> GetTotalVentas()
+        public async Task<IActionResult> GetTotalVentas(string fechaInicio = "", string fechaFin = "")
         {
-            var totalVentas = await _context.Venta.SumAsync(v => v.total);
-            return Ok(new { TotalVentas = totalVentas });
+            // Establecer fechas predeterminadas si están vacías
+            DateTime inicio;
+            DateTime fin;
+
+            if (string.IsNullOrEmpty(fechaInicio))
+            {
+                // Si no se proporciona fecha de inicio, usar hace 7 días
+                inicio = DateTime.Now.AddDays(-7).Date; // Solo la fecha, sin hora
+            }
+            else
+            {
+                inicio = DateTime.Parse(fechaInicio).Date; // Solo la fecha, sin hora
+            }
+
+            if (string.IsNullOrEmpty(fechaFin))
+            {
+                // Si no se proporciona fecha de fin, usar hoy (sin hora)
+                fin = DateTime.Today; // Solo la fecha, sin hora
+            }
+            else
+            {
+                fin = DateTime.Parse(fechaFin).Date; // Solo la fecha, sin hora
+            }
+
+            var ventasOnline = await _context.Venta
+                .Where(v => v.tipoVenta == "Online" && v.fechaVenta >= inicio && v.fechaVenta <= fin.AddDays(1).AddTicks(-1)) // Incluye el día completo
+                .SumAsync(v => v.total);
+
+            var ventasFisico = await _context.Venta
+                .Where(v => v.tipoVenta == "Fisica" && v.fechaVenta >= inicio && v.fechaVenta <= fin.AddDays(1).AddTicks(-1)) // Incluye el día completo
+                .SumAsync(v => v.total);
+
+            return Ok(new { ventasOnline, ventasFisico });
         }
+
+
+
+
 
         [HttpGet("productos-mas-vendidos")]
         public async Task<IActionResult> GetProductosMasVendidos()

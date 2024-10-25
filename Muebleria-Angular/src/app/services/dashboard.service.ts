@@ -14,9 +14,11 @@ export class DashboardService {
   constructor(private http: HttpClient) {}
 
   // Obtener total de ventas
-    getTotalVentas(): Observable<{ totalVentas: number }> {
-    return this.http.get<{ totalVentas: number }>(`${this.apiUrl}/ventas-totales`);
+  getTotalVentas(fechaInicio: string = '', fechaFin: string = ''): Observable<{ ventasOnline: number, ventasFisico: number }> {
+    const params = { fechaInicio, fechaFin };
+    return this.http.get<{ ventasOnline: number, ventasFisico: number }>(`${this.apiUrl}/ventas-totales`, { params });
   }
+
 
   // Obtener productos más vendidos
     getProductosMasVendidos(): Observable<{ nombreProducto: string, totalVendidos: number }[]> {
