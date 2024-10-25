@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
+    "D:\\Desarrollos\\ASP.NET\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {
+    "D:\\Desarrollos\\ASP.NET\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "projectUniqueName": "D:\\Desarrollos\\ASP.NET\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
         "projectName": "ProyectoFinalAPI",
-        "projectPath": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
-        "packagesPath": "C:\\Users\\emman\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
+        "projectPath": "D:\\Desarrollos\\ASP.NET\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "packagesPath": "C:\\Users\\Mayo\\.nuget\\packages\\",
+        "outputPath": "D:\\Desarrollos\\ASP.NET\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\emman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mayo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
