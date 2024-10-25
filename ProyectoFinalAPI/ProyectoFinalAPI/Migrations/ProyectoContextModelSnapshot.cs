@@ -72,6 +72,23 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Contactos");
                 });
 
+            modelBuilder.Entity("ProyectoFinalAPI.Models.ContraseniaInsegura", b =>
+                {
+                    b.Property<int>("IdContraseniaInsegura")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContraseniaInsegura"));
+
+                    b.Property<string>("Contrasenia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdContraseniaInsegura");
+
+                    b.ToTable("ContraseniaInsegura", (string)null);
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
                 {
                     b.Property<int>("idDetalleOrdenCompra")

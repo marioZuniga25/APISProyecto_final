@@ -85,7 +85,7 @@
           <label for="contraseniaActual">Confirmar Contraseña</label>
           <input [(ngModel)]="contraseniaActual" id="contraseniaActual" name="contraseniaActual" type="password" class="form-control" required>
           <div *ngIf="mostrarErrorContrasenia" class="text-danger" style="font-size: 14px;">
-            Ingrese la contraseña
+            {{ mensajeErrorContrasenia }}
           </div>
         </div>
         <div class="text-end">

@@ -1174,7 +1174,7 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.UsuarioController",
-    "Method": "updateUsuario",
+    "Method": "UpdateUsuario",
     "RelativePath": "api/Usuario/ModificarUsuario/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -1195,7 +1195,7 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.UsuarioController",
-    "Method": "addUsuario",
+    "Method": "AddUsuario",
     "RelativePath": "api/Usuario/registrar",
     "HttpMethod": "POST",
     "IsController": true,
@@ -1211,7 +1211,7 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.UsuarioController",
-    "Method": "addUsuarioInterno",
+    "Method": "AddUsuarioInterno",
     "RelativePath": "api/Usuario/registrarInterno",
     "HttpMethod": "POST",
     "IsController": true,

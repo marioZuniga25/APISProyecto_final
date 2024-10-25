@@ -15,6 +15,11 @@ namespace ProyectoFinalAPI.Controllers
         {
             _context = context;
         }
+        private async Task<bool> IsPasswordUnsafe(string password)
+        {
+            // Verificar si la contraseña está en la lista de contraseñas inseguras
+            return await _context.ContraseniaInsegura.AnyAsync(c => c.Contrasenia == password);
+        }
 
         [HttpGet("Listado")]
         public async Task<ActionResult> GetListadoUsuarios()
@@ -41,8 +46,13 @@ namespace ProyectoFinalAPI.Controllers
 
         [HttpPost]
         [Route("registrar")]
-        public async Task<IActionResult> addUsuario([FromBody] Usuario request)
+        public async Task<IActionResult> AddUsuario([FromBody] Usuario request)
         {
+            if (await IsPasswordUnsafe(request.contrasenia))
+            {
+                return BadRequest(new { message = "La contraseña ingresada es insegura." });
+            }
+
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
 
             var usuario = new Usuario
@@ -63,8 +73,13 @@ namespace ProyectoFinalAPI.Controllers
         // Endpoint para registrar empleados (usuarios internos)
         [HttpPost]
         [Route("registrarInterno")]
-        public async Task<IActionResult> addUsuarioInterno([FromBody] Usuario request)
+        public async Task<IActionResult> AddUsuarioInterno([FromBody] Usuario request)
         {
+            if (await IsPasswordUnsafe(request.contrasenia))
+            {
+                return BadRequest(new { message = "La contraseña ingresada es insegura." });
+            }
+
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
 
             var usuario = new Usuario
@@ -85,7 +100,7 @@ namespace ProyectoFinalAPI.Controllers
 
         [HttpPut]
         [Route("ModificarUsuario/{id:int}")]
-        public async Task<IActionResult> updateUsuario(int id, [FromBody] Usuario request)
+        public async Task<IActionResult> UpdateUsuario(int id, [FromBody] Usuario request)
         {
             var usuarioModificar = await _context.Usuario.FindAsync(id);
 
@@ -97,8 +112,13 @@ namespace ProyectoFinalAPI.Controllers
             usuarioModificar.nombreUsuario = request.nombreUsuario;
             usuarioModificar.correo = request.correo;
 
+            // Verificar si se actualiza la contraseña
             if (!string.IsNullOrEmpty(request.contrasenia))
             {
+                if (await IsPasswordUnsafe(request.contrasenia))
+                {
+                    return BadRequest(new { message = "La contraseña ingresada es insegura." });
+                }
                 usuarioModificar.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
             }
 
@@ -147,6 +167,7 @@ namespace ProyectoFinalAPI.Controllers
 
             return Ok(usuario);
         }
+
 
 
         //EndPoint para login
@@ -263,8 +284,12 @@ namespace ProyectoFinalAPI.Controllers
                 return BadRequest(new { message = "El token es inválido o ha expirado." });
             }
 
-            usuario.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.NuevaContrasenia);
+            if (await IsPasswordUnsafe(request.NuevaContrasenia))
+            {
+                return BadRequest(new { message = "La nueva contraseña ingresada es insegura." });
+            }
 
+            usuario.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.NuevaContrasenia);
             usuario.ResetToken = null;
             usuario.ResetTokenExpires = null;
 
@@ -280,6 +305,6 @@ namespace ProyectoFinalAPI.Controllers
 
 
 
-    }
+}
 }
 

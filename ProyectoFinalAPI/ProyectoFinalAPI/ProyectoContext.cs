@@ -29,9 +29,10 @@ namespace ProyectoFinalAPI
         public DbSet<OrdenCompra> OrdenesCompra { get; set; }
         public DbSet<DetalleOrdenCompra> DetallesOrdenCompra { get; set; }
         public DbSet<UnidadMedida> UnidadMedidas { get; set; }
+        public DbSet<ContraseniaInsegura> ContraseniaInsegura { get; set; }
 
 
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -195,6 +196,14 @@ namespace ProyectoFinalAPI
                          venta.Property(i => i.tipoVenta).IsRequired().HasMaxLength(10).HasColumnType("varchar(10)");
 
                      });
+            modelBuilder.Entity<ContraseniaInsegura>(contraseniaInsegura =>
+            {
+                contraseniaInsegura.ToTable("ContraseniaInsegura");
+                contraseniaInsegura.HasKey(i => i.IdContraseniaInsegura);
+                contraseniaInsegura.Property(i => i.IdContraseniaInsegura).ValueGeneratedOnAdd().UseIdentityColumn();
+                contraseniaInsegura.Property(i => i.Contrasenia).IsRequired();
+            });
+
             modelBuilder.Entity<Pedidos>(pedido =>
             {
                 pedido.ToTable("Pedidos");

@@ -71,7 +71,9 @@ export class ResetPasswordComponent implements OnInit {
       },
       (error) => {
         console.error('Error al restablecer la contraseña', error);
-        this.errorMessage = 'Hubo un error al restablecer la contraseña.';
+        // Captura y muestra el mensaje de error específico
+        const mensajeError = error.error?.message || 'Hubo un error al restablecer la contraseña.';
+        this.errorMessage = mensajeError;
         this.successMessage = '';
         this.isSubmitting = false;
       }

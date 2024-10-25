@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241024202134_AgregarTipoVentaAVentas")]
-    partial class AgregarTipoVentaAVentas
+    [Migration("20241025103917_CreateTableContraseniaInsegura")]
+    partial class CreateTableContraseniaInsegura
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,23 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasKey("IdContacto");
 
                     b.ToTable("Contactos");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.ContraseniaInsegura", b =>
+                {
+                    b.Property<int>("IdContraseniaInsegura")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContraseniaInsegura"));
+
+                    b.Property<string>("Contrasenia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdContraseniaInsegura");
+
+                    b.ToTable("ContraseniaInsegura", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>

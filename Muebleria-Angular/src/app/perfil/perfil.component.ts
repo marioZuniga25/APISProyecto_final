@@ -21,7 +21,8 @@ export class PerfilComponent implements OnInit {
   userEdit: IUsuarioDetalle | null = null;
   contraseniaActual: string = ''; // Variable para la contraseña actual
   nuevaContrasenia: string = ''; // Variable para la nueva contraseña
-  mostrarErrorContrasenia: boolean = false; // Nueva variable para mostrar el mensaje de error
+  mostrarErrorContrasenia: boolean = false; // Para indicar si hay un error
+  mensajeErrorContrasenia: string = ''; // Mensaje de error detallado
   nuevaTarjeta: IUtarjetas = {
     idTarjeta: 0,
     idUsuario: 0,
@@ -101,13 +102,11 @@ export class PerfilComponent implements OnInit {
   }
 
   abrirModalModificar(idUsuario: number | undefined): void {
-    console.log('Abrir modal llamado con idUsuario:', idUsuario);
     if (idUsuario) {
       this.perfilService.getUserDetails(idUsuario).subscribe(
         (data: IUsuarioDetalle) => {
           this.userEdit = data;
           this.isModalOpen = true;
-          console.log('Datos del usuario cargados para editar:', this.userEdit);
         },
         (error) => {
           console.error('Error fetching user details for edit', error);
@@ -124,7 +123,13 @@ export class PerfilComponent implements OnInit {
   onSubmit(): void {
     // Validación de la contraseña actual
     if (!this.contraseniaActual) {
-      this.mostrarErrorContrasenia = true; // Muestra el error si la contraseña está vacía
+      this.mostrarErrorContrasenia = true;
+      this.mensajeErrorContrasenia = 'Ingrese la nueva contraseña.';
+      return;
+    }
+    if (!this.validatePassword(this.contraseniaActual)) {
+      this.mostrarErrorContrasenia = true;
+      this.mensajeErrorContrasenia = 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.';
       return;
     }
 
@@ -157,8 +162,13 @@ export class PerfilComponent implements OnInit {
         },
         error => {
           console.error("Error al actualizar el usuario:", error);
-          Swal.fire('Error', 'Hubo un problema al actualizar el usuario.', 'error');
+          const mensajeError = error.error?.message || 'Hubo un problema al actualizar el usuario. Inténtalo de nuevo.';
+          Swal.fire('Error', mensajeError, 'error');
         }
       );
+  }
+  validatePassword(contrasenia: string): boolean {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(contrasenia);
   }
 }
