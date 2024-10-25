@@ -45,8 +45,10 @@
 
 .productImage {
     width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho */
-    height: auto; /* Mantiene la proporción de la imagen */
+    height: 150px; /* Establece una altura fija para la imagen */
+    object-fit: cover; /* Mantiene la proporción de la imagen y la recorta si es necesario */
     border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .productName {
@@ -59,24 +61,26 @@
     color: #333;
 }
 
-/* Ofertas.module.css */
-
-.progress-loader {
-    top: 50%;
-    left: 50%;
-    position: relative; /* Cambiado a relative para que se posicione dentro del contenedor */
+.progressLoader {
+    margin-top: 10px; /* Ajusta el margen para que se separe del contenido */
     width: 100%; /* Cambiar el ancho según el contenedor */
     background: rgba(0, 0, 255, 0.253);
     height: 10px;
     border-radius: 7px;
-    overflow: hidden;
-    margin-top: 20px; /* Margen para separar de los productos */
-  }
-  
-  .progress {
+}
+
+.progress {
     height: 10px;
     border-radius: 7px;
     background: rgb(255, 0, 0);
     transition: width 1s linear; /* Hacer que el ancho cambie suavemente */
-  }
-  
+}
+
+.countdown{
+    margin-top: auto;
+}
+.strikethrough {
+    text-decoration: line-through; /* Aplica el rayo */
+    color: red; /* Cambia el color si es necesario */
+    font-weight: normal; /* Asegúrate de que no esté en negrita */
+}

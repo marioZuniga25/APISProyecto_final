@@ -64,31 +64,33 @@ const Ofertas = () => {
 
   return (
     <div className={styles.ofertasContainer}>
-        <h2>Ofertas Relámpago</h2>
-        {ofertas && ofertas.productos && ofertas.productos.length > 0 ? (
-            <div className={styles.banner}>
-                <div key={ofertas.idPromocionRandom} className={styles.ofertaCard}>
-                    <div className={styles.productList}>
-                        {ofertas.productos.map(producto => (
-                            <div key={producto.idProducto} className={styles.productCard}>
-                                <img src={producto.imagen} alt={producto.nombreProducto} className={styles.productImage} />
-                                <div className={styles.productName}>{producto.nombreProducto}</div>
-                                <div className={styles.productPrice}>Precio: ${producto.precio}</div>
-                                <div className={styles.productDiscount}>Precio con Descuento: ${producto.precioConDescuento}</div>
-                                <div className={styles.countdown}>
-                                    <span>Quedan: {countdown} segundos</span>
-                                </div>
-                                <div className={styles.progressLoader}>
-                                    <div className={styles.progress} style={{ width: `${progress}%` }}></div>
-                                </div>
-                            </div>
-                        ))}
+      <h2>Ofertas Relámpago</h2>
+      {ofertas && ofertas.productos && ofertas.productos.length > 0 ? (
+        <div className={styles.banner}>
+          <div key={ofertas.idPromocionRandom} className={styles.ofertaCard}>
+            <div className={styles.productList}>
+              {ofertas.productos.map(producto => (
+                <div key={producto.idProducto} className={styles.productCard}>
+                  <img src={producto.imagen} alt={producto.nombreProducto} className={styles.productImage} />
+                    <div className={styles.productName}>{producto.nombreProducto}</div>
+                    <div className={styles.productPrice}>
+                        Precio: <span className={styles.strikethrough}>${producto.precio}</span>
+                    </div>
+                    <div className={styles.productDiscount}>Precio con Descuento: ${producto.precioConDescuento}</div>
+                    <div className={styles.countdown}>
+                        <span>Quedan: {countdown} segundos</span>
+                    </div>
+                    <div className={styles.progressLoader}>
+                        <div className={styles.progress} style={{ width: `${progress}%` }}></div>
                     </div>
                 </div>
+              ))}
             </div>
-        ) : (
-            <p>No hay ofertas disponibles.</p>
-        )}
+          </div>
+        </div>
+      ) : (
+        <p>No hay ofertas disponibles.</p>
+      )}
     </div>
   );
 };
