@@ -499,6 +499,11 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<int>("idUsuario")
                         .HasColumnType("int");
 
+                    b.Property<string>("tipoVenta")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
                     b.Property<double>("total")
                         .HasColumnType("float");
 

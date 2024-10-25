@@ -6,5 +6,6 @@
         public int idUsuario { get; set; }
         public DateTime fechaVenta{ get; set; }
         public double total { get; set; }
+        public string tipoVenta { get; set; } // "Online" o "Fisica"
     }
 }

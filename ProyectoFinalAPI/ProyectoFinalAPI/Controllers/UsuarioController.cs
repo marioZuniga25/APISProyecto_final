@@ -43,12 +43,14 @@ namespace ProyectoFinalAPI.Controllers
         [Route("registrar")]
         public async Task<IActionResult> addUsuario([FromBody] Usuario request)
         {
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
+
             var usuario = new Usuario
             {
                 idUsuario = 0,
                 nombreUsuario = request.nombreUsuario,
                 correo = request.correo,
-                contrasenia = request.contrasenia,
+                contrasenia = hashedPassword,
                 rol = request.rol,
                 type = 0,
             };
@@ -63,14 +65,16 @@ namespace ProyectoFinalAPI.Controllers
         [Route("registrarInterno")]
         public async Task<IActionResult> addUsuarioInterno([FromBody] Usuario request)
         {
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
+
             var usuario = new Usuario
             {
                 idUsuario = 0,
                 nombreUsuario = request.nombreUsuario,
                 correo = request.correo,
-                contrasenia = request.contrasenia,
+                contrasenia = hashedPassword,
                 rol = request.rol,
-                type = 1, // Usuario interno (empleado)
+                type = 1,
             };
 
             await _context.Usuario.AddAsync(usuario);
@@ -81,7 +85,6 @@ namespace ProyectoFinalAPI.Controllers
 
         [HttpPut]
         [Route("ModificarUsuario/{id:int}")]
-
         public async Task<IActionResult> updateUsuario(int id, [FromBody] Usuario request)
         {
             var usuarioModificar = await _context.Usuario.FindAsync(id);
@@ -93,9 +96,13 @@ namespace ProyectoFinalAPI.Controllers
 
             usuarioModificar.nombreUsuario = request.nombreUsuario;
             usuarioModificar.correo = request.correo;
-            usuarioModificar.contrasenia = request.contrasenia;
-            usuarioModificar.rol = request.rol;
 
+            if (!string.IsNullOrEmpty(request.contrasenia))
+            {
+                usuarioModificar.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
+            }
+
+            usuarioModificar.rol = request.rol;
 
             try
             {
@@ -104,7 +111,6 @@ namespace ProyectoFinalAPI.Controllers
             catch
             {
                 return NotFound();
-
             }
 
             return Ok();
@@ -148,18 +154,21 @@ namespace ProyectoFinalAPI.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] Usuario request)
         {
-            // Buscar usuario por nombre de usuario o correo y contraseña
             var usuario = await _context.Usuario
-                .FirstOrDefaultAsync(u => (u.nombreUsuario == request.nombreUsuario || u.correo == request.correo)
-                                          && u.contrasenia == request.contrasenia);
+                .FirstOrDefaultAsync(u => u.nombreUsuario == request.nombreUsuario || u.correo == request.correo);
 
-            // Si no se encuentra el usuario, devolver una respuesta no autorizada
             if (usuario == null)
             {
-                return Unauthorized(new { message = "Usuario o contraseña incorrectos" });
+                return Unauthorized(new { message = "Usuario no encontrado." });
             }
 
-            // Si se encuentra el usuario, devolver una respuesta de éxito
+            bool passwordValid = BCrypt.Net.BCrypt.Verify(request.contrasenia, usuario.contrasenia);
+
+            if (!passwordValid)
+            {
+                return Unauthorized(new { message = "Contraseña incorrecta." });
+            }
+
             return Ok(new { message = "Inicio de sesión exitoso", user = usuario });
         }
 
@@ -254,14 +263,13 @@ namespace ProyectoFinalAPI.Controllers
                 return BadRequest(new { message = "El token es inválido o ha expirado." });
             }
 
-            // Actualizar la contraseña y limpiar el token
-            usuario.contrasenia = request.NuevaContrasenia;
+            usuario.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.NuevaContrasenia);
+
             usuario.ResetToken = null;
             usuario.ResetTokenExpires = null;
 
             await _context.SaveChangesAsync();
 
-            // Preparar y enviar el correo con el template "PasswordUpdated.html"
             var body = System.IO.File.ReadAllText("Templates/PasswordUpdated.html")
                        .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png");
 
@@ -269,6 +277,7 @@ namespace ProyectoFinalAPI.Controllers
 
             return Ok(new { message = "Contraseña restablecida con éxito." });
         }
+
 
 
     }

@@ -192,6 +192,7 @@ namespace ProyectoFinalAPI
                          venta.Property(i => i.total).IsRequired();
                          venta.Property(i => i.fechaVenta).IsRequired();
                          venta.Property(i => i.idUsuario).IsRequired();
+                         venta.Property(i => i.tipoVenta).IsRequired().HasMaxLength(10).HasColumnType("varchar(10)");
 
                      });
             modelBuilder.Entity<Pedidos>(pedido =>

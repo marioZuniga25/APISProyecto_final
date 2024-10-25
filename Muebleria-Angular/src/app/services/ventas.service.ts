@@ -26,8 +26,11 @@ export class VentasService {
       return this._http.get<IProductoResponse[]>( `${this._apiUrlP}ListadoProductos`);
     }
 
-    addVenta(request: IVenta): Observable<number> {
-      return this._http.post<number>(`${this._apiUrlV}AgregarVenta`, request);
+    addVentaOnline(request: IVenta): Observable<number> {
+      return this._http.post<number>(`${this._apiUrlV}AgregarVentaOnline`, request);
+    }
+    addVentaFisica(request: IVenta): Observable<number> {
+      return this._http.post<number>(`${this._apiUrlV}AgregarVentaFisica`, request);
     }
 
     addDetalleVenta(request: IDetalleVenta[]): Observable<void> {

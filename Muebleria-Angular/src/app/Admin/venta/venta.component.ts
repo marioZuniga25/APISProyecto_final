@@ -31,7 +31,8 @@ export class VentaComponent {
   nuevaVenta: IVenta = {
     idUsuario: 1,
     fechaVenta: new Date(),
-    total: 0
+    total: 0,
+    tipoVenta: ''
   };
 
 
@@ -117,7 +118,7 @@ export class VentaComponent {
   
     this.nuevaVenta.total = this.calcularTotal();
   
-    this._ventaService.addVenta(this.nuevaVenta).subscribe({
+    this._ventaService.addVentaFisica(this.nuevaVenta).subscribe({
       next: (idVentaGenerada) => {
         console.log('ID de la venta generada:', idVentaGenerada);
         Swal.fire({
@@ -142,7 +143,7 @@ export class VentaComponent {
         });
   
         
-        this.nuevaVenta = { fechaVenta: new Date(), total: 0, idUsuario: 1 };
+        this.nuevaVenta = { fechaVenta: new Date(), total: 0, idUsuario: 1, tipoVenta: ''};
         this.selectedProducts = [];
       },
       error: (error) => {

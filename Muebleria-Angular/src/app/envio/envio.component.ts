@@ -62,129 +62,11 @@ export class EnvioComponent implements OnInit{
     this.subtotal = this.carrito.reduce((acc, producto) => acc + producto.precio * producto.cantidad, 0);
     this.total = this.subtotal; // Aquí puedes sumar impuestos o descuentos si es necesario
   }
-//   confirmarPedido() {
-//     // Obtén el idTarjeta seleccionado
-//     const idTarjeta = (document.querySelector('input[name="tarjeta"]:checked') as HTMLInputElement)?.value;
 
-//     // Obtén los datos del formulario de envío
-//     const nombre = (document.querySelector('input[name="nombre"]') as HTMLInputElement).value;
-//     const apellidos = (document.querySelector('input[name="apellidos"]') as HTMLInputElement).value;
-//     const telefono = (document.querySelector('input[name="telefono"]') as HTMLInputElement).value;
-//     const correo = (document.querySelector('input[name="correo"]') as HTMLInputElement).value;
-//     const calle = (document.querySelector('input[name="calle"]') as HTMLInputElement).value;
-//     const numero = (document.querySelector('input[name="numero"]') as HTMLInputElement).value;
-//     const colonia = (document.querySelector('input[name="colonia"]') as HTMLInputElement).value;
-//     const ciudad = (document.querySelector('input[name="cuidad"]') as HTMLInputElement).value;
-//     const estado = (document.querySelector('select[name="estado"]') as HTMLSelectElement).value;
-//     const codigoPostal = (document.querySelector('input[name="codigo"]') as HTMLInputElement).value;
-
-//     // Validar que todos los campos estén llenos
-//     if (!nombre || !apellidos || !telefono || !correo || !calle || !numero || !colonia || !ciudad || !estado || !codigoPostal || !idTarjeta) {
-//         Swal.fire({
-//             title: 'Campos incompletos',
-//             text: 'Por favor, llena todos los campos requeridos y selecciona una tarjeta.',
-//             icon: 'warning',
-//             confirmButtonText: 'Aceptar'
-//         });
-//         return; // Si algún campo está vacío, detenemos la ejecución
-//     }
-
-//     Swal.fire({
-//         title: '¿Estás seguro?',
-//         text: "¿Deseas confirmar tu compra?",
-//         icon: 'warning',
-//         showCancelButton: true,
-//         confirmButtonText: 'Aceptar',
-//         cancelButtonText: 'Cancelar'
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             // Si el usuario confirma, procesamos la venta
-//             const idUsuario = localStorage.getItem('userId')!;
-//             const total = this.total;
-
-//             const nuevaVenta: IVenta = {
-//                 idUsuario: parseInt(idUsuario),
-//                 fechaVenta: new Date(),
-//                 total: total
-//             };
-
-//             this.ventasService.addVenta(nuevaVenta).subscribe(
-//                 (idVentaGenerado) => {
-//                     // Inserción de los detalles de la venta
-//                     const detallesVenta: IDetalleVenta[] = this.carrito.map(producto => ({
-//                         idDetalleVenta: 0,
-//                         idVenta: idVentaGenerado,
-//                         idProducto: producto.id,
-//                         cantidad: producto.cantidad,
-//                         precioUnitario: producto.precio
-//                     }));
-
-//                     this.ventasService.addDetalleVenta(detallesVenta).subscribe(
-//                         () => {
-//                             // Crear el objeto del pedido
-//                             const nuevoPedido: IPedidos = {
-//                                 idPedido: 0,
-//                                 idVenta: idVentaGenerado,
-//                                 idUsuario: parseInt(idUsuario),
-//                                 idTarjeta: parseInt(idTarjeta),
-//                                 nombre: nombre,
-//                                 apellidos: apellidos,
-//                                 telefono: telefono,
-//                                 correo: correo,
-//                                 calle: calle,
-//                                 numero: numero,
-//                                 colonia: colonia,
-//                                 ciudad: ciudad,
-//                                 estado: estado,
-//                                 codigoPostal: codigoPostal,
-//                                 estatus: 'Pedido'
-//                             };
-
-//                             // Insertar el nuevo pedido
-//                             this.pedidoService.guardarPedido(nuevoPedido).subscribe(
-//                                 () => {
-//                                     Swal.fire({
-//                                         title: 'Procesando la transacción...',
-//                                         allowOutsideClick: false,
-//                                         didOpen: () => {
-//                                             Swal.showLoading();
-//                                         }
-//                                     });
-//                                     this.carritoService.limpiarCarrito();
-//                                     setTimeout(() => {
-//                                         Swal.close();
-//                                         Swal.fire({
-//                                             title: '¡Venta exitosa!',
-//                                             icon: 'success',
-//                                             showConfirmButton: true
-//                                         }).then(() => {
-//                                             window.location.href = `/gracias/${idVentaGenerado}`;
-//                                         });
-//                                     }, 5000);
-//                                 },
-//                                 (error) => {
-//                                     Swal.fire('Error', 'Error al guardar el pedido', 'error');
-//                                     console.error('Error al guardar el pedido', error);
-//                                 }
-//                             );
-//                         },
-//                         (error) => {
-//                             Swal.fire('Error', 'Error al agregar los detalles de la venta', 'error');
-//                             console.error('Error al agregar los detalles de la venta', error);
-//                         }
-//                     );
-//                 },
-//                 (error) => {
-//                     Swal.fire('Error', 'Error al procesar la venta', 'error');
-//                     console.error('Error al procesar la venta', error);
-//                 }
-//             );
-//         }
-//     });
-// }
 confirmarPedido() {
     // Obtén el idTarjeta seleccionado
     const idTarjeta = (document.querySelector('input[name="tarjeta"]:checked') as HTMLInputElement)?.value;
+    const tipoVenta = '';
   
     // Obtén los datos del formulario de envío
     const nombre = (document.querySelector('input[name="nombre"]') as HTMLInputElement).value;
@@ -247,10 +129,11 @@ confirmarPedido() {
                     const nuevaVenta: IVenta = {
                         idUsuario: parseInt(idUsuario),
                         fechaVenta: new Date(),
-                        total: total
+                        total: total,
+                        tipoVenta: tipoVenta
                     };
   
-                    this.ventasService.addVenta(nuevaVenta).subscribe(
+                    this.ventasService.addVentaOnline(nuevaVenta).subscribe(
                         (idVentaGenerado) => {
                             // Inserción de los detalles de la venta
                             const detallesVenta: IDetalleVenta[] = this.carrito.map(producto => ({
