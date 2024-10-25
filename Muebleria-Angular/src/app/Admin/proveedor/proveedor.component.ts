@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { IUnidadMedida } from '../../interfaces/IUnidadMedida';
+import { BuscadorCompartidoComponent } from '../shared/buscador-compartido/buscador-compartido.component';
 
 @Component({
   selector: 'app-proveedor',
   standalone: true,
-  imports: [NgForOf, NgClass, FormsModule, NgIf],
+  imports: [NgForOf, NgClass, FormsModule, NgIf,BuscadorCompartidoComponent],
   templateUrl: './proveedor.component.html',
   styleUrls: ['./proveedor.component.css']
 })
@@ -75,7 +76,9 @@ materiaPrimaInput = {
 
   // Función para manejar resultados de búsqueda
   onSearchResults(resultados: IProveedorResponse[]): void {
+
     this.resultadosBusqueda = resultados;
+    console.log('Resultados de búsqueda:', this.resultadosBusqueda);
   }
 
   // Agregar un proveedor a la base de datos

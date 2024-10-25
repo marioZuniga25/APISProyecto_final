@@ -1,4 +1,6 @@
+using Hangfire;
 using ProyectoFinalAPI;
+using ProyectoFinalAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Configura Hangfire
+builder.Services.AddHangfire(config =>
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("cnProyecto")));
+builder.Services.AddHangfireServer();
 
 builder.Services.AddScoped<EmailService>();
 
@@ -30,6 +36,10 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 var app = builder.Build();
+// Configura el middleware
+app.UseHangfireDashboard(); // Añade el panel de control de Hangfire
+app.UseHangfireServer(); // Inicia el servidor de Hangfire
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -45,5 +55,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
+recurringJobManager.AddOrUpdate<PromocionesRandomService>(
+    "ActualizarPromocionesRandom",
+    service => service.EjecutarPromocionesAleatorias(),
+    Cron.Minutely); // Ejecutar cada hora
 
 app.Run();
