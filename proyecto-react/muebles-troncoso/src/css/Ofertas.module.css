@@ -58,3 +58,25 @@
 .productDiscount {
     color: #333;
 }
+
+/* Ofertas.module.css */
+
+.progress-loader {
+    top: 50%;
+    left: 50%;
+    position: relative; /* Cambiado a relative para que se posicione dentro del contenedor */
+    width: 100%; /* Cambiar el ancho según el contenedor */
+    background: rgba(0, 0, 255, 0.253);
+    height: 10px;
+    border-radius: 7px;
+    overflow: hidden;
+    margin-top: 20px; /* Margen para separar de los productos */
+  }
+  
+  .progress {
+    height: 10px;
+    border-radius: 7px;
+    background: rgb(255, 0, 0);
+    transition: width 1s linear; /* Hacer que el ancho cambie suavemente */
+  }
+  

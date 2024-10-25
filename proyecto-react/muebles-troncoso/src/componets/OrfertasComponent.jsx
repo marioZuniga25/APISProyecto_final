@@ -5,6 +5,7 @@ import styles from "../css/Ofertas.module.css"; // Asegúrate de tener estilos p
 const Ofertas = () => {
   const [ofertas, setOfertas] = useState([]);
   const [countdown, setCountdown] = useState(60);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,17 +13,14 @@ const Ofertas = () => {
         const promocionesData = await PromocionesService.getPromocionesRandom();
         const productosData = await PromocionesService.getProductos();
 
-        // Filtrar promociones que estén activas
         const ahora = new Date();
         const promocionesActivas = promocionesData.filter(promocion => {
           const fechaFin = new Date(promocion.fechaFin);
           return fechaFin > ahora; // Solo incluir si la fecha de fin es futura
         });
 
-        // Tomar solo la última promoción
         const ultimaPromocion = promocionesActivas.length > 0 ? promocionesActivas[promocionesActivas.length - 1] : null;
 
-        // Empatar productos con promociones si existe
         if (ultimaPromocion) {
           const productosEnPromocion = ultimaPromocion.productos.map(productoId => {
             const producto = productosData.find(p => p.idProducto === productoId);
@@ -32,6 +30,8 @@ const Ofertas = () => {
             };
           });
           setOfertas({ ...ultimaPromocion, productos: productosEnPromocion });
+          setCountdown(60); // Reiniciar el contador al obtener nuevas ofertas
+          setProgress(0); // Reiniciar el progreso al obtener nuevas ofertas
         }
       } catch (error) {
         console.error('Error fetching ofertas:', error);
@@ -40,18 +40,24 @@ const Ofertas = () => {
 
     fetchData();
 
-    // Refrescar datos cada minuto
     const intervalId = setInterval(() => {
       fetchData();
-      setCountdown(60); // Resetea el temporizador cada vez que se obtienen datos
-    }, 60000); // 60000 ms = 1 minuto
+    }, 60000); // Refrescar datos cada minuto
 
     const countdownInterval = setInterval(() => {
-      setCountdown(prev => (prev > 0 ? prev - 1 : 0)); // Decrementa el temporizador
-    }, 1000); // 1000 ms = 1 segundo
+      setCountdown(prev => {
+        if (prev > 0) {
+          setProgress((prev - 1) * (100 / 60)); // Incrementa el progreso de acuerdo al tiempo restante
+          return prev - 1;
+        } else {
+          clearInterval(countdownInterval); // Limpiar el intervalo si llega a cero
+          return 0;
+        }
+      });
+    }, 1000); // Actualizar cada segundo
 
     return () => {
-      clearInterval(intervalId); // Limpiar el intervalo al desmontar el componente
+      clearInterval(intervalId);
       clearInterval(countdownInterval);
     };
   }, []);
@@ -70,7 +76,10 @@ const Ofertas = () => {
                                 <div className={styles.productPrice}>Precio: ${producto.precio}</div>
                                 <div className={styles.productDiscount}>Precio con Descuento: ${producto.precioConDescuento}</div>
                                 <div className={styles.countdown}>
-                                    Quedan: {countdown} segundos
+                                    <span>Quedan: {countdown} segundos</span>
+                                </div>
+                                <div className={styles.progressLoader}>
+                                    <div className={styles.progress} style={{ width: `${progress}%` }}></div>
                                 </div>
                             </div>
                         ))}
