@@ -30,6 +30,10 @@ namespace ProyectoFinalAPI
         public DbSet<DetalleOrdenCompra> DetallesOrdenCompra { get; set; }
         public DbSet<UnidadMedida> UnidadMedidas { get; set; }
 
+        public DbSet<Persona> Personas { get; set; }
+
+        public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
+
 
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)

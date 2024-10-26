@@ -27,9 +27,15 @@ export class AuthService {
   }
 
   setUser(user: User): void {
-    localStorage.setItem(this.userKey, JSON.stringify(user));
-    this.currentUserSubject.next(user); // Notifica a los suscriptores del cambio
+    try {
+      const userString = JSON.stringify(user);
+      localStorage.setItem(this.userKey, userString);
+      this.currentUserSubject.next(user); // Notifica a los suscriptores del cambio
+    } catch (error) {
+      console.error('Error al guardar en LocalStorage:', error);
+    }
   }
+  
 
   createUsuario(usuario: IUsuarioDetalle): Observable<any> {
     return this.http.post(`${this.apiUrl}usuario/registrarInterno`, usuario);
@@ -68,8 +74,18 @@ export class AuthService {
   }
 
   getUser(): User | null {
-    return this.currentUserSubject.value;
+    try {
+      const storedUser = localStorage.getItem(this.userKey);
+      if (storedUser) {
+        return JSON.parse(storedUser);
+      }
+      return null;
+    } catch (error) {
+      console.error('Error al leer desde LocalStorage:', error);
+      return null;
+    }
   }
+  
 
   removeUser(): void {
     localStorage.removeItem(this.userKey);
@@ -82,12 +98,14 @@ export class AuthService {
       .pipe(
         map((response: AuthResponse) => {
           if (response && response.user) {
-            this.setUser(response.user);
+            console.log('Respuesta completa del servidor:', response.user); // Para verificar la respuesta
+            this.setUser(response.user); // Guardar el usuario completo en LocalStorage
           }
           return response;
         })
       );
   }
+  
 
   searchUsuariosPorNombre(nombre: string): Observable<IUsuarioDetalle[]> {
     return this.http.get<IUsuarioDetalle[]>(`${this.apiUrl}usuario/BuscarPorNombre?nombre=${nombre}`);

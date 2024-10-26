@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class newMigration : Migration
+    public partial class newPerfil : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -290,6 +290,29 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Personas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Apellidos = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Personas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Personas_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
+                        principalColumn: "idUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RecetaDetalles",
                 columns: table => new
                 {
@@ -316,15 +339,53 @@ namespace ProyectoFinalAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DireccionesEnvio",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreDireccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EsPredeterminada = table.Column<bool>(type: "bit", nullable: false),
+                    Calle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Numero = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Colonia = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DireccionesEnvio", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DireccionesEnvio_Personas_PersonaId",
+                        column: x => x.PersonaId,
+                        principalTable: "Personas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleOrdenCompra_OrdenCompraidOrdenCompra",
                 table: "DetalleOrdenCompra",
                 column: "OrdenCompraidOrdenCompra");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DireccionesEnvio_PersonaId",
+                table: "DireccionesEnvio",
+                column: "PersonaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MateriaPrima_ProveedoridProveedor",
                 table: "MateriaPrima",
                 column: "ProveedoridProveedor");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Personas_UsuarioId",
+                table: "Personas",
+                column: "UsuarioId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecetaDetalles_idMateriaPrima",
@@ -358,6 +419,9 @@ namespace ProyectoFinalAPI.Migrations
                 name: "DetalleVenta");
 
             migrationBuilder.DropTable(
+                name: "DireccionesEnvio");
+
+            migrationBuilder.DropTable(
                 name: "instructivoProductos");
 
             migrationBuilder.DropTable(
@@ -376,19 +440,22 @@ namespace ProyectoFinalAPI.Migrations
                 name: "UnidadMedida");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
-
-            migrationBuilder.DropTable(
                 name: "Venta");
 
             migrationBuilder.DropTable(
                 name: "OrdenCompra");
 
             migrationBuilder.DropTable(
+                name: "Personas");
+
+            migrationBuilder.DropTable(
                 name: "MateriaPrima");
 
             migrationBuilder.DropTable(
                 name: "Recetas");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Proovedor");

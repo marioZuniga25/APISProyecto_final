@@ -142,16 +142,17 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(usuario);
         }
 
-
-        //EndPoint para login
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] Usuario request)
         {
             // Buscar usuario por nombre de usuario o correo y contraseña
             var usuario = await _context.Usuario
-                .FirstOrDefaultAsync(u => (u.nombreUsuario == request.nombreUsuario || u.correo == request.correo)
-                                          && u.contrasenia == request.contrasenia);
+                .Include(u => u.Persona) // Incluye la relación con Persona
+                .ThenInclude(p => p.DireccionesEnvio) // Incluye las direcciones
+                .FirstOrDefaultAsync(u =>
+                    (u.nombreUsuario == request.nombreUsuario || u.correo == request.correo)
+                    && u.contrasenia == request.contrasenia);
 
             // Si no se encuentra el usuario, devolver una respuesta no autorizada
             if (usuario == null)
@@ -159,9 +160,44 @@ namespace ProyectoFinalAPI.Controllers
                 return Unauthorized(new { message = "Usuario o contraseña incorrectos" });
             }
 
-            // Si se encuentra el usuario, devolver una respuesta de éxito
-            return Ok(new { message = "Inicio de sesión exitoso", user = usuario });
+            // Construir la respuesta con el usuario y la persona relacionada
+            var response = new
+            {
+                message = "Inicio de sesión exitoso",
+                user = new
+                {
+                    usuario.idUsuario,
+                    usuario.nombreUsuario,
+                    usuario.correo,
+                    usuario.rol,
+                    usuario.type,
+                    persona = new
+                    {
+                        usuario.Persona?.Id,
+                        usuario.Persona?.Nombre,
+                        usuario.Persona?.Apellidos,
+                        usuario.Persona?.Telefono,
+                        usuario.Persona?.Correo,
+                        DireccionesEnvio = usuario.Persona?.DireccionesEnvio?.Select(d => new
+                        {
+                            d.Id,
+                            d.NombreDireccion,
+                            d.Calle,
+                            d.Numero,
+                            d.Colonia,
+                            d.Ciudad,
+                            d.Estado,
+                            d.CodigoPostal,
+                            d.EsPredeterminada
+                        }).ToList()
+                    }
+                }
+            };
+
+            // Devolver la respuesta con los datos del usuario y persona
+            return Ok(response);
         }
+
 
         [HttpGet("BuscarPorNombre")]
         public async Task<ActionResult<IEnumerable<Usuario>>> SearchUsuariosPorNombre(string nombre)

@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241022194014_newMigration")]
-    partial class newMigration
+    [Migration("20241022235302_newPerfil")]
+    partial class newPerfil
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,90 @@ namespace ProyectoFinalAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("DireccionEnvio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Calle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ciudad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodigoPostal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Colonia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EsPredeterminada")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreDireccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaId");
+
+                    b.ToTable("DireccionesEnvio");
+                });
+
+            modelBuilder.Entity("Persona", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId")
+                        .IsUnique();
+
+                    b.ToTable("Personas");
+                });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Categoria", b =>
                 {
@@ -510,6 +594,28 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Venta", (string)null);
                 });
 
+            modelBuilder.Entity("DireccionEnvio", b =>
+                {
+                    b.HasOne("Persona", "Persona")
+                        .WithMany("DireccionesEnvio")
+                        .HasForeignKey("PersonaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Persona");
+                });
+
+            modelBuilder.Entity("Persona", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.Usuario", "Usuario")
+                        .WithOne("Persona")
+                        .HasForeignKey("Persona", "UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
                 {
                     b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", null)
@@ -554,6 +660,11 @@ namespace ProyectoFinalAPI.Migrations
                     b.Navigation("Receta");
                 });
 
+            modelBuilder.Entity("Persona", b =>
+                {
+                    b.Navigation("DireccionesEnvio");
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>
                 {
                     b.Navigation("Detalles");
@@ -567,6 +678,12 @@ namespace ProyectoFinalAPI.Migrations
             modelBuilder.Entity("ProyectoFinalAPI.Models.Receta", b =>
                 {
                     b.Navigation("Detalles");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Usuario", b =>
+                {
+                    b.Navigation("Persona")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
