@@ -4,5 +4,6 @@ export interface IVenta {
     idUsuario: number;
     fechaVenta: Date;
     total: number;
+    tipoVenta: string;
   }
   

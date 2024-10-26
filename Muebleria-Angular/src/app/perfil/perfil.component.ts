@@ -21,10 +21,10 @@ export class PerfilComponent implements OnInit {
   tarjetas: IUtarjetas[] = [];
   isModalOpen = false;
   userEdit: IUsuarioDetalle | null = null;
-  contraseniaActual: string = '';
-  nuevaContrasenia: string = '';
-  isEditing: boolean = false; 
-  mostrarErrorContrasenia: boolean = false;
+  isEditing: boolean = false; ontraseniaActual: string = ''; // Variable para la contraseña actual
+  nuevaContrasenia: string = ''; // Variable para la nueva contraseña
+  mostrarErrorContrasenia: boolean = false; // Para indicar si hay un error
+  mensajeErrorContrasenia: string = ''; // Mensaje de error detallado
   nuevaTarjeta: IUtarjetas = {
     idTarjeta: 0,
     idUsuario: 0,
@@ -390,6 +390,12 @@ eliminarDireccion(id: number) {
   onSubmit(): void {
     if (!this.contraseniaActual) {
       this.mostrarErrorContrasenia = true;
+      this.mensajeErrorContrasenia = 'Ingrese la nueva contraseña.';
+      return;
+    }
+    if (!this.validatePassword(this.contraseniaActual)) {
+      this.mostrarErrorContrasenia = true;
+      this.mensajeErrorContrasenia = 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.';
       return;
     }
 
@@ -418,12 +424,16 @@ eliminarDireccion(id: number) {
           this.ngOnInit();
         },
         error => {
-          Swal.fire('Error', 'Hubo un problema al actualizar el usuario.', 'error');
           console.error("Error al actualizar el usuario:", error);
+          const mensajeError = error.error?.message || 'Hubo un problema al actualizar el usuario. Inténtalo de nuevo.';
+          Swal.fire('Error', mensajeError, 'error');
         }
       );
 
 
   }
-
+  validatePassword(contrasenia: string): boolean {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(contrasenia);
+  }
 }

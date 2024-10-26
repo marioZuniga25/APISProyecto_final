@@ -9,9 +9,13 @@
             <div class="text">
                 <h1>{{ producto.nombreProducto }}</h1> 
                 <p class="price">${{ producto.precio | number:'1.2-2' }} MXN</p>
-                <p>
-                    Cantidad: <span>{{producto.stock}} disponibles</span>
+                <p *ngIf="producto.stock > 0">
+                Cantidad: <span>{{producto.stock}} disponibles</span>
                 </p>
+                <p *ngIf="producto.stock === 0" style="color: red;">
+                Agotado
+                </p>
+                  
                 <div class="data">
                     <div class="col">
                         <div class="titulo data-titulo">

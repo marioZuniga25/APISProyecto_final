@@ -40,6 +40,10 @@ export class DetalleUsuarioComponent implements OnChanges {
       this.showAlert('Por favor, complete todos los campos requeridos.', 'danger');
       return;
     }
+    if (!this.validatePassword(this.usuario.contrasenia)) {
+      this.showAlert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.', 'danger');
+      return;
+    }
 
     // Asegúrate de que rol sea un número
     this.usuario.rol = Number(this.usuario.rol);
@@ -56,7 +60,9 @@ export class DetalleUsuarioComponent implements OnChanges {
             this.cerrarDetalle();
           },
           error => {
-            this.showAlert('Error al crear el usuario.', 'danger');
+            // Captura y muestra el mensaje de error específico
+            const mensajeError = error.error?.message || 'Error al crear el usuario.';
+            this.showAlert(mensajeError, 'danger');
           }
         );
       } else {
@@ -67,7 +73,9 @@ export class DetalleUsuarioComponent implements OnChanges {
             this.cerrarDetalle();
           },
           error => {
-            this.showAlert('Error al actualizar el usuario.', 'danger');
+            // Captura y muestra el mensaje de error específico
+            const mensajeError = error.error?.message || 'Error al actualizar el usuario.';
+            this.showAlert(mensajeError, 'danger');
           }
         );
       }
@@ -87,5 +95,9 @@ export class DetalleUsuarioComponent implements OnChanges {
     setTimeout(() => {
       this.isAlertVisible = false;
     }, 3000);
+  }
+  validatePassword(contrasenia: string): boolean {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(contrasenia);
   }
 }

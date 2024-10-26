@@ -41,3 +41,25 @@
     color: white;
   }
   
+  .detalles-orden {
+    background-color: #f8f9fa; /* Color de fondo claro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 15px; /* Espaciado interno */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+  }
+  
+  .list-group-item {
+    border: none; /* Quitar bordes del list group */
+    padding: 10px 15px; /* Espaciado en cada ítem */
+    transition: background-color 0.3s; /* Transición suave en el hover */
+  }
+  
+  .list-group-item:hover {
+    background-color: #e9ecef; /* Color de fondo en hover */
+  }
+  
+  .cantidad-precio {
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+    color: #6c757d; /* Color de texto más suave */
+  }
+  

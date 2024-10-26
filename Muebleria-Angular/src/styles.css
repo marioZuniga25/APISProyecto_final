@@ -118,3 +118,7 @@ body{
 .scroll{
     height: calc(100% - 177px);
 }
+.buscador-producto-result{
+    text-decoration: none !important;
+    color: black !important;
+}

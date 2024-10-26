@@ -17,13 +17,20 @@ namespace ProyectoFinalAPI.Controllers
         }
 
 
-
-
-        [HttpPost("AgregarVenta")]
-        public async Task<ActionResult> AddVenta([FromBody] Venta request)
+        [HttpPost("AgregarVentaOnline")]
+        public async Task<ActionResult> AddVentaOnline([FromBody] Venta request)
         {
+            request.tipoVenta = "Online";
+            await _context.Venta.AddAsync(request);
+            await _context.SaveChangesAsync();
+            int idVentaGenerado = request.idVenta;
 
-
+            return Ok(idVentaGenerado);
+        }
+        [HttpPost("AgregarVentaFisica")]
+        public async Task<ActionResult> AddVentaFisica([FromBody] Venta request)
+        {
+            request.tipoVenta = "Fisica";
             await _context.Venta.AddAsync(request);
             await _context.SaveChangesAsync();
             int idVentaGenerado = request.idVenta;
@@ -32,11 +39,9 @@ namespace ProyectoFinalAPI.Controllers
         }
 
 
-
         [HttpPost("AgregarDetalleVenta")]
         public async Task<ActionResult> AddDetallesVenta([FromBody] List<DetalleVenta> detallesVenta)
-        {
-            
+        {           
                 foreach (var detalle in detallesVenta)
                 {
                     // Buscar el producto

@@ -21,7 +21,9 @@ namespace ProyectoFinalAPI
         public DbSet<Tarjetas> Tarjetas { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
-        public DbSet<Receta> Recetas { get; set; }
+       public DbSet<Promocion> Promociones { get; set; }
+       public DbSet<PromocionesRandom> PromocionesRandom { get; set; }
+  public DbSet<Receta> Recetas { get; set; }
         public DbSet<RecetaDetalle> RecetaDetalles { get; set; }
         public DbSet<Contacto> Contactos { get; set; }
         public DbSet<UnidadMedida> UnidadesMedida { get; set; }
@@ -29,13 +31,14 @@ namespace ProyectoFinalAPI
         public DbSet<OrdenCompra> OrdenesCompra { get; set; }
         public DbSet<DetalleOrdenCompra> DetallesOrdenCompra { get; set; }
         public DbSet<UnidadMedida> UnidadMedidas { get; set; }
+        public DbSet<ContraseniaInsegura> ContraseniaInsegura { get; set; }
+
 
         public DbSet<Persona> Personas { get; set; }
 
         public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
 
 
-        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -196,9 +199,41 @@ namespace ProyectoFinalAPI
                          venta.Property(i => i.total).IsRequired();
                          venta.Property(i => i.fechaVenta).IsRequired();
                          venta.Property(i => i.idUsuario).IsRequired();
+                         venta.Property(i => i.tipoVenta).IsRequired().HasMaxLength(10).HasColumnType("varchar(10)");
 
                      });
-            modelBuilder.Entity<Pedidos>(pedido =>
+            modelBuilder.Entity<ContraseniaInsegura>(contraseniaInsegura =>
+            {
+                contraseniaInsegura.ToTable("ContraseniaInsegura");
+                contraseniaInsegura.HasKey(i => i.IdContraseniaInsegura);
+                contraseniaInsegura.Property(i => i.IdContraseniaInsegura).ValueGeneratedOnAdd().UseIdentityColumn();
+                contraseniaInsegura.Property(i => i.Contrasenia).IsRequired();
+            });
+   // Configuración de Promociones
+   modelBuilder.Entity<Promocion>(promocion =>
+   {
+    promocion.ToTable("Promociones");
+    promocion.HasKey(p => p.IdPromocion);
+    promocion.Property(p => p.IdPromocion).ValueGeneratedOnAdd();
+    promocion.Property(p => p.Codigo).IsRequired();
+    promocion.Property(p => p.FechaInicio).IsRequired();
+    promocion.Property(p => p.FechaFin).IsRequired();
+    promocion.Property(p => p.Descuento).IsRequired().HasColumnType("decimal(18,2)");
+    promocion.Property(p => p.Productos).IsRequired(); // Ajusta esto si necesitas un tipo específico
+   });
+
+   // Configuración de PromocionesRandom
+   modelBuilder.Entity<PromocionesRandom>(promocionRandom =>
+   {
+    promocionRandom.ToTable("PromocionesRandom");
+    promocionRandom.HasKey(p => p.IdPromocionRandom);
+    promocionRandom.Property(p => p.Codigo).IsRequired();
+    promocionRandom.Property(p => p.FechaCreacion).IsRequired();
+    promocionRandom.Property(p => p.FechaFin).IsRequired();
+    promocionRandom.Property(p => p.Productos).IsRequired(); // Ajusta esto si necesitas un tipo específico
+   });
+
+   modelBuilder.Entity<Pedidos>(pedido =>
             {
                 pedido.ToTable("Pedidos");
                 pedido.HasKey(p => p.idPedido);
@@ -255,6 +290,7 @@ namespace ProyectoFinalAPI
 
 
         }
+
     }
 
 }

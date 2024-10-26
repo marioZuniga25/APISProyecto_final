@@ -114,3 +114,8 @@
   max-width: 100% !important; 
   width: 100% !important;
 }
+
+.list-group-item{
+  display: grid;
+  grid-template-columns: 1fr auto;
+}

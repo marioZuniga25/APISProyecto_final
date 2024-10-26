@@ -2,16 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, ChartData, ChartOptions, ChartType, registerables } from 'chart.js';  // Importar los controladores
 import { DashboardService } from '../../services/dashboard.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [BaseChartDirective, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   ventas: number = 0;
+  fechaInicio: string = '';  
+  fechaFin: string = ''; 
+
   totalVentas: number = 0;
   productosMasVendidos: { nombreProducto: string, totalVendidos: number }[] = [];
   usuariosActivos: number = 0;
@@ -69,16 +73,27 @@ export class DashboardComponent implements OnInit {
   }
 
   // Métodos para obtener datos
-  getTotalVentas(): void {
-    this.dashboardService.getTotalVentas().subscribe(data => {
-      console.log('TotalVentas API Response:', data);
-      this.ventas = data.totalVentas;
-      this.totalVentasData = {
-        labels: ['Total de Ventas'],
-        datasets: [{ data: [this.ventas], backgroundColor: ['#002D62'] }]  // Azul Marino
-      };
-    });
+getTotalVentas(): void {
+  // Llama al servicio sin parámetros para obtener las ventas de la última semana
+  this.dashboardService.getTotalVentas(this.fechaInicio, this.fechaFin).subscribe(data => {
+    this.totalVentasData = {
+      labels: ['Ventas en Línea', 'Ventas en Físico'],
+      datasets: [
+        {
+          data: [data.ventasOnline, data.ventasFisico],
+          backgroundColor: ['#007BFF', '#FFC107']  // Azul para en línea, amarillo para físico
+        }
+      ]
+    };
+  });
+}
+
+
+  // Método para actualizar el gráfico al cambiar las fechas
+  actualizarGrafico(): void {
+    this.getTotalVentas();
   }
+
 
   getProductosMasVendidos(): void {
     this.dashboardService.getProductosMasVendidos().subscribe(data => {
