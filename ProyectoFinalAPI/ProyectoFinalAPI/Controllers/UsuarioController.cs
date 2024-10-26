@@ -176,22 +176,55 @@ namespace ProyectoFinalAPI.Controllers
         public async Task<IActionResult> Login([FromBody] Usuario request)
         {
             var usuario = await _context.Usuario
-                .FirstOrDefaultAsync(u => u.nombreUsuario == request.nombreUsuario || u.correo == request.correo);
+                .Include(u => u.Persona) // Incluye la relación con Persona
+                .ThenInclude(p => p.DireccionesEnvio) // Incluye las direcciones
+                .FirstOrDefaultAsync(u =>
+                    (u.nombreUsuario == request.nombreUsuario || u.correo == request.correo)
+                    && u.contrasenia == request.contrasenia);
 
             if (usuario == null)
             {
-                return Unauthorized(new { message = "Usuario no encontrado." });
+                return Unauthorized(new { message = "Usuario o contraseña incorrectos" });
             }
 
-            bool passwordValid = BCrypt.Net.BCrypt.Verify(request.contrasenia, usuario.contrasenia);
-
-            if (!passwordValid)
+            // Construir la respuesta con el usuario y la persona relacionada
+            var response = new
             {
-                return Unauthorized(new { message = "Contraseña incorrecta." });
-            }
+                message = "Inicio de sesión exitoso",
+                user = new
+                {
+                    usuario.idUsuario,
+                    usuario.nombreUsuario,
+                    usuario.correo,
+                    usuario.rol,
+                    usuario.type,
+                    persona = new
+                    {
+                        usuario.Persona?.Id,
+                        usuario.Persona?.Nombre,
+                        usuario.Persona?.Apellidos,
+                        usuario.Persona?.Telefono,
+                        usuario.Persona?.Correo,
+                        DireccionesEnvio = usuario.Persona?.DireccionesEnvio?.Select(d => new
+                        {
+                            d.Id,
+                            d.NombreDireccion,
+                            d.Calle,
+                            d.Numero,
+                            d.Colonia,
+                            d.Ciudad,
+                            d.Estado,
+                            d.CodigoPostal,
+                            d.EsPredeterminada
+                        }).ToList()
+                    }
+                }
+            };
 
-            return Ok(new { message = "Inicio de sesión exitoso", user = usuario });
+            // Devolver la respuesta con los datos del usuario y persona
+            return Ok(response);
         }
+
 
         [HttpGet("BuscarPorNombre")]
         public async Task<ActionResult<IEnumerable<Usuario>>> SearchUsuariosPorNombre(string nombre)

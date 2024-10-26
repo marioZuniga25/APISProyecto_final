@@ -34,6 +34,10 @@ namespace ProyectoFinalAPI
         public DbSet<ContraseniaInsegura> ContraseniaInsegura { get; set; }
 
 
+        public DbSet<Persona> Personas { get; set; }
+
+        public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,28 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {}
+    "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj": {
+    "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+        "projectUniqueName": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
         "projectName": "ProyectoFinalAPI",
-        "projectPath": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
-        "packagesPath": "C:\\Users\\emman\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI\\obj\\",
+        "projectPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "packagesPath": "/Users/angelroberto/.nuget/packages/",
+        "outputPath": "/Users/angelroberto/Documents/Escuela/10th Cuatrimestre/Proyecto/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\emman\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/angelroberto/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -90,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
