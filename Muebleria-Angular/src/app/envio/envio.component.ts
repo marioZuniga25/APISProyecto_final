@@ -40,12 +40,12 @@ export class EnvioComponent implements OnInit {
 
 
   estados: string[] = [
-    'Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 
-    'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Durango', 'Guanajuato', 
-    'Guerrero', 'Hidalgo', 'Jalisco', 'Mexico', 'Michoacán', 'Morelos', 
-    'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 
-    'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 
-    'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 
+    'Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche',
+    'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Durango', 'Guanajuato',
+    'Guerrero', 'Hidalgo', 'Jalisco', 'Mexico', 'Michoacán', 'Morelos',
+    'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro',
+    'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora',
+    'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz',
     'Yucatán', 'Zacatecas'
   ];
 
@@ -56,7 +56,7 @@ export class EnvioComponent implements OnInit {
     private perfilService: PerfilService,
     private pedidoService: PedidoService,
     private ventasService: VentasService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarCarrito();
@@ -114,8 +114,8 @@ export class EnvioComponent implements OnInit {
     const idTarjeta = (document.querySelector('input[name="tarjeta"]:checked') as HTMLInputElement)?.value;
 
     if (!this.nombre || !this.apellidos || !this.telefono || !this.correo ||
-        !this.calle || !this.numero || !this.colonia || !this.ciudad ||
-        !this.estado || !this.codigoPostal || !idTarjeta) {
+      !this.calle || !this.numero || !this.colonia || !this.ciudad ||
+      !this.estado || !this.codigoPostal || !idTarjeta) {
       Swal.fire('Campos incompletos', 'Por favor, llena todos los campos y selecciona una tarjeta.', 'warning');
       return;
     }
@@ -123,10 +123,11 @@ export class EnvioComponent implements OnInit {
     const nuevaVenta: IVenta = {
       idUsuario: parseInt(idUsuario),
       fechaVenta: new Date(),
-      total: this.total
+      total: this.total,
+      tipoVenta: ''
     };
 
-    this.ventasService.addVenta(nuevaVenta).subscribe(
+    this.ventasService.addVentaOnline(nuevaVenta).subscribe(
       idVentaGenerado => {
         const detallesVenta: IDetalleVenta[] = this.carrito.map(producto => ({
           idDetalleVenta: 0,
@@ -155,14 +156,30 @@ export class EnvioComponent implements OnInit {
               codigoPostal: this.codigoPostal,
               estatus: 'Pedido'
             };
-
+            // Insertar el nuevo pedido
             this.pedidoService.guardarPedido(nuevoPedido).subscribe(
               () => {
-                Swal.fire('¡Venta exitosa!', 'Tu pedido ha sido confirmado.', 'success')
-                  .then(() => window.location.href = `/gracias/${idVentaGenerado}`);
+                Swal.fire({
+                  title: 'Procesando la transacción...',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  }
+                });
+                this.carritoService.limpiarCarrito();
+                setTimeout(() => {
+                  Swal.close();
+                  Swal.fire({
+                    title: '¡Venta exitosa!',
+                    icon: 'success',
+                    showConfirmButton: true
+                  }).then(() => {
+                    window.location.href = "/gracias/${idVentaGenerado}";
+                  });
+                }, 5000);
               },
-              error => {
-                Swal.fire('Error', 'No se pudo guardar el pedido.', 'error');
+              (error) => {
+                Swal.fire('Error', 'Error al guardar el pedido', 'error');
                 console.error('Error al guardar el pedido', error);
               }
             );

@@ -21,7 +21,7 @@ export class PerfilComponent implements OnInit {
   tarjetas: IUtarjetas[] = [];
   isModalOpen = false;
   userEdit: IUsuarioDetalle | null = null;
-  isEditing: boolean = false; ontraseniaActual: string = ''; // Variable para la contraseña actual
+  isEditing: boolean = false; contraseniaActual: string = ''; // Variable para la contraseña actual
   nuevaContrasenia: string = ''; // Variable para la nueva contraseña
   mostrarErrorContrasenia: boolean = false; // Para indicar si hay un error
   mensajeErrorContrasenia: string = ''; // Mensaje de error detallado
