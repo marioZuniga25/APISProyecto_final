@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; // Importa Router
 import { VentasService } from '../services/ventas.service';
 import { IDetalleVenta } from '../interfaces/IDetalleVenta';
 import { IVenta } from '../interfaces/IVenta';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-gracias',
   standalone: true,
@@ -18,7 +19,8 @@ export class GraciasComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ventasService: VentasService
+    private ventasService: VentasService,
+    private router: Router // Inyecta el Router
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,11 @@ export class GraciasComponent implements OnInit {
           (detalles: IDetalleVenta[]) => {
             this.detallesVenta = detalles;
             console.log(this.detallesVenta);
+
+            // Espera 3 segundos antes de redirigir
+            setTimeout(() => {
+              this.router.navigate(['/catalogo']); // Redirige al catálogo
+            }, 3000); // 3000 milisegundos = 3 segundos
           },
           (error) => {
             console.error('Error al cargar los detalles de la venta', error);
