@@ -31,3 +31,16 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     margin:0 25px 15px 0 !important;
     width: calc(25% - 25px) !important;
 } 
+
+.strikethrough {
+    text-decoration: line-through;
+    color: red;
+    margin-right: 10px;
+  }
+  
+  .descuento {
+    color: green;
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  

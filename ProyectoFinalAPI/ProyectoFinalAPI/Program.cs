@@ -59,6 +59,6 @@ var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>(
 recurringJobManager.AddOrUpdate<PromocionesRandomService>(
     "ActualizarPromocionesRandom",
     service => service.EjecutarPromocionesAleatorias(),
-    Cron.Minutely); // Ejecutar cada hora
+    Cron.Hourly); 
 
 app.Run();

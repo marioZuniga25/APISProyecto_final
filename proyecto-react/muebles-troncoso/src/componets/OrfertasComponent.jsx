@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import PromocionesService from '../services/PromocionesService';
-import styles from "../css/Ofertas.module.css"; // Asegúrate de tener estilos para el banner
-
+import PromocionesService from '../services/PromocionesService'; 
+import '../css/Ofertas.css';
+import 'animate.css';
+import { FaBolt } from 'react-icons/fa';
 const Ofertas = () => {
   const [ofertas, setOfertas] = useState([]);
-  const [countdown, setCountdown] = useState(60);
+  const [countdown, setCountdown] = useState(0);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -16,7 +17,7 @@ const Ofertas = () => {
         const ahora = new Date();
         const promocionesActivas = promocionesData.filter(promocion => {
           const fechaFin = new Date(promocion.fechaFin);
-          return fechaFin > ahora; // Solo incluir si la fecha de fin es futura
+          return fechaFin > ahora;
         });
 
         const ultimaPromocion = promocionesActivas.length > 0 ? promocionesActivas[promocionesActivas.length - 1] : null;
@@ -24,14 +25,19 @@ const Ofertas = () => {
         if (ultimaPromocion) {
           const productosEnPromocion = ultimaPromocion.productos.map(productoId => {
             const producto = productosData.find(p => p.idProducto === productoId);
+            const descuento = Math.floor(Math.random() * 11) + 10; // Descuento entre 10% y 20%
+            const precioConDescuento = (producto.precio * (1 - descuento / 100)).toFixed(2);
             return {
               ...producto,
-              precioConDescuento: (producto.precio * 0.9).toFixed(2), // Aplica un 10% de descuento
+              descuento,
+              precioConDescuento
             };
           });
           setOfertas({ ...ultimaPromocion, productos: productosEnPromocion });
-          setCountdown(60); // Reiniciar el contador al obtener nuevas ofertas
-          setProgress(0); // Reiniciar el progreso al obtener nuevas ofertas
+
+          const tiempoRestante = Math.floor((new Date(ultimaPromocion.fechaFin) - ahora) / 1000);
+          setCountdown(tiempoRestante);
+          setProgress((tiempoRestante * 100) / 3600); // Suponiendo una duración de 1 hora (3600 segundos)
         }
       } catch (error) {
         console.error('Error fetching ofertas:', error);
@@ -41,51 +47,87 @@ const Ofertas = () => {
     fetchData();
 
     const intervalId = setInterval(() => {
-      fetchData();
-    }, 60000); // Refrescar datos cada minuto
-
-    const countdownInterval = setInterval(() => {
       setCountdown(prev => {
         if (prev > 0) {
-          setProgress((prev - 1) * (100 / 60)); // Incrementa el progreso de acuerdo al tiempo restante
+          setProgress(((prev - 1) * 100) / 3600);
           return prev - 1;
-        } else {
-          clearInterval(countdownInterval); // Limpiar el intervalo si llega a cero
-          return 0;
         }
+        clearInterval(intervalId);
+        return 0;
       });
-    }, 1000); // Actualizar cada segundo
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);
-      clearInterval(countdownInterval);
     };
   }, []);
 
+  const formatTime = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${h} hr ${m} min ${s} sec`;
+  };
+
+  // Nueva función para emitir el evento
+  const handleProductClick = (producto) => {
+    const event = new CustomEvent('productoSeleccionado', {
+      detail: {
+        idProducto: producto.idProducto,
+        precioConDescuento: producto.precioConDescuento,
+        descuento: producto.descuento
+      },
+      bubbles: true,
+      cancelable: true,
+      composed: true
+    });
+    window.dispatchEvent(event); // Emite el evento
+  };
+
   return (
-    <div className={styles.ofertasContainer}>
-      <h2>Ofertas Relámpago</h2>
+    <div className="ofertasContainer">
+       <h2 className="title animate__animated animate__flash">
+        <FaBolt className="icon animate__animated animate__bounce animate__infinite" />
+        Ofertas Relámpago
+      </h2>
       {ofertas && ofertas.productos && ofertas.productos.length > 0 ? (
-        <div className={styles.banner}>
-          <div key={ofertas.idPromocionRandom} className={styles.ofertaCard}>
-            <div className={styles.productList}>
-              {ofertas.productos.map(producto => (
-                <div key={producto.idProducto} className={styles.productCard}>
-                  <img src={producto.imagen} alt={producto.nombreProducto} className={styles.productImage} />
-                    <div className={styles.productName}>{producto.nombreProducto}</div>
-                    <div className={styles.productPrice}>
-                        Precio: <span className={styles.strikethrough}>${producto.precio}</span>
-                    </div>
-                    <div className={styles.productDiscount}>Precio con Descuento: ${producto.precioConDescuento}</div>
-                    <div className={styles.countdown}>
-                        <span>Quedan: {countdown} segundos</span>
-                    </div>
-                    <div className={styles.progressLoader}>
-                        <div className={styles.progress} style={{ width: `${progress}%` }}></div>
-                    </div>
+        <div className="banner">
+          <div key={ofertas.idPromocionRandom} className="productList">
+            {ofertas.productos.map(producto => (
+              <div 
+                key={producto.idProducto} 
+                className="productCard" 
+                onClick={() => handleProductClick(producto)}
+              >
+                {/* Badge de descuento */}
+                <div className="discountBadge">-{producto.descuento}%</div>
+                
+                <img 
+                  src={producto.imagen} 
+                  alt={producto.nombreProducto} 
+                  className="productImage" 
+                />
+                <div className="productName">{producto.nombreProducto}</div>
+                
+                {/* Precio original tachado */}
+                <div className="productPrice">
+                  <span className="strikethrough">${producto.precio}</span>
                 </div>
-              ))}
-            </div>
+                
+                {/* Precio con descuento */}
+                <div className="productDiscount">
+                  MNX: ${producto.precioConDescuento} 
+                </div>
+                
+                <div className="countdown">
+                  Quedan: {formatTime(countdown)}
+                </div>
+                
+                <div className="progressLoader">
+                  <div className="progress" style={{ width: `${progress}%` }}></div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       ) : (
@@ -93,6 +135,7 @@ const Ofertas = () => {
       )}
     </div>
   );
+  
 };
 
 export default Ofertas;
