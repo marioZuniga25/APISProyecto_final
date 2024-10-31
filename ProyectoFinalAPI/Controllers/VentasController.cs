@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProyectoFinalAPI.Dto;
 using ProyectoFinalAPI.Models;
 
 namespace ProyectoFinalAPI.Controllers

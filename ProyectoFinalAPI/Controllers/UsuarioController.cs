@@ -46,7 +46,7 @@ namespace ProyectoFinalAPI.Controllers
 
         [HttpPost]
         [Route("registrar")]
-        public async Task<IActionResult> AddUsuario([FromBody] Usuario request)
+        public async Task<IActionResult> AddUsuario([FromBody] Usuario request, [FromServices] EmailService emailService)
         {
             if (await IsPasswordUnsafe(request.contrasenia))
             {
@@ -67,6 +67,14 @@ namespace ProyectoFinalAPI.Controllers
 
             await _context.Usuario.AddAsync(usuario);
             await _context.SaveChangesAsync();
+
+            // Preparar el correo con el template de bienvenida
+            var body = System.IO.File.ReadAllText("Templates/WelcomeEmail.html")
+                       .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
+                       .Replace("[NOMBRE_USUARIO]", usuario.nombreUsuario);
+
+            await emailService.SendEmailAsync(usuario.correo, "¡Bienvenido a nuestra plataforma!", body);
+
             return Ok(request);
         }
 
@@ -169,25 +177,61 @@ namespace ProyectoFinalAPI.Controllers
         }
 
 
-
-        //EndPoint para login
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] Usuario request)
+        public async Task<IActionResult> Login([FromBody] Usuario request, [FromServices] EmailService emailService)
         {
             var usuario = await _context.Usuario
-                .Include(u => u.Persona) // Incluye la relación con Persona
-                .ThenInclude(p => p.DireccionesEnvio) // Incluye las direcciones
+                .Include(u => u.Persona)
+                .ThenInclude(p => p.DireccionesEnvio)
                 .FirstOrDefaultAsync(u =>
-                    (u.nombreUsuario == request.nombreUsuario || u.correo == request.correo)
-                    && u.contrasenia == request.contrasenia);
+                    (u.nombreUsuario == request.nombreUsuario || u.correo == request.correo));
 
             if (usuario == null)
             {
                 return Unauthorized(new { message = "Usuario o contraseña incorrectos" });
             }
 
-            // Construir la respuesta con el usuario y la persona relacionada
+            // Verificar si el usuario está bloqueado
+            if (usuario.EstaBloqueado)
+            {
+                return Unauthorized(new { message = "Tu usuario está bloqueado. Restablece la contraseña para volver a ingresar." });
+            }
+
+            // Verificar la contraseña
+            if (!BCrypt.Net.BCrypt.Verify(request.contrasenia, usuario.contrasenia))
+            {
+                usuario.IntentosFallidos++;
+                if (usuario.IntentosFallidos >= 3)
+                {
+                    usuario.EstaBloqueado = true;
+
+                    // Generar el token de recuperación y su expiración
+                    var token = GenerateResetToken();
+                    usuario.ResetToken = token;
+                    usuario.ResetTokenExpires = DateTime.UtcNow.AddMinutes(15); // Expira en 15 minutos
+
+                    await _context.SaveChangesAsync();
+
+                    // Enviar correo de notificación de bloqueo con el enlace para restablecer la contraseña
+                    var resetLink = $"http://localhost:4200/reset-password?token={token}";
+                    var body = System.IO.File.ReadAllText("Templates/BlockedAccount.html")
+                        .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
+                        .Replace("[RESET_LINK]", resetLink);
+
+                    await emailService.SendEmailAsync(usuario.correo, "Cuenta bloqueada", body);
+
+                    return Unauthorized(new { message = "Tu cuenta ha sido bloqueada. Revisa tu correo para más detalles y restablece tu contraseña." });
+                }
+
+                await _context.SaveChangesAsync();
+                return Unauthorized(new { message = "Usuario o contraseña incorrectos" });
+            }
+
+            // Restablecer los intentos fallidos al iniciar sesión correctamente
+            usuario.IntentosFallidos = 0;
+            await _context.SaveChangesAsync();
+
             var response = new
             {
                 message = "Inicio de sesión exitoso",
@@ -221,7 +265,6 @@ namespace ProyectoFinalAPI.Controllers
                 }
             };
 
-            // Devolver la respuesta con los datos del usuario y persona
             return Ok(response);
         }
 
@@ -322,22 +365,28 @@ namespace ProyectoFinalAPI.Controllers
                 return BadRequest(new { message = "La nueva contraseña ingresada es insegura." });
             }
 
+            // Cambiar la contraseña y limpiar el token
             usuario.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.NuevaContrasenia);
             usuario.ResetToken = null;
             usuario.ResetTokenExpires = null;
 
+            // Verificar si el usuario está bloqueado y restablecer los intentos
+            if (usuario.EstaBloqueado)
+            {
+                usuario.IntentosFallidos = 0; // Restablecer intentos
+                usuario.EstaBloqueado = false; // Desbloquear al usuario
+            }
+
             await _context.SaveChangesAsync();
 
+            // Preparar el correo con el template de confirmación de cambio de contraseña
             var body = System.IO.File.ReadAllText("Templates/PasswordUpdated.html")
-                       .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png");
+                    .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png");
 
             await emailService.SendEmailAsync(usuario.correo, "Tu contraseña ha sido actualizada", body);
 
             return Ok(new { message = "Contraseña restablecida con éxito." });
         }
-
-
-
-}
+    }
 }
 

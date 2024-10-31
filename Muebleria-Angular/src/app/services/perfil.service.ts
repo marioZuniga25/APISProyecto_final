@@ -67,6 +67,6 @@ export class PerfilService {
 
   // Modificar usuario
   updateUser(id: number, usuario: IUsuarioDetalle): Observable<IUsuarioDetalle> {
-    return this.http.put<IUsuarioDetalle>(`${this.apiUrl}/ModificarUsuario/${id}`, usuario);
+    return this.http.put<IUsuarioDetalle>(`http://localhost:5194/api/Usuario/ModificarUsuario/${id}`, usuario);
   }
 }
