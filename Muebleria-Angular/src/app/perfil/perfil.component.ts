@@ -10,7 +10,10 @@ import { IDireccionEnvio } from '../interfaces/IDireccionEnvio';
 import { IPersona } from '../interfaces/IPersona';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
+registerLocaleData(localeEs, 'es');
 @Component({
   selector: 'app-perfil',
   standalone: true,
@@ -32,6 +35,7 @@ export class PerfilComponent implements OnInit {
   confirmarContrasenia: string = ''; // Nueva variable para confirmar la contraseña
   mostrarErrorConfirmarContrasenia: boolean = false; // Bandera de error
   mensajeErrorConfirmarContrasenia: string = ''; // Mensaje de error
+  ultimoInicioSesion: Date | null = null;
 
   // DEFINICIÓN DE OBJETOS
 
@@ -108,6 +112,7 @@ export class PerfilComponent implements OnInit {
     this.cargarDatosUsuario(userId);
     this.cargarTarjetasUsuario(userId);
     this.getDireccionesPorPersona(userId);
+    this.obtenerUltimoInicioSesion(userId);
 
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
@@ -535,7 +540,7 @@ export class PerfilComponent implements OnInit {
 
           localStorage.setItem('currentUser', JSON.stringify(respuesta));
 
-            
+
           this.cerrarModalUsuario();
           this.ngOnInit();
           this.AuthService.removeUser();
@@ -564,53 +569,65 @@ export class PerfilComponent implements OnInit {
     }
 
     if (this.personaEdit.id > 0) {
-        // Perfil existente, usar el endpoint de actualización
-        this.perfilService.updateProfile(this.personaEdit.id, this.personaEdit).subscribe(
-          () => {
-            localStorage.setItem('currentUser', JSON.stringify(this.personaEdit));
-            Swal.fire({
-              icon: 'success',
-              title: 'Éxito',
-              text: 'Perfil actualizado exitosamente',
-              confirmButtonText: 'Aceptar'
-            }).then(() => {
-              // Redirigir o actualizar la página de perfil
-              this.router.navigate(['/login']);
-              localStorage.removeItem('userId');
-            });
-            this.cerrarModal(); // Cerrar el modal después de guardar
-            this.ngOnInit(); // Recargar los datos si es necesario
-          },
-          (error) => {
-            console.error("Error al actualizar el perfil:", error);
-            const mensajeError = error.error?.message || 'Hubo un problema al actualizar el perfil. Inténtalo de nuevo.';
-            Swal.fire('Error', mensajeError, 'error');
-          }
-        );
+      // Perfil existente, usar el endpoint de actualización
+      this.perfilService.updateProfile(this.personaEdit.id, this.personaEdit).subscribe(
+        () => {
+          localStorage.setItem('currentUser', JSON.stringify(this.personaEdit));
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Perfil actualizado exitosamente',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            // Redirigir o actualizar la página de perfil
+            this.router.navigate(['/login']);
+            localStorage.removeItem('userId');
+          });
+          this.cerrarModal(); // Cerrar el modal después de guardar
+          this.ngOnInit(); // Recargar los datos si es necesario
+        },
+        (error) => {
+          console.error("Error al actualizar el perfil:", error);
+          const mensajeError = error.error?.message || 'Hubo un problema al actualizar el perfil. Inténtalo de nuevo.';
+          Swal.fire('Error', mensajeError, 'error');
+        }
+      );
     } else {
-        // Nuevo perfil, usar el endpoint de agregar
-        this.perfilService.addProfile(this.personaEdit).subscribe(
-          (respuesta: IPersona) => {
-            localStorage.setItem('currentUser', JSON.stringify(respuesta));
-            Swal.fire({
-              icon: 'success',
-              title: 'Éxito',
-              text: 'Perfil agregado exitosamente',
-              confirmButtonText: 'Aceptar'
-            }).then(() => {
-              // Redirigir al perfil
-              this.router.navigate(['/login']);
-              localStorage.removeItem('userId');
-            });
-            this.cerrarModal(); // Cerrar el modal después de guardar
-            this.ngOnInit(); // Recargar los datos si es necesario
-          },
-          (error) => {
-            console.error("Error al agregar el perfil:", error);
-            const mensajeError = error.error?.message || 'Hubo un problema al agregar el perfil. Inténtalo de nuevo.';
-            Swal.fire('Error', mensajeError, 'error');
-          }
-        );
+      // Nuevo perfil, usar el endpoint de agregar
+      this.perfilService.addProfile(this.personaEdit).subscribe(
+        (respuesta: IPersona) => {
+          localStorage.setItem('currentUser', JSON.stringify(respuesta));
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Perfil agregado exitosamente',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            // Redirigir al perfil
+            this.router.navigate(['/login']);
+            localStorage.removeItem('userId');
+          });
+          this.cerrarModal(); // Cerrar el modal después de guardar
+          this.ngOnInit(); // Recargar los datos si es necesario
+        },
+        (error) => {
+          console.error("Error al agregar el perfil:", error);
+          const mensajeError = error.error?.message || 'Hubo un problema al agregar el perfil. Inténtalo de nuevo.';
+          Swal.fire('Error', mensajeError, 'error');
+        }
+      );
     }
-}
+  }
+
+  // Método para obtener el último inicio de sesión
+  obtenerUltimoInicioSesion(userId: number): void {
+    this.AuthService.getUltimoInicioSesion(userId).subscribe(
+      (data: { fechaInicioSesion: Date }) => {
+        this.ultimoInicioSesion = data.fechaInicioSesion;
+      },
+      (error) => {
+        console.error('Error al obtener el último inicio de sesión', error);
+      }
+    );
+  }
 }
