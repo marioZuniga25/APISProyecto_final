@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 import { User } from '../interfaces/AuthResponse';
 import { IDetalleVenta } from '../interfaces/IDetalleVenta';
 import { FormsModule, NgModel } from '@angular/forms';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-envio',
   standalone: true,
@@ -174,7 +174,9 @@ export class EnvioComponent implements OnInit {
                     icon: 'success',
                     showConfirmButton: true
                   }).then(() => {
-                    window.location.href = "/gracias/${idVentaGenerado}";
+                    const secretKey = 'tu_clave_secreta';
+                    const encryptedId = CryptoJS.AES.encrypt(idVentaGenerado.toString(), secretKey).toString();
+                    window.location.href = `/gracias/${encodeURIComponent(encryptedId)}`;                  
                   });
                 }, 5000);
               },
