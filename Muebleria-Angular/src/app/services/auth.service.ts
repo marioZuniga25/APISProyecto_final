@@ -129,5 +129,10 @@ export class AuthService {
   updateUsuario(idUsuario: number, usuario: any): Observable<any> {
     return this.http.put(`${this.apiUrl}usuario/ModificarUsuario/${idUsuario}`, usuario);
   }
+
+  // Método para obtener el último inicio de sesión de un usuario
+  getUltimoInicioSesion(userId: number): Observable<{ fechaInicioSesion: Date }> {
+    return this.http.get<{ fechaInicioSesion: Date }>(`${this.apiUrl}usuario/UltimoInicioSesion/${userId}`);
+  }
   
 }

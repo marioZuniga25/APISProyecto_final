@@ -232,6 +232,23 @@ namespace ProyectoFinalAPI.Controllers
             usuario.IntentosFallidos = 0;
             await _context.SaveChangesAsync();
 
+            // Obtener la zona horaria de León, Guanajuato (América/México_Ciudad)
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("America/Mexico_City");
+
+            // Convertir la hora UTC a la hora local de la zona horaria
+            var fechaInicioSesionLocal = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+
+            // Guardar un log de inicio de sesión con la hora local
+            var log = new LogInicioSesion
+            {
+                UsuarioId = usuario.idUsuario,
+                FechaInicioSesion = fechaInicioSesionLocal,
+                IpDireccion = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Desconocida"
+            };
+
+            await _context.LogInicioSesion.AddAsync(log);
+            await _context.SaveChangesAsync();
+
             var response = new
             {
                 message = "Inicio de sesión exitoso",
@@ -267,8 +284,6 @@ namespace ProyectoFinalAPI.Controllers
 
             return Ok(response);
         }
-
-
         [HttpGet("BuscarPorNombre")]
         public async Task<ActionResult<IEnumerable<Usuario>>> SearchUsuariosPorNombre(string nombre)
         {
@@ -348,6 +363,36 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(true);
         }
 
+        [HttpGet]
+        [Route("UltimoInicioSesion/{id:int}")]
+        public async Task<IActionResult> GetUltimoInicioSesion(int id)
+        {
+            // Verificar si el usuario existe
+            var usuario = await _context.Usuario.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound(new { message = "Usuario no encontrado." });
+            }
+
+            // Obtener el segundo último inicio de sesión
+            var ultimoInicioSesion = await _context.LogInicioSesion
+                .Where(log => log.UsuarioId == id)
+                .OrderByDescending(log => log.FechaInicioSesion)
+                .Skip(1) // Saltar el inicio de sesión más reciente
+                .FirstOrDefaultAsync();
+
+            if (ultimoInicioSesion == null)
+            {
+                return NotFound(new { message = "No se encontraron registros de inicio de sesión previos." });
+            }
+
+            return Ok(new
+            {
+                FechaInicioSesion = ultimoInicioSesion.FechaInicioSesion,
+                IpDireccion = ultimoInicioSesion.IpDireccion
+            });
+        }
+
         [HttpPost]
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, [FromServices] EmailService emailService)
@@ -388,5 +433,7 @@ namespace ProyectoFinalAPI.Controllers
             return Ok(new { message = "Contraseña restablecida con éxito." });
         }
     }
+
+
 }
 

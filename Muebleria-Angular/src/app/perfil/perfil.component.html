@@ -18,8 +18,8 @@
         <p>{{ personaEdit.correo || 'No tienes un perfil establecido aún.' }}</p>
 
 
-        <button (click)="abrirModalUsuario(idUsuario);"
-          class="tarjeta-agregar-boton btn btn-success w-100" title="Configurar Mi Usuario">
+        <button (click)="abrirModalUsuario(idUsuario);" class="tarjeta-agregar-boton btn btn-success w-100"
+          title="Configurar Mi Usuario">
           <i class="fa-duotone fa-solid fa-pen"></i> Editar mi usuario </button>
 
 
@@ -34,8 +34,8 @@
         <h3>telefono</h3>
         <p>{{ personaEdit.telefono || 'No tienes un perfil establecido aún.' }}</p>
 
-        <button (click)="abrirModalModificarPersona(personaId);"
-          class="tarjeta-agregar-boton btn btn-success w-100" title="Configurar Perfil">
+        <button (click)="abrirModalModificarPersona(personaId);" class="tarjeta-agregar-boton btn btn-success w-100"
+          title="Configurar Perfil">
           <i class="fa-duotone fa-solid fa-plus"></i> {{ !personaEdit.nombre ? 'Establecer mi perfil' : 'Editar mi
           perfil' }} </button>
 
@@ -170,7 +170,10 @@
             <button class="tarjeta-eliminar btn btn-danger" (click)="eliminarTarjeta(tarjeta.idTarjeta)">
               <span class="fa fa-trash"></span> Eliminar
             </button>
+
+
           </div>
+
 
           <div class="tarjeta-agregar">
             <h3 style="font-size: 20px; padding-bottom: 20px;">Agregar Nueva Tarjeta</h3>
@@ -216,8 +219,13 @@
             </form>
           </div>
         </div>
+        <div class="ultimo-inicio-sesion mt-4">
+          <h3>Último inicio de sesión</h3>
+          <!-- Mostrar la fecha en formato español -->
+          <p>Último inicio de sesión: {{ ultimoInicioSesion | date:'fullDate':'':'es-ES' }} a las {{ ultimoInicioSesion
+            | date:'hh:mm a':'':'es-ES' }}</p>
+        </div>
       </div>
-
     </div>
   </div>
 
@@ -268,7 +276,8 @@
         </div>
         <div class="form-group mt-4">
           <label for="contraseniaActual">Contraseña Actual</label>
-          <input type="password" id="contraseniaActual" [(ngModel)]="contraseniaActual" name="contraseniaActual" required>
+          <input type="password" id="contraseniaActual" [(ngModel)]="contraseniaActual" name="contraseniaActual"
+            required>
         </div>
         <div class="form-group mt-4">
           <label for="nuevaContrasenia">Nueva Contraseña</label>
@@ -276,11 +285,12 @@
         </div>
         <div class="form-group mt-4">
           <label for="confirmarContrasenia">Confirmar Nueva Contraseña</label>
-          <input type="password" id="confirmarContrasenia" [(ngModel)]="confirmarContrasenia" name="confirmarContrasenia" required>
+          <input type="password" id="confirmarContrasenia" [(ngModel)]="confirmarContrasenia"
+            name="confirmarContrasenia" required>
           <div *ngIf="mostrarErrorConfirmarContrasenia" class="text-danger">{{ mensajeErrorConfirmarContrasenia }}</div>
         </div>
         <div *ngIf="mostrarErrorContrasenia" class="text-danger">{{ mensajeErrorContrasenia }}</div>
-        
+
         <button type="submit" class="btn btn-primary mt-3 w-100">
           <i class="fa fa-save"></i> Guardar Cambios
         </button>
