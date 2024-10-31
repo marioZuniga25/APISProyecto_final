@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/cristianleyva/Documents/integrador/RAMA-MAIN/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
+    "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {}
   },
   "projects": {
-    "/Users/cristianleyva/Documents/integrador/RAMA-MAIN/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
+    "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/cristianleyva/Documents/integrador/RAMA-MAIN/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "projectUniqueName": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
         "projectName": "ProyectoFinalAPI",
-        "projectPath": "/Users/cristianleyva/Documents/integrador/RAMA-MAIN/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+        "projectPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
         "packagesPath": "/Users/cristianleyva/.nuget/packages/",
-        "outputPath": "/Users/cristianleyva/Documents/integrador/RAMA-MAIN/APISProyecto_final/ProyectoFinalAPI/obj/",
+        "outputPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/cristianleyva/.nuget/NuGet/NuGet.Config"

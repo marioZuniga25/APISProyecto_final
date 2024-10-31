@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ideZfFBBWfegzH0ZQywmn3BfjoSZSpMsObhLU9J3ly9pntNfVndSjTxl9VW5f1Cc9jqNORt4rRbdY6wgzQTAKA==",
+  "dgSpecHash": "rCS8pvBOtlPTzU6CJPr6bEDuU2/9kVB7hExneX3LtnYRGLjASh00PPyM81cq2u3ImN+Gs6xRFNNJj8zwkQ7LOg==",
   "success": true,
-  "projectFilePath": "/Users/cristianleyva/Documents/integrador/RAMA-MAIN/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+  "projectFilePath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
   "expectedPackageFiles": [
     "/Users/cristianleyva/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/cristianleyva/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
