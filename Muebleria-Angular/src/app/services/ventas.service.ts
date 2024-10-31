@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IProducto } from '../interfaces/IProducto';
-import { IVenta } from '../interfaces/IVenta';
+import { IVenta, IVentaAux } from '../interfaces/IVenta';
 import { IDetalleVenta } from '../interfaces/IDetalleVenta';
 import { IProductoResponse } from '../interfaces/IProductoResponse';
 
@@ -52,6 +52,10 @@ export class VentasService {
 
     filtrarProductos(request: string): Observable<IProductoResponse[]> {
       return this._http.get<IProductoResponse[]>(`${this._apiUrlP}FiltrarProductos?term=${request}`);
+    }
+
+    getVentasByTipo(tipoVenta: string): Observable<IVentaAux[]> {
+        return this._http.get<IVentaAux[]>(`${this._apiUrlV}GetVentasByTipo/${tipoVenta}`);
     }
 
     /*search(name: string): Observable<IProducto[]>{
