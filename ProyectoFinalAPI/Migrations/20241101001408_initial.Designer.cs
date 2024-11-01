@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241031074206_RelacionVentasUsuario")]
-    partial class RelacionVentasUsuario
+    [Migration("20241101001408_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,29 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasIndex("PersonaId");
 
                     b.ToTable("DireccionesEnvio");
+                });
+
+            modelBuilder.Entity("LogInicioSesion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("FechaInicioSesion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IpDireccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogInicioSesion");
                 });
 
             modelBuilder.Entity("Persona", b =>
@@ -620,6 +643,12 @@ namespace ProyectoFinalAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idUsuario"));
+
+                    b.Property<bool>("EstaBloqueado")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("IntentosFallidos")
+                        .HasColumnType("int");
 
                     b.Property<string>("ResetToken")
                         .HasColumnType("nvarchar(max)");

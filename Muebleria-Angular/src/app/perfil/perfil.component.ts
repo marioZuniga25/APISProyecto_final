@@ -7,7 +7,13 @@ import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { IDireccionEnvio } from '../interfaces/IDireccionEnvio';
+import { IPersona } from '../interfaces/IPersona';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
+registerLocaleData(localeEs, 'es');
 @Component({
   selector: 'app-perfil',
   standalone: true,
@@ -18,29 +24,57 @@ import { IDireccionEnvio } from '../interfaces/IDireccionEnvio';
 export class PerfilComponent implements OnInit {
   user: IUsuarioDetalle | null = null;
   personaId: number = parseInt(localStorage.getItem('userId') || '0') || 0;
+  idUsuario: number = this.route.snapshot.params['id'];
   tarjetas: IUtarjetas[] = [];
   isModalOpen = false;
-  userEdit: IUsuarioDetalle | null = null;
+  isModalOpenUser = false;
   isEditing: boolean = false; contraseniaActual: string = ''; // Variable para la contraseña actual
   nuevaContrasenia: string = ''; // Variable para la nueva contraseña
   mostrarErrorContrasenia: boolean = false; // Para indicar si hay un error
   mensajeErrorContrasenia: string = ''; // Mensaje de error detallado
+  confirmarContrasenia: string = ''; // Nueva variable para confirmar la contraseña
+  mostrarErrorConfirmarContrasenia: boolean = false; // Bandera de error
+  mensajeErrorConfirmarContrasenia: string = ''; // Mensaje de error
+  ultimoInicioSesion: Date | null = null;
+
+  // DEFINICIÓN DE OBJETOS
+
   nuevaTarjeta: IUtarjetas = {
     idTarjeta: 0,
-    idUsuario: 0,
+    idUsuario: this.route.snapshot.params['id'],
     nombrePropietario: '',
     numeroTarjeta: '',
     fechaVencimiento: '',
     ccv: ''
   };
 
+  userEdit: IUsuarioDetalle = {
+    idUsuario: 0,
+    nombreUsuario: '',
+    correo: '',
+    contrasenia: '',
+    rol: 0,
+    confirmPassword: '',
+    type: 0
+  }
+
+  personaEdit: IPersona = {
+    id: 0,
+    nombre: '',
+    apellidos: '',
+    telefono: '',
+    correo: '',
+    usuarioId: this.route.snapshot.params['id'],
+    direccionesEnvio: []
+  };
+
   estados: string[] = [
-    'Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 
-    'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Durango', 'Guanajuato', 
-    'Guerrero', 'Hidalgo', 'Jalisco', 'Mexico', 'Michoacán', 'Morelos', 
-    'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 
-    'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 
-    'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 
+    'Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche',
+    'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Durango', 'Guanajuato',
+    'Guerrero', 'Hidalgo', 'Jalisco', 'Mexico', 'Michoacán', 'Morelos',
+    'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro',
+    'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora',
+    'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz',
     'Yucatán', 'Zacatecas'
   ];
 
@@ -71,13 +105,26 @@ export class PerfilComponent implements OnInit {
     personaId: 0,
   };
 
-  constructor(private route: ActivatedRoute, private perfilService: PerfilService) { }
+  constructor(private route: ActivatedRoute, private AuthService: AuthService, private perfilService: PerfilService, private router: Router) { }
 
   ngOnInit(): void {
     const userId = this.route.snapshot.params['id'];
     this.cargarDatosUsuario(userId);
     this.cargarTarjetasUsuario(userId);
-    this.getDireccionesPorPersona(userId); // Cargar direcciones
+    this.getDireccionesPorPersona(userId);
+    this.obtenerUltimoInicioSesion(userId);
+
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      // Precargar el correo y el nombre de usuario
+      this.personaEdit.correo = parsedUser.correo;
+      this.personaEdit.nombre = parsedUser.persona.nombre;
+      this.personaEdit.apellidos = parsedUser.persona.apellidos;
+      this.personaEdit.telefono = parsedUser.persona.telefono;
+      this.userEdit.nombreUsuario = parsedUser.nombreUsuario;
+      console.log(parsedUser);
+    }
   }
 
   cargarDatosUsuario(userId: number): void {
@@ -176,7 +223,7 @@ export class PerfilComponent implements OnInit {
 
   agregarDireccion(): void {
     this.nuevaDireccion.personaId = this.personaId ?? 0; // Asigna el ID del usuario
-  
+
     if (this.direcciones.length === 0) {
       // Si es la primera dirección, la establecemos como predeterminada
       this.nuevaDireccion.esPredeterminada = true;
@@ -225,7 +272,7 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
-  
+
   enviarModificacion(): void {
     this.perfilService.updateAddress(this.nuevaDireccion.id, this.nuevaDireccion).subscribe(
       () => {
@@ -244,7 +291,7 @@ export class PerfilComponent implements OnInit {
     );
   }
 
-  
+
   enviarDireccion(): void {
     this.perfilService.addAddress(this.nuevaDireccion.personaId || 0, this.nuevaDireccion).subscribe(
       (direccion: IDireccionEnvio) => {
@@ -256,19 +303,19 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
-  
+
   // Método para establecer todas las direcciones como no predeterminadas
   setAllDirectionsToFalse(callback: () => void): void {
     const updates = this.direcciones.map(direccion => {
       direccion.esPredeterminada = false;
       return this.perfilService.updateAddress(direccion.id, direccion).toPromise();
     });
-  
+
     Promise.all(updates)
       .then(() => callback())
       .catch(error => console.error('Error updating addresses', error));
   }
-  
+
 
   resetDireccion(): void {
     this.nuevaDireccion = {
@@ -290,7 +337,7 @@ export class PerfilComponent implements OnInit {
     this.isEditing = true;
   }
 
-  
+
 
   agregarTarjeta(): void {
     this.perfilService.addCard(this.nuevaTarjeta).subscribe(
@@ -309,7 +356,7 @@ export class PerfilComponent implements OnInit {
   resetTarjeta(): void {
     this.nuevaTarjeta = {
       idTarjeta: 0,
-      idUsuario: this.user?.idUsuario || 0,
+      idUsuario: this.route.snapshot.params['id'] || 0,
       nombrePropietario: '',
       numeroTarjeta: '',
       fechaVencimiento: '',
@@ -341,73 +388,134 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  abrirModalModificar(idUsuario: number | undefined): void {
+  abrirModalUsuario(idUsuario: number | undefined): void {
     if (idUsuario) {
       this.perfilService.getUserDetails(idUsuario).subscribe(
         (data: IUsuarioDetalle) => {
-          this.userEdit = data;
-          this.isModalOpen = true;
+          this.userEdit = data || this.userEdit; // Precargar datos si existen
+          this.isModalOpenUser = true; // Mostrar modal
         },
         (error) => {
-          console.error('Error fetching user details for edit', error);
+          console.error('Error al cargar detalles del usuario:', error);
+          this.isModalOpenUser = true; // Mostrar modal aunque haya error para agregar un usuario nuevo
         }
       );
+    } else {
+      this.isModalOpenUser = true; // Mostrar modal para nuevo usuario
+    }
+  }
+
+  cerrarModalUsuario(): void {
+    this.isModalOpenUser = false;
+    this.userEdit = {
+      idUsuario: 0,
+      nombreUsuario: '',
+      correo: '',
+      contrasenia: '',
+      rol: 0,
+      confirmPassword: '',
+      type: 0
+    };
+    this.contraseniaActual = ''; // Limpiar campo de contraseña actual
+    this.nuevaContrasenia = ''; // Limpiar campo de nueva contraseña
+  }
+
+  abrirModalModificarPersona(idUsuario: number | undefined): void {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+
+      // Precargar datos de usuario y perfil
+      this.userEdit = {
+        idUsuario: parsedUser.idUsuario || 0,
+        nombreUsuario: parsedUser.nombreUsuario || '',
+        correo: parsedUser.correo || '',
+        contrasenia: '', // Este campo no se debe mostrar ni precargar por seguridad
+        rol: parsedUser.rol || 0,
+        confirmPassword: '', // Este campo no se debe mostrar ni precargar por seguridad
+        type: parsedUser.type || 0
+      };
+
+      this.personaEdit = {
+        id: parsedUser.persona?.id || 0,
+        nombre: parsedUser.persona?.nombre || '',
+        apellidos: parsedUser.persona?.apellidos || '',
+        telefono: parsedUser.persona?.telefono || '',
+        correo: parsedUser.correo || '',
+        usuarioId: parsedUser.idUsuario || 0,
+        direccionesEnvio: parsedUser.persona?.direccionesEnvio || []
+      };
+
+      console.log('Datos precargados:', parsedUser);
+      this.isModalOpen = true; // Abre el modal
+    } else {
+      console.error('No se encontró ningún usuario almacenado en localStorage');
     }
   }
 
   cerrarModal(): void {
     this.isModalOpen = false;
-    this.userEdit = null;
+    this.userEdit = {
+      idUsuario: 0,
+      nombreUsuario: '',
+      correo: '',
+      contrasenia: '',
+      rol: 0,
+      confirmPassword: '',
+      type: 0
+    }
   }
 
   // Método para eliminar una dirección
- // Método para eliminar una dirección
-eliminarDireccion(id: number) {
-  Swal.fire({
-    title: '¿Estás seguro?',
-    text: 'Esta acción no se puede deshacer.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Eliminar',
-    cancelButtonText: 'Cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.perfilService.deleteAddress(id).subscribe(() => {
-        // Filtra el array para eliminar la dirección que coincide con el ID
-        this.direcciones = this.direcciones.filter(d => d.id !== id);
-        Swal.fire('Eliminada', 'La dirección ha sido eliminada.', 'success');
-      }, (error) => {
-        Swal.fire('Error', 'Hubo un problema al eliminar la dirección.', 'error');
-        console.error('Error deleting address', error);
-      });
-    }
-  });
-}
-
-
-
+  // Método para eliminar una dirección
+  eliminarDireccion(id: number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.perfilService.deleteAddress(id).subscribe(() => {
+          // Filtra el array para eliminar la dirección que coincide con el ID
+          this.direcciones = this.direcciones.filter(d => d.id !== id);
+          Swal.fire('Eliminada', 'La dirección ha sido eliminada.', 'success');
+        }, (error) => {
+          Swal.fire('Error', 'Hubo un problema al eliminar la dirección.', 'error');
+          console.error('Error deleting address', error);
+        });
+      }
+    });
+  }
 
   onSubmit(): void {
-    if (!this.contraseniaActual) {
-      this.mostrarErrorContrasenia = true;
-      this.mensajeErrorContrasenia = 'Ingrese la nueva contraseña.';
-      return;
-    }
-    if (!this.validatePassword(this.contraseniaActual)) {
-      this.mostrarErrorContrasenia = true;
-      this.mensajeErrorContrasenia = 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.';
-      return;
-    }
-
     this.mostrarErrorContrasenia = false;
+    this.mostrarErrorConfirmarContrasenia = false;
 
-    if (!this.userEdit?.idUsuario) {
+    // Validar que la confirmación de la contraseña coincida con la nueva contraseña
+    if (this.nuevaContrasenia.trim() !== this.confirmarContrasenia.trim()) {
+      this.mostrarErrorConfirmarContrasenia = true;
+      this.mensajeErrorConfirmarContrasenia = 'La confirmación de la contraseña no coincide.';
+      return;
+    }
+
+    // Validar que la contraseña cumpla con los estándares de seguridad
+    if (!this.validatePassword(this.nuevaContrasenia)) {
+      this.mostrarErrorContrasenia = true;
+      this.mensajeErrorContrasenia = 'La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una letra minúscula, un número y un carácter especial.';
+      return;
+    }
+
+    // Continuar con la lógica si todo es válido
+    if (!this.idUsuario) {
       console.error("El ID del usuario no puede estar vacío.");
       return;
     }
 
     const usuarioDetalle: IUsuarioDetalle = {
-      idUsuario: this.userEdit.idUsuario,
+      idUsuario: this.idUsuario,
       nombreUsuario: this.userEdit.nombreUsuario,
       correo: this.userEdit.correo,
       contrasenia: this.nuevaContrasenia,
@@ -416,24 +524,110 @@ eliminarDireccion(id: number) {
       type: this.userEdit.type
     };
 
-    this.perfilService.updateUser(usuarioDetalle.idUsuario ?? 0, { ...usuarioDetalle, contrasenia: this.contraseniaActual })
+    this.perfilService.updateUser(usuarioDetalle.idUsuario ?? 0, { ...usuarioDetalle, contrasenia: this.nuevaContrasenia })
       .subscribe(
         respuesta => {
-          Swal.fire('Éxito', 'Usuario actualizado exitosamente.', 'success');
-          this.cerrarModal();
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Usuario actualizado correctamente',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            // Redirigir al perfil
+            this.router.navigate(['/login']);
+            localStorage.removeItem('userId');
+          });
+
+          localStorage.setItem('currentUser', JSON.stringify(respuesta));
+
+
+          this.cerrarModalUsuario();
           this.ngOnInit();
+          this.AuthService.removeUser();
+          this.user = null;
+          this.router.navigate(['/login']);
+          localStorage.removeItem('userId');
         },
         error => {
           console.error("Error al actualizar el usuario:", error);
-          const mensajeError = error.error?.message || 'Hubo un problema al actualizar el usuario. Inténtalo de nuevo.';
-          Swal.fire('Error', mensajeError, 'error');
+          this.mostrarErrorContrasenia = true;
+          this.mensajeErrorContrasenia = 'Hubo un problema al actualizar el usuario. Inténtalo de nuevo.';
         }
       );
-
-
   }
+
   validatePassword(contrasenia: string): boolean {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(contrasenia);
+  }
+
+  onSubmitPerfil(): void {
+    // Validación simple antes de enviar los datos de perfil
+    if (!this.personaEdit || this.personaEdit.usuarioId <= 0) {
+      Swal.fire('Error', 'Los datos del perfil están incompletos.', 'error');
+      return;
+    }
+
+    if (this.personaEdit.id > 0) {
+      // Perfil existente, usar el endpoint de actualización
+      this.perfilService.updateProfile(this.personaEdit.id, this.personaEdit).subscribe(
+        () => {
+          localStorage.setItem('currentUser', JSON.stringify(this.personaEdit));
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Perfil actualizado exitosamente',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            // Redirigir o actualizar la página de perfil
+            this.router.navigate(['/login']);
+            localStorage.removeItem('userId');
+          });
+          this.cerrarModal(); // Cerrar el modal después de guardar
+          this.ngOnInit(); // Recargar los datos si es necesario
+        },
+        (error) => {
+          console.error("Error al actualizar el perfil:", error);
+          const mensajeError = error.error?.message || 'Hubo un problema al actualizar el perfil. Inténtalo de nuevo.';
+          Swal.fire('Error', mensajeError, 'error');
+        }
+      );
+    } else {
+      // Nuevo perfil, usar el endpoint de agregar
+      this.perfilService.addProfile(this.personaEdit).subscribe(
+        (respuesta: IPersona) => {
+          localStorage.setItem('currentUser', JSON.stringify(respuesta));
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Perfil agregado exitosamente',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            // Redirigir al perfil
+            this.router.navigate(['/login']);
+            localStorage.removeItem('userId');
+          });
+          this.cerrarModal(); // Cerrar el modal después de guardar
+          this.ngOnInit(); // Recargar los datos si es necesario
+        },
+        (error) => {
+          console.error("Error al agregar el perfil:", error);
+          const mensajeError = error.error?.message || 'Hubo un problema al agregar el perfil. Inténtalo de nuevo.';
+          Swal.fire('Error', mensajeError, 'error');
+        }
+      );
+    }
+  }
+
+  // Método para obtener el último inicio de sesión
+  obtenerUltimoInicioSesion(userId: number): void {
+    this.AuthService.getUltimoInicioSesion(userId).subscribe(
+      (data: { fechaInicioSesion: Date }) => {
+        this.ultimoInicioSesion = data.fechaInicioSesion;
+      },
+      (error) => {
+        console.error('Error al obtener el último inicio de sesión', error);
+      }
+    );
   }
 }

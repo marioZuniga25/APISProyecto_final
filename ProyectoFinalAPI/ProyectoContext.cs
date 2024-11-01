@@ -32,6 +32,7 @@ namespace ProyectoFinalAPI
         public DbSet<DetalleOrdenCompra> DetallesOrdenCompra { get; set; }
         public DbSet<UnidadMedida> UnidadMedidas { get; set; }
         public DbSet<ContraseniaInsegura> ContraseniaInsegura { get; set; }
+        public DbSet<LogInicioSesion> LogInicioSesion { get; set; }
 
 
         public DbSet<Persona> Personas { get; set; }

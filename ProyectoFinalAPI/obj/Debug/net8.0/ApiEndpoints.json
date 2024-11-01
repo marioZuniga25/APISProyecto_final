@@ -1519,6 +1519,22 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.UsuarioController",
+    "Method": "GetUltimoInicioSesion",
+    "RelativePath": "api/Usuario/UltimoInicioSesion/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.UsuarioController",
     "Method": "ValidateToken",
     "RelativePath": "api/Usuario/validate-token",
     "HttpMethod": "GET",

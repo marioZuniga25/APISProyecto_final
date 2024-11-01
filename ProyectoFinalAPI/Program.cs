@@ -24,12 +24,13 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("NuevaPolitica", app =>
     {
-        app.SetIsOriginAllowed(origin => true)
+        app.WithOrigins("http://localhost:4200")
            .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials();
     });
 });
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5194);
@@ -37,7 +38,7 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 // Configura el middleware
-app.UseHangfireDashboard(); // Añade el panel de control de Hangfire
+app.UseHangfireDashboard(); // Aï¿½ade el panel de control de Hangfire
 app.UseHangfireServer(); // Inicia el servidor de Hangfire
 
 

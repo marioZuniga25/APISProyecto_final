@@ -103,61 +103,58 @@ namespace ProyectoFinalAPI.Controllers
 
             return detallesVenta;
         }
+
         [HttpGet("GetVentasByTipo/{tipoVenta}")]
-        public async Task<ActionResult<IEnumerable<VentaDto>>> GetVentasByTipo(string tipoVenta)
-        {
-            var ventas = await _context.Venta
-                .Where(v => v.tipoVenta == tipoVenta)
-                .OrderByDescending(v => v.fechaVenta)
-                .Select(v => new VentaDto
-                {
-                    IdVenta = v.idVenta,
-                    Total = (decimal)v.total,
-                    FechaVenta = v.fechaVenta,
-                    TipoVenta = v.tipoVenta,
-                    // Obtener el usuario directamente sin necesidad de una relación definida
-                    Usuario = _context.Usuario
-                        .Where(u => u.idUsuario == v.idUsuario)
-                        .Select(u => new UsuarioDto
-                        {
-                            IdUsuario = u.idUsuario,
-                            NombreUsuario = u.nombreUsuario,
-                            Correo = u.correo
-                        }).FirstOrDefault(),
-                    DetalleVentas = _context.DetalleVenta
-                        .Where(dv => dv.idVenta == v.idVenta)
-                        .Select(dv => new DetalleVentaDto
-                        {
-                            IdDetalleVenta = dv.idDetalleVenta,
-                            Cantidad = dv.cantidad,
-                            PrecioUnitario = (decimal)dv.precioUnitario,
-                            Producto = _context.Producto
-                                .Where(p => p.idProducto == dv.idProducto)
-                                .Select(p => new ProductoDto
-                                {
-                                    IdProducto = p.idProducto,
-                                    NombreProducto = p.nombreProducto,
-                                    Descripcion = p.descripcion,
-                                    Precio = p.precio,
-                                    Stock = p.stock,
-                                    NombreCategoria = p.NombreCategoria,
-                                    IdInventario = p.idInventario,
-                                    IdCategoria = p.idCategoria,
-                                    //Imagen = p.imagen
-                                }).FirstOrDefault()
-                        }).ToList()
-                })
-                .ToListAsync();
-
-            if (ventas == null || !ventas.Any())
+            public async Task<ActionResult<IEnumerable<VentaDto>>> GetVentasByTipo(string tipoVenta)
             {
-                return NotFound($"No se encontraron ventas del tipo '{tipoVenta}'.");
+                var ventas = await _context.Venta
+                    .Where(v => v.tipoVenta == tipoVenta)
+                    .OrderByDescending(v => v.fechaVenta)
+                    .Select(v => new VentaDto
+                    {
+                        IdVenta = v.idVenta,
+                        Total = (decimal)v.total,
+                        FechaVenta = v.fechaVenta,
+                        TipoVenta = v.tipoVenta,
+                        Usuario = _context.Usuario
+                            .Where(u => u.idUsuario == v.idUsuario)
+                            .Select(u => new UsuarioDto
+                            {
+                                IdUsuario = u.idUsuario,
+                                NombreUsuario = u.nombreUsuario,
+                                Correo = u.correo
+                            }).FirstOrDefault(),
+                        DetalleVentas = _context.DetalleVenta
+                            .Where(dv => dv.idVenta == v.idVenta)
+                            .Select(dv => new DetalleVentaDto
+                            {
+                                IdDetalleVenta = dv.idDetalleVenta,
+                                Cantidad = dv.cantidad,
+                                PrecioUnitario = (decimal)dv.precioUnitario,
+                                Producto = _context.Producto
+                                    .Where(p => p.idProducto == dv.idProducto)
+                                    .Select(p => new ProductoDto
+                                    {
+                                        IdProducto = p.idProducto,
+                                        NombreProducto = p.nombreProducto,
+                                        Descripcion = p.descripcion,
+                                        Precio = p.precio,
+                                        Stock = p.stock,
+                                        NombreCategoria = p.NombreCategoria,
+                                        IdInventario = p.idInventario,
+                                        IdCategoria = p.idCategoria,
+                                        //Imagen = p.imagen
+                                    }).FirstOrDefault()
+                            }).ToList()
+                    })
+                    .ToListAsync();
+            
+                if (ventas == null || !ventas.Any())
+                {
+                    return NotFound($"No se encontraron ventas del tipo '{tipoVenta}'.");
+                }
+            
+                return Ok(ventas);
             }
-
-            return Ok(ventas);
-        }
-
-
-
     }
 }

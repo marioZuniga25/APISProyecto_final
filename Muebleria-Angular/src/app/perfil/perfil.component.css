@@ -1782,6 +1782,7 @@ body.owH {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: hidden;
 }
 
 .modal.show {
@@ -1796,6 +1797,7 @@ body.owH {
   width: 80%;
   max-width: 500px;
   border-radius: 15px;
+  margin-top: 2%;
 }
 
 .close {

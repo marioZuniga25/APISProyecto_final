@@ -4,7 +4,7 @@ import { VentasService } from '../services/ventas.service';
 import { IDetalleVenta } from '../interfaces/IDetalleVenta';
 import { IVenta } from '../interfaces/IVenta';
 import { CommonModule } from '@angular/common';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-gracias',
   standalone: true,
@@ -25,7 +25,10 @@ export class GraciasComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtén el ID de la venta desde la URL
-    const idVenta = +this.route.snapshot.paramMap.get('id')!;
+    const encryptedId = this.route.snapshot.paramMap.get('id');
+    const secretKey = 'tu_clave_secreta';
+    const bytes = CryptoJS.AES.decrypt(decodeURIComponent(encryptedId!), secretKey);
+    const idVenta = parseInt(bytes.toString(CryptoJS.enc.Utf8), 10);
     
     // Carga los datos de la venta
     this.ventasService.getVentaById(idVenta).subscribe(

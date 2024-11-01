@@ -44,6 +44,7 @@ export class LoginUsuarioComponent implements OnInit {
     }
     this.loginData.correo = this.aFormGroup.value.correo;
     this.loginData.contrasenia = this.aFormGroup.value.password;
+    this.errorMessage = "";
 
     this.authService.login(this.loginData).subscribe(
       (response: AuthResponse) => {
@@ -56,7 +57,7 @@ export class LoginUsuarioComponent implements OnInit {
       },
       (error) => {
         console.error('Error en el inicio de sesión', error);
-        this.errorMessage = 'Correo o contraseña incorrectos. Inténtalo de nuevo.';
+        this.errorMessage = error.error.message;
       }
     );
   }
