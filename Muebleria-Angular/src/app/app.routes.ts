@@ -26,6 +26,7 @@ import { ComprasMateriasPrimasComponent } from './Admin/compras-materias-primas/
 import { ForgotPasswordComponent } from './Usuario/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './Usuario/reset-password/reset-password.component';
 import { Error404Component } from './error404/error404.component'; 
+import { TipoVentasComponent } from './Admin/tipo-ventas/tipo-ventas.component';
 
 export const routes: Routes = [
   {
@@ -88,6 +89,11 @@ export const routes: Routes = [
   {
     path: 'admin/venta',
     component: VentaComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
+  },
+  {
+    path: 'admin/tipoVenta',
+    component: TipoVentasComponent,
     canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {

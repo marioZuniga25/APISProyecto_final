@@ -53,10 +53,10 @@ export class VentasService {
     filtrarProductos(request: string): Observable<IProductoResponse[]> {
       return this._http.get<IProductoResponse[]>(`${this._apiUrlP}FiltrarProductos?term=${request}`);
     }
-
     getVentasByTipo(tipoVenta: string): Observable<IVentaAux[]> {
-        return this._http.get<IVentaAux[]>(`${this._apiUrlV}GetVentasByTipo/${tipoVenta}`);
+      return this._http.get<IVentaAux[]>(`${this._apiUrlV}GetVentasByTipo/${tipoVenta}`);
     }
+  
 
     /*search(name: string): Observable<IProducto[]>{
       return this._http.get<IProducto[]>( `${this._apiUrl}search?name=${name}`);

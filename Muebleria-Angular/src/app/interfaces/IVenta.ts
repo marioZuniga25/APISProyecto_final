@@ -21,3 +21,4 @@ export interface IVentaAux extends IVenta {
       };
     }[];
 }
+  
