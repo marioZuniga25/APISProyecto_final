@@ -12,12 +12,14 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './detalle.component.html',
-  styleUrl: './detalle.component.css'
+  styleUrls: ['./detalle.component.css']
 })
 export class DetalleComponent implements OnInit {
   producto!: IProductoResponse;
-    cantidad: number = 1;
-
+  cantidad: number = 1;
+  precioConDescuento!: number;
+  descuento!: number;
+  tienePromocion: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -27,15 +29,21 @@ export class DetalleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtén el ID del producto de la ruta
     this.route.paramMap.subscribe(params => {
       const idStr = params.get('id');
       const id = idStr ? +idStr : null;
+      const descuentoStr = this.route.snapshot.queryParamMap.get('descuento');
+      const precioConDescuentoStr = this.route.snapshot.queryParamMap.get('precioConDescuento');
+
+      // Verifica si hay promoción
+      this.descuento = descuentoStr ? +descuentoStr : 0;
+      this.precioConDescuento = precioConDescuentoStr ? +precioConDescuentoStr : 0;
+      this.tienePromocion = this.descuento > 0 && this.precioConDescuento > 0;
+
       if (id !== null) {
         this.productosService.getProductoById(id).subscribe(producto => {
           if (producto) {
             this.producto = producto;
-            // Cierra el buscador después de establecer el producto
             this.buscadorService.closeBuscador();
           } else {
             console.error('Producto no encontrado');
@@ -66,7 +74,7 @@ export class DetalleComponent implements OnInit {
           const productoCarrito: ProductoCarrito = {
             id: this.producto.idProducto,
             nombre: this.producto.nombreProducto,
-            precio: this.producto.precio,
+            precio: this.precioConDescuento, // Usa el precio con descuento
             cantidad: this.cantidad,
             imagen: this.producto.imagen,
             stock: this.producto.stock
