@@ -4983,19 +4983,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emman\\.nuget\\packages\\": {}
+    "C:\\Users\\Mayo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\prueba\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+      "projectUniqueName": "D:\\Desarrollos\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
       "projectName": "ProyectoFinalAPI",
-      "projectPath": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\prueba\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
-      "packagesPath": "C:\\Users\\emman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emman\\IDGS1001\\MueblesTroncoso\\prueba\\APISProyecto_final\\ProyectoFinalAPI\\obj\\",
+      "projectPath": "D:\\Desarrollos\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+      "packagesPath": "C:\\Users\\Mayo\\.nuget\\packages\\",
+      "outputPath": "D:\\Desarrollos\\APISProyecto_final\\ProyectoFinalAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\emman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Mayo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5075,7 +5075,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
