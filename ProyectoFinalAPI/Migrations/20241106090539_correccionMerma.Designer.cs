@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241101001408_initial")]
-    partial class initial
+    [Migration("20241106090539_correccionMerma")]
+    partial class correccionMerma
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -306,6 +306,47 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasIndex("ProveedoridProveedor");
 
                     b.ToTable("MateriaPrima", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Merma", b =>
+                {
+                    b.Property<int>("IdMerma")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMerma"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<string>("causa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("comentarios")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("fechaMerma")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("idMateria")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<string>("unidadMedida")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdMerma");
+
+                    b.ToTable("Merma", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>

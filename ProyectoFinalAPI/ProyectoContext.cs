@@ -21,9 +21,9 @@ namespace ProyectoFinalAPI
         public DbSet<Tarjetas> Tarjetas { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
-       public DbSet<Promocion> Promociones { get; set; }
-       public DbSet<PromocionesRandom> PromocionesRandom { get; set; }
-  public DbSet<Receta> Recetas { get; set; }
+        public DbSet<Promocion> Promociones { get; set; }
+        public DbSet<PromocionesRandom> PromocionesRandom { get; set; }
+        public DbSet<Receta> Recetas { get; set; }
         public DbSet<RecetaDetalle> RecetaDetalles { get; set; }
         public DbSet<Contacto> Contactos { get; set; }
         public DbSet<UnidadMedida> UnidadesMedida { get; set; }
@@ -33,6 +33,7 @@ namespace ProyectoFinalAPI
         public DbSet<UnidadMedida> UnidadMedidas { get; set; }
         public DbSet<ContraseniaInsegura> ContraseniaInsegura { get; set; }
         public DbSet<LogInicioSesion> LogInicioSesion { get; set; }
+        public DbSet<Merma> Merma { get; set; }
 
 
         public DbSet<Persona> Personas { get; set; }
@@ -53,6 +54,22 @@ namespace ProyectoFinalAPI
                          //ciudad.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
 
                      });
+
+            modelBuilder.Entity<Merma>(merma=>
+            {
+                merma.ToTable("Merma");
+                merma.HasKey(m => m.IdMerma);
+                merma.Property(m => m.IdMerma).ValueGeneratedOnAdd().UseIdentityColumn();
+                merma.Property(m => m.Nombre).IsRequired();
+                merma.Property(m => m.fechaMerma).IsRequired();
+                merma.Property(m => m.cantidad).IsRequired();
+                merma.Property(m => m.unidadMedida).IsRequired();
+                merma.Property(m => m.causa).IsRequired();
+                merma.Property(m => m.comentarios).IsRequired();
+                merma.Property(m => m.idUsuario).IsRequired();
+                merma.Property(m => m.idMateria).IsRequired();
+
+            });
 
             modelBuilder.Entity<DetalleVenta>(dVenta =>
             {

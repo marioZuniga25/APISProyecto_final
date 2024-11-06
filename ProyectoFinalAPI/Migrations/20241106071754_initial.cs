@@ -101,6 +101,26 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Merma",
+                columns: table => new
+                {
+                    IdMerma = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fechaMerma = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    idMateria = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    unidadMedida = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    causa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    comentarios = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    idUsuario = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Merma", x => x.IdMerma);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrdenCompra",
                 columns: table => new
                 {
@@ -494,6 +514,9 @@ namespace ProyectoFinalAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "LogInicioSesion");
+
+            migrationBuilder.DropTable(
+                name: "Merma");
 
             migrationBuilder.DropTable(
                 name: "Pedidos");
