@@ -195,7 +195,7 @@ namespace ProyectoFinalAPI.Controllers
 
                     detalleProductos.Append($@"
             <tr>
-                <td><img src='{imagenProducto}' alt='Imagen del Producto' style='width: 50px; height: 50px;' /></td>
+                <td><img alt='Imagen del Producto' style='width: 50px; height: 50px;' /></td>
                 <td>{detalle.Producto.NombreProducto}</td>
                 <td>{detalle.Cantidad}</td>
                 <td>{detalle.PrecioUnitario.ToString("C", new System.Globalization.CultureInfo("es-MX"))}</td>
