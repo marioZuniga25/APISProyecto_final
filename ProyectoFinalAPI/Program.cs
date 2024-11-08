@@ -1,11 +1,22 @@
 using Hangfire;
 using ProyectoFinalAPI;
 using ProyectoFinalAPI.Services;
+using Serilog;
+
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console() 
+    .WriteTo.File(@"./Logs/Log.txt",
+    outputTemplate: "{Timestamp: yyyy-MM-dd HH:dd:ss} {Message: lj}{NewLine}{Exception}")
+    .CreateLogger();
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Host.UseSerilog();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -62,4 +73,16 @@ recurringJobManager.AddOrUpdate<PromocionesRandomService>(
     service => service.EjecutarPromocionesAleatorias(),
     Cron.Minutely); // Ejecutar cada hora
 
-app.Run();
+try
+{
+    Log.Information("Iniciando la aplicación");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "La aplicación falló al iniciar");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

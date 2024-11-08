@@ -11,171 +11,227 @@ namespace ProyectoFinalAPI.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly ProyectoContext _context;
-        public UsuarioController(ProyectoContext context)
+        private readonly ILogger<UsuarioController> _logger;
+
+        public UsuarioController(ProyectoContext context, ILogger<UsuarioController> logger)
         {
             _context = context;
+            _logger = logger;
         }
+
         private async Task<bool> IsPasswordUnsafe(string password)
         {
             // Verificar si la contraseña está en la lista de contraseñas inseguras
             return await _context.ContraseniaInsegura.AnyAsync(c => c.Contrasenia == password);
         }
 
+
         [HttpGet("Listado")]
         public async Task<ActionResult> GetListadoUsuarios()
         {
-            // Listar usuarios externos (type = 0) e internos (type = 1)
-            var usuariosExternos = await _context.Usuario.Where(u => u.type == 0).ToListAsync();
-            var usuariosInternos = await _context.Usuario.Where(u => u.type == 1).ToListAsync();
-
-            return Ok(new
+            try
             {
-                Externos = usuariosExternos,
-                Internos = usuariosInternos
-            });
+                // Listar usuarios externos (type = 0) e internos (type = 1)
+                var usuariosExternos = await _context.Usuario.Where(u => u.type == 0).ToListAsync();
+                var usuariosInternos = await _context.Usuario.Where(u => u.type == 1).ToListAsync();
+
+                return Ok(new
+                {
+                    Externos = usuariosExternos,
+                    Internos = usuariosInternos
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener el listado de usuarios.");
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
         [HttpGet("Buscar")]
         public async Task<ActionResult<IEnumerable<Usuario>>> SearchUsuario(string nameUsuario)
         {
-            // Incluir la categoría relacionada en la consulta
-            return await _context.Usuario.Where(u => u.nombreUsuario.Contains(nameUsuario)).ToListAsync();
-
+            try
+            {
+                // Incluir la categoría relacionada en la consulta
+                return await _context.Usuario.Where(u => u.nombreUsuario.Contains(nameUsuario)).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al buscar usuario.");
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
 
         [HttpPost]
         [Route("registrar")]
-        public async Task<IActionResult> AddUsuario([FromBody] Usuario request, [FromServices] EmailService emailService)
+        public async Task<IActionResult> AddUsuario([FromBody] Usuario request)
         {
-            if (await IsPasswordUnsafe(request.contrasenia))
+
+            try
             {
-                return BadRequest(new { message = "La contraseña ingresada es insegura." });
+                if (await IsPasswordUnsafe(request.contrasenia))
+                {
+                    return BadRequest(new { message = "La contraseña ingresada es insegura." });
+                }
+
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
+
+                var usuario = new Usuario
+                {
+                    idUsuario = 0,
+                    nombreUsuario = request.nombreUsuario,
+                    correo = request.correo,
+                    contrasenia = hashedPassword,
+                    rol = request.rol,
+                    type = 0,
+                };
+
+                await _context.Usuario.AddAsync(usuario);
+                await _context.SaveChangesAsync();
+
+                return Ok(request);
             }
-
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
-
-            var usuario = new Usuario
+            catch (Exception ex)
             {
-                idUsuario = 0,
-                nombreUsuario = request.nombreUsuario,
-                correo = request.correo,
-                contrasenia = hashedPassword,
-                rol = request.rol,
-                type = 0,
-            };
-
-            await _context.Usuario.AddAsync(usuario);
-            await _context.SaveChangesAsync();
-
-            // Preparar el correo con el template de bienvenida
-            var body = System.IO.File.ReadAllText("Templates/WelcomeEmail.html")
-                       .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
-                       .Replace("[NOMBRE_USUARIO]", usuario.nombreUsuario);
-
-            await emailService.SendEmailAsync(usuario.correo, "¡Bienvenido a nuestra plataforma!", body);
-
-            return Ok(request);
+                _logger.LogError(ex, "Error al registrar el usuario.");
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
+
 
         // Endpoint para registrar empleados (usuarios internos)
         [HttpPost]
         [Route("registrarInterno")]
         public async Task<IActionResult> AddUsuarioInterno([FromBody] Usuario request)
         {
-            if (await IsPasswordUnsafe(request.contrasenia))
+
+            try
             {
-                return BadRequest(new { message = "La contraseña ingresada es insegura." });
+                if (await IsPasswordUnsafe(request.contrasenia))
+                {
+                    return BadRequest(new { message = "La contraseña ingresada es insegura." });
+                }
+
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
+
+                var usuario = new Usuario
+                {
+                    idUsuario = 0,
+                    nombreUsuario = request.nombreUsuario,
+                    correo = request.correo,
+                    contrasenia = hashedPassword,
+                    rol = request.rol,
+                    type = 1,
+                };
+
+                await _context.Usuario.AddAsync(usuario);
+                await _context.SaveChangesAsync();
+
+                return Ok(request);
             }
-
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
-
-            var usuario = new Usuario
+            catch (Exception ex)
             {
-                idUsuario = 0,
-                nombreUsuario = request.nombreUsuario,
-                correo = request.correo,
-                contrasenia = hashedPassword,
-                rol = request.rol,
-                type = 1,
-            };
-
-            await _context.Usuario.AddAsync(usuario);
-            await _context.SaveChangesAsync();
-            return Ok(request);
+                _logger.LogError(ex, "Error al registrar el usuario interno.");
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
+
 
 
         [HttpPut]
         [Route("ModificarUsuario/{id:int}")]
         public async Task<IActionResult> UpdateUsuario(int id, [FromBody] Usuario request)
         {
-            var usuarioModificar = await _context.Usuario.FindAsync(id);
-
-            if (usuarioModificar == null)
-            {
-                return BadRequest("No existe el usuario");
-            }
-
-            usuarioModificar.nombreUsuario = request.nombreUsuario;
-            usuarioModificar.correo = request.correo;
-
-            // Verificar si se actualiza la contraseña
-            if (!string.IsNullOrEmpty(request.contrasenia))
-            {
-                if (await IsPasswordUnsafe(request.contrasenia))
-                {
-                    return BadRequest(new { message = "La contraseña ingresada es insegura." });
-                }
-                usuarioModificar.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
-            }
-
-            usuarioModificar.rol = request.rol;
 
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch
-            {
-                return NotFound();
-            }
+                var usuarioModificar = await _context.Usuario.FindAsync(id);
 
-            return Ok();
+                if (usuarioModificar == null)
+                {
+                    return BadRequest("No existe el usuario");
+                }
+
+                usuarioModificar.nombreUsuario = request.nombreUsuario;
+                usuarioModificar.correo = request.correo;
+
+                // Verificar si se actualiza la contraseña
+                if (!string.IsNullOrEmpty(request.contrasenia))
+                {
+                    if (await IsPasswordUnsafe(request.contrasenia))
+                    {
+                        return BadRequest(new { message = "La contraseña ingresada es insegura." });
+                    }
+                    usuarioModificar.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.contrasenia);
+                }
+
+                usuarioModificar.rol = request.rol;
+
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al modificar el usuario con ID {Id}.", id);
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
+
 
 
         [HttpDelete]
         [Route("EliminarUsuario/{id:int}")]
         public async Task<IActionResult> deleteUsuario(int id)
         {
-            var usuarioEliminar = await _context.Usuario.FindAsync(id);
-
-            if (usuarioEliminar == null)
+            try
             {
-                return BadRequest("No se encontro el usuario.");
+                var usuarioEliminar = await _context.Usuario.FindAsync(id);
+
+                if (usuarioEliminar == null)
+                {
+                    return BadRequest("No se encontró el usuario.");
+                }
+
+                _context.Usuario.Remove(usuarioEliminar);
+                await _context.SaveChangesAsync();
+
+                return Ok();
             }
-            _context.Usuario.Remove(usuarioEliminar);
-
-            await _context.SaveChangesAsync();
-
-            return Ok();
-
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al eliminar el usuario con ID {Id}.", id);
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
+
 
         [HttpGet("DetalleUsuario/{id:int}")]
         public async Task<ActionResult<Usuario>> GetUsuarioById(int id)
         {
-            var usuario = await _context.Usuario.FindAsync(id);
-
-            if (usuario == null)
+            try
             {
-                return NotFound(new { message = "Usuario no encontrado." });
-            }
+                var usuario = await _context.Usuario.FindAsync(id);
 
-            return Ok(usuario);
+                if (usuario == null)
+                {
+                    return NotFound(new { message = "Usuario no encontrado." });
+                }
+
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener el usuario con ID {Id}.", id);
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
+
+
+
+        //EndPoint para login
 
         [HttpPost]
         [Route("Login")]
@@ -284,6 +340,8 @@ namespace ProyectoFinalAPI.Controllers
 
             return Ok(response);
         }
+
+
         [HttpGet("BuscarPorNombre")]
         public async Task<ActionResult<IEnumerable<Usuario>>> SearchUsuariosPorNombre(string nombre)
         {
@@ -292,48 +350,64 @@ namespace ProyectoFinalAPI.Controllers
                 return BadRequest("El nombre de usuario es requerido.");
             }
 
-            var usuarios = await _context.Usuario
-                .Where(u => u.nombreUsuario.Contains(nombre))
-                .ToListAsync();
+            try
+            {
+                var usuarios = await _context.Usuario
+                    .Where(u => u.nombreUsuario.Contains(nombre))
+                    .ToListAsync();
 
-            return Ok(usuarios); // Devuelve 200 OK con una lista (posiblemente vacía)
+                return Ok(usuarios); // Devuelve 200 OK con una lista (posiblemente vacía)
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al buscar usuarios por nombre: {Nombre}.", nombre);
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
+
 
         [HttpPost]
         [Route("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request, [FromServices] EmailService emailService)
         {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.correo == request.Correo);
-
-            if (usuario == null)
+            try
             {
-                return BadRequest(new { message = "El correo no está registrado." });
-            }
+                var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.correo == request.Correo);
 
-            // Verificar si ya hay un token activo y no ha expirado
-            if (usuario.ResetTokenExpires > DateTime.UtcNow)
+                if (usuario == null)
+                {
+                    return BadRequest(new { message = "El correo no está registrado." });
+                }
+
+                // Verificar si ya hay un token activo y no ha expirado
+                if (usuario.ResetTokenExpires > DateTime.UtcNow)
+                {
+                    return BadRequest(new { message = "Ya se ha iniciado un proceso de recuperación. Inténtalo más tarde." });
+                }
+
+                // Generar un nuevo token y establecer su fecha de expiración
+                var token = GenerateResetToken();
+                usuario.ResetToken = token;
+                usuario.ResetTokenExpires = DateTime.UtcNow.AddMinutes(5);
+
+                await _context.SaveChangesAsync();
+
+                // Preparar el correo con el template
+                var resetLink = $"http://localhost:4200/reset-password?token={token}";
+                var body = System.IO.File.ReadAllText("Templates/ForgotPassword.html")
+                           .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
+                           .Replace("[RESET_LINK]", resetLink);
+
+                await emailService.SendEmailAsync(usuario.correo, "Recuperación de contraseña", body);
+
+                return Ok(new { message = "Correo de recuperación enviado." });
+            }
+            catch (Exception ex)
             {
-                return BadRequest(new { message = "Ya se ha iniciado un proceso de recuperación. Inténtalo más tarde." });
+                _logger.LogError(ex, "Error al procesar la solicitud de recuperación de contraseña para el correo: {Correo}.", request.Correo);
+                return StatusCode(500, "Error interno del servidor.");
             }
-
-            // Generar un nuevo token y establecer su fecha de expiración
-            var token = GenerateResetToken();
-            usuario.ResetToken = token;
-            usuario.ResetTokenExpires = DateTime.UtcNow.AddMinutes(5);
-
-            await _context.SaveChangesAsync();
-
-            // Preparar el correo con el template
-            var resetLink = $"http://localhost:4200/reset-password?token={token}";
-            var body = System.IO.File.ReadAllText("Templates/ForgotPassword.html")
-                       .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
-                       .Replace("[RESET_LINK]", resetLink);
-
-            await emailService.SendEmailAsync(usuario.correo, "Recuperación de contraseña", body);
-
-            return Ok(new { message = "Correo de recuperación enviado." });
         }
-
 
         private string GenerateResetToken()
         {
@@ -350,18 +424,68 @@ namespace ProyectoFinalAPI.Controllers
             }
         }
 
+
         [HttpGet]
         [Route("validate-token")]
         public async Task<IActionResult> ValidateToken(string token)
         {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.ResetToken == token && u.ResetTokenExpires > DateTime.UtcNow);
-            if (usuario == null)
+            try
             {
-                return BadRequest(new { message = "El token es inválido o ha expirado." });
-            }
+                var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.ResetToken == token && u.ResetTokenExpires > DateTime.UtcNow);
+                if (usuario == null)
+                {
+                    return BadRequest(new { message = "El token es inválido o ha expirado." });
+                }
 
-            return Ok(true);
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al validar el token: {Token}.", token);
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
+
+        [HttpPost]
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, [FromServices] EmailService emailService)
+        {
+            try
+            {
+                var usuario = await _context.Usuario.FirstOrDefaultAsync(
+                    u => u.ResetToken == request.Token && u.ResetTokenExpires > DateTime.UtcNow);
+
+                if (usuario == null)
+                {
+                    return BadRequest(new { message = "El token es inválido o ha expirado." });
+                }
+
+                if (await IsPasswordUnsafe(request.NuevaContrasenia))
+                {
+                    return BadRequest(new { message = "La nueva contraseña ingresada es insegura." });
+                }
+
+                usuario.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.NuevaContrasenia);
+                usuario.ResetToken = null;
+                usuario.ResetTokenExpires = null;
+
+                await _context.SaveChangesAsync();
+
+                var body = System.IO.File.ReadAllText("Templates/PasswordUpdated.html")
+                           .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png");
+
+                await emailService.SendEmailAsync(usuario.correo, "Tu contraseña ha sido actualizada", body);
+
+                return Ok(new { message = "Contraseña restablecida con éxito." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al restablecer la contraseña.");
+                return StatusCode(500, "Error interno del servidor.");
+            }
+        }
+
+
 
         [HttpGet]
         [Route("UltimoInicioSesion/{id:int}")]
@@ -393,46 +517,7 @@ namespace ProyectoFinalAPI.Controllers
             });
         }
 
-        [HttpPost]
-        [Route("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, [FromServices] EmailService emailService)
-        {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(
-                u => u.ResetToken == request.Token && u.ResetTokenExpires > DateTime.UtcNow);
 
-            if (usuario == null)
-            {
-                return BadRequest(new { message = "El token es inválido o ha expirado." });
-            }
 
-            if (await IsPasswordUnsafe(request.NuevaContrasenia))
-            {
-                return BadRequest(new { message = "La nueva contraseña ingresada es insegura." });
-            }
-
-            // Cambiar la contraseña y limpiar el token
-            usuario.contrasenia = BCrypt.Net.BCrypt.HashPassword(request.NuevaContrasenia);
-            usuario.ResetToken = null;
-            usuario.ResetTokenExpires = null;
-
-            // Verificar si el usuario está bloqueado y restablecer los intentos
-            if (usuario.EstaBloqueado)
-            {
-                usuario.IntentosFallidos = 0; // Restablecer intentos
-                usuario.EstaBloqueado = false; // Desbloquear al usuario
-            }
-
-            await _context.SaveChangesAsync();
-
-            // Preparar el correo con el template de confirmación de cambio de contraseña
-            var body = System.IO.File.ReadAllText("Templates/PasswordUpdated.html")
-                    .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png");
-
-            await emailService.SendEmailAsync(usuario.correo, "Tu contraseña ha sido actualizada", body);
-
-            return Ok(new { message = "Contraseña restablecida con éxito." });
-        }
     }
-
-
 }

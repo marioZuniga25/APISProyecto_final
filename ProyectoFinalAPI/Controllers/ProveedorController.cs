@@ -13,55 +13,73 @@ namespace ProyectoFinalAPI.Controllers
     public class ProveedoresController : ControllerBase
     {
         private readonly ProyectoContext _context;
+        private readonly ILogger<ProveedoresController> _logger;
 
-        public ProveedoresController(ProyectoContext context)
+        public ProveedoresController(ProyectoContext context, ILogger<ProveedoresController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Proveedores
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProveedorDTO>>> GetProveedores()
         {
-            var proveedores = await _context.Proveedor
-                .Include(p => p.MateriasPrimas)
-                .ToListAsync();
-
-            var proveedoresDto = proveedores.Select(p => new ProveedorDTO
+            try
             {
-                idProveedor = p.idProveedor,
-                nombreProveedor = p.nombreProveedor,
-                telefono = p.telefono,
-                correo = p.correo,
-                nombresMateriasPrimas = p.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList()
-            }).ToList();
+                var proveedores = await _context.Proveedor
+                    .Include(p => p.MateriasPrimas)
+                    .ToListAsync();
 
-            return Ok(proveedoresDto);
+                var proveedoresDto = proveedores.Select(p => new ProveedorDTO
+                {
+                    idProveedor = p.idProveedor,
+                    nombreProveedor = p.nombreProveedor,
+                    telefono = p.telefono,
+                    correo = p.correo,
+                    nombresMateriasPrimas = p.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList()
+                }).ToList();
+
+                return Ok(proveedoresDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al recuperar la lista de proveedores.");
+                return StatusCode(500, "Ocurrió un error al recuperar los proveedores.");
+            }
         }
 
         // GET: api/Proveedores/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProveedorDTO>> GetProveedor(int id)
         {
-            var proveedor = await _context.Proveedor
-                .Include(p => p.MateriasPrimas)
-                .FirstOrDefaultAsync(p => p.idProveedor == id);
-
-            if (proveedor == null)
+            try
             {
-                return NotFound();
+                var proveedor = await _context.Proveedor
+                    .Include(p => p.MateriasPrimas)
+                    .FirstOrDefaultAsync(p => p.idProveedor == id);
+
+                if (proveedor == null)
+                {
+                    return NotFound();
+                }
+
+                var proveedorDto = new ProveedorDTO
+                {
+                    idProveedor = proveedor.idProveedor,
+                    nombreProveedor = proveedor.nombreProveedor,
+                    telefono = proveedor.telefono,
+                    correo = proveedor.correo,
+                    nombresMateriasPrimas = proveedor.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList()
+                };
+
+                return Ok(proveedorDto);
             }
-
-            var proveedorDto = new ProveedorDTO
+            catch (Exception ex)
             {
-                idProveedor = proveedor.idProveedor,
-                nombreProveedor = proveedor.nombreProveedor,
-                telefono = proveedor.telefono,
-                correo = proveedor.correo,
-                nombresMateriasPrimas = proveedor.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList()
-            };
-
-            return Ok(proveedorDto);
+                _logger.LogError(ex, "Error al recuperar el proveedor con ID: {id}", id);
+                return StatusCode(500, "Ocurrió un error al recuperar el proveedor.");
+            }
         }
 
         // POST: api/Proveedores
@@ -75,80 +93,92 @@ namespace ProyectoFinalAPI.Controllers
 
             proveedor.MateriasPrimas = proveedor.MateriasPrimas ?? new List<MateriaPrima>();
 
-            _context.Proveedor.Add(proveedor);
-            await _context.SaveChangesAsync();
-
-            if (proveedor.MateriasPrimas.Any())
+            try
             {
-                try
+                _context.Proveedor.Add(proveedor);
+                await _context.SaveChangesAsync();
+
+                var proveedorDto = new ProveedorDTO
                 {
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest($"Error al guardar: {ex.Message}");
-                }
+                    idProveedor = proveedor.idProveedor,
+                    nombreProveedor = proveedor.nombreProveedor,
+                    telefono = proveedor.telefono,
+                    correo = proveedor.correo,
+                    nombresMateriasPrimas = proveedor.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList()
+                };
+
+                return CreatedAtAction("GetProveedor", new { id = proveedor.idProveedor }, proveedorDto);
             }
-
-            var proveedorDto = new ProveedorDTO
+            catch (Exception ex)
             {
-                idProveedor = proveedor.idProveedor,
-                nombreProveedor = proveedor.nombreProveedor,
-                telefono = proveedor.telefono,
-                correo = proveedor.correo,
-                nombresMateriasPrimas = proveedor.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList()
-            };
-
-            return CreatedAtAction("GetProveedor", new { id = proveedor.idProveedor }, proveedorDto);
+                _logger.LogError(ex, "Error al guardar el proveedor.");
+                return StatusCode(500, "Ocurrió un error al guardar el proveedor.");
+            }
         }
 
         // DELETE: api/Proveedores/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProveedor(int id)
         {
-            var proveedor = await _context.Proveedor
-                .Include(p => p.MateriasPrimas)
-                .FirstOrDefaultAsync(p => p.idProveedor == id);
-
-            if (proveedor == null)
+            try
             {
-                return NotFound();
-            }
+                var proveedor = await _context.Proveedor
+                    .Include(p => p.MateriasPrimas)
+                    .FirstOrDefaultAsync(p => p.idProveedor == id);
 
-            if (proveedor.MateriasPrimas != null && proveedor.MateriasPrimas.Count > 0)
+                if (proveedor == null)
+                {
+                    return NotFound();
+                }
+
+                if (proveedor.MateriasPrimas != null && proveedor.MateriasPrimas.Count > 0)
+                {
+                    _context.MateriasPrimas.RemoveRange(proveedor.MateriasPrimas);
+                }
+
+                _context.Proveedor.Remove(proveedor);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
             {
-                _context.MateriasPrimas.RemoveRange(proveedor.MateriasPrimas);
+                _logger.LogError(ex, "Error al eliminar el proveedor con ID: {id}", id);
+                return StatusCode(500, "Ocurrió un error al eliminar el proveedor.");
             }
-
-            _context.Proveedor.Remove(proveedor);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         // GET: api/Proveedores/{id}/materiasprimas
         [HttpGet("{id}/materiasprimas")]
         public async Task<ActionResult<IEnumerable<MateriaPrimaDTO>>> GetMateriasPrimasPorProveedor(int id)
         {
-            var proveedor = await _context.Proveedor
-                .Include(p => p.MateriasPrimas)
-                .FirstOrDefaultAsync(p => p.idProveedor == id);
-
-            if (proveedor == null)
+            try
             {
-                return NotFound("No se encontró el proveedor");
+                var proveedor = await _context.Proveedor
+                    .Include(p => p.MateriasPrimas)
+                    .FirstOrDefaultAsync(p => p.idProveedor == id);
+
+                if (proveedor == null)
+                {
+                    return NotFound("No se encontró el proveedor");
+                }
+
+                var materiasPrimasDto = proveedor.MateriasPrimas.Select(mp => new MateriaPrimaDTO
+                {
+                    NombreMateriaPrima = mp.nombreMateriaPrima,
+                    Descripcion = mp.descripcion,
+                    Precio = mp.precio,
+                    Stock = mp.stock,
+                    idUnidad = mp.idUnidad
+                }).ToList();
+
+                return Ok(materiasPrimasDto);
             }
-
-            var materiasPrimasDto = proveedor.MateriasPrimas.Select(mp => new MateriaPrimaDTO
+            catch (Exception ex)
             {
-                NombreMateriaPrima = mp.nombreMateriaPrima,
-                Descripcion = mp.descripcion,
-                Precio = mp.precio,
-                Stock = mp.stock,
-                idUnidad = mp.idUnidad
-            }).ToList();
-
-            return Ok(materiasPrimasDto);
+                _logger.LogError(ex, "Error al recuperar materias primas del proveedor con ID: {id}", id);
+                return StatusCode(500, "Ocurrió un error al recuperar las materias primas del proveedor.");
+            }
         }
 
         private bool ProveedorExists(int id)

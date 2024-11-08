@@ -9,15 +9,19 @@ namespace ProyectoFinalAPI.Controllers
     public class PedidoController : ControllerBase
     {
         private readonly ProyectoContext _context;
+        private readonly ILogger<PedidoController> _logger;
 
-        public PedidoController(ProyectoContext context)
+        public PedidoController(ProyectoContext context, ILogger<PedidoController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
+        // GET: api/Pedido
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PedidoDetalleDto>>> GetPedidos()
         {
+            _logger.LogInformation("Consultando todos los pedidos.");
             var result = await (from pedido in _context.Pedidos
                                 join detalleVenta in _context.DetalleVenta on pedido.idVenta equals detalleVenta.idVenta
                                 join producto in _context.Producto on detalleVenta.idProducto equals producto.idProducto
@@ -70,44 +74,66 @@ namespace ProyectoFinalAPI.Controllers
                                })
                                .ToListAsync();
 
+            _logger.LogInformation("Se recuperaron {count} pedidos.", result.Count);
             return result;
         }
 
-
-        // Agregar un nuevo pedido
+        // POST: api/Pedido
         [HttpPost]
         public async Task<ActionResult<Pedidos>> AddPedido(Pedidos pedido)
         {
-            _context.Pedidos.Add(pedido);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetPedidos), new { id = pedido.idPedido }, pedido);
+            try
+            {
+                _logger.LogInformation("Agregando un nuevo pedido.");
+                _context.Pedidos.Add(pedido);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Pedido creado con ID: {idPedido}.", pedido.idPedido);
+                return CreatedAtAction(nameof(GetPedidos), new { id = pedido.idPedido }, pedido);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error al agregar el pedido: {errorMessage}", ex.Message);
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
-        // Actualizar el estatus de un pedido
+        // PUT: api/Pedido/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePedido(int id, Pedidos pedido)
         {
-            if (id != pedido.idPedido)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(pedido).State = EntityState.Modified;
-
             try
             {
+                _logger.LogInformation("Actualizando el pedido con ID: {idPedido}.", id);
+
+                if (id != pedido.idPedido)
+                {
+                    _logger.LogWarning("El ID proporcionado {id} no coincide con el ID del pedido {pedidoId}.", id, pedido.idPedido);
+                    return BadRequest();
+                }
+
+                _context.Entry(pedido).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Pedido con ID: {idPedido} actualizado correctamente.", id);
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!_context.Pedidos.Any(e => e.idPedido == id))
                 {
+                    _logger.LogWarning("No se encontró el pedido con ID: {idPedido} para actualizar.", id);
                     return NotFound();
                 }
                 else
                 {
+                    _logger.LogError("Error de concurrencia al actualizar el pedido con ID: {idPedido}.", id);
                     throw;
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error al actualizar el pedido: {errorMessage}", ex.Message);
+                return StatusCode(500, "Error interno del servidor.");
             }
 
             return NoContent();

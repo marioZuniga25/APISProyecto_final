@@ -1,0 +1,80 @@
+ 2024-11-08 06:08:27 Iniciando la aplicación
+ 2024-11-08 06:08:55 Iniciando la aplicación
+ 2024-11-08 07:08:05 Iniciando la aplicación
+ 2024-11-08 07:08:49 Start installing Hangfire SQL objects...
+ 2024-11-08 07:08:50 Hangfire SQL objects installed.
+ 2024-11-08 07:08:50 Starting Hangfire Server using job storage: 'SQL Server: localhost@Proyecto'
+ 2024-11-08 07:08:50 Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+ 2024-11-08 07:08:50 Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+ 2024-11-08 07:08:50 Server desktop-81p4img:22784:d00ed85a successfully announced in 175.7429 ms
+ 2024-11-08 07:08:50 Server desktop-81p4img:22784:d00ed85a is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, SqlServerHeartbeatProcess, Worker, DelayedJobScheduler, RecurringJobScheduler...
+ 2024-11-08 07:08:50 2 servers were removed due to timeout
+ 2024-11-08 07:08:50 Server desktop-81p4img:22784:d00ed85a all the dispatchers started
+ 2024-11-08 07:08:50 Iniciando la aplicación
+ 2024-11-08 07:08:50 Overriding address(es) 'http://localhost:5194, http://192.168.1.182:5194'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+ 2024-11-08 07:08:50 Now listening on: http://[::]:5194
+ 2024-11-08 07:08:50 Starting Hangfire Server using job storage: 'SQL Server: localhost@Proyecto'
+ 2024-11-08 07:08:50 Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+ 2024-11-08 07:08:50 Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+ 2024-11-08 07:08:50 Application started. Press Ctrl+C to shut down.
+ 2024-11-08 07:08:50 Hosting environment: Development
+ 2024-11-08 07:08:50 Server desktop-81p4img:22784:2f67bb1d successfully announced in 1.1926 ms
+ 2024-11-08 07:08:50 Content root path: D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI
+ 2024-11-08 07:08:50 Server desktop-81p4img:22784:2f67bb1d is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, SqlServerHeartbeatProcess, Worker, DelayedJobScheduler, RecurringJobScheduler...
+ 2024-11-08 07:08:50 Server desktop-81p4img:22784:2f67bb1d all the dispatchers started
+ 2024-11-08 07:08:51 Request starting HTTP/1.1 GET http://localhost:5194/swagger/index.html - null null
+ 2024-11-08 07:08:51 Request finished HTTP/1.1 GET http://localhost:5194/swagger/index.html - 200 null text/html;charset=utf-8 248.2979ms
+ 2024-11-08 07:08:51 Request starting HTTP/1.1 GET http://localhost:5194/_framework/aspnetcore-browser-refresh.js - null null
+ 2024-11-08 07:08:51 Request starting HTTP/1.1 GET http://localhost:5194/_vs/browserLink - null null
+ 2024-11-08 07:08:51 Request finished HTTP/1.1 GET http://localhost:5194/_framework/aspnetcore-browser-refresh.js - 200 13768 application/javascript; charset=utf-8 12.8873ms
+ 2024-11-08 07:08:51 Request finished HTTP/1.1 GET http://localhost:5194/_vs/browserLink - 200 null text/javascript; charset=UTF-8 39.5661ms
+ 2024-11-08 07:08:51 No store type was specified for the decimal property 'precioUnitario' on entity type 'DetalleOrdenCompra'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+ 2024-11-08 07:08:51 Request starting HTTP/1.1 GET http://localhost:5194/swagger/v1/swagger.json - null null
+ 2024-11-08 07:08:51 Request finished HTTP/1.1 GET http://localhost:5194/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 89.1748ms
+ 2024-11-08 07:08:51 Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[idProducto], [p].[NombreCategoria], [p].[descripcion], [p].[idCategoria], [p].[idInventario], [p].[imagen], [p].[nombreProducto], [p].[precio], [p].[stock]
+FROM [Producto] AS [p]
+ 2024-11-08 07:08:51 Executed DbCommand (7ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [PromocionesRandom] ([Codigo], [FechaCreacion], [FechaFin], [Productos])
+OUTPUT INSERTED.[IdPromocionRandom]
+VALUES (@p0, @p1, @p2, @p3);
+ 2024-11-08 07:08:56 Request starting HTTP/1.1 GET http://localhost:5194/api/Categorias - null null
+ 2024-11-08 07:08:56 Failed to determine the https port for redirect.
+ 2024-11-08 07:08:56 Executing endpoint 'ProyectoFinalAPI.Controllers.CategoriasController.GetCategorias (ProyectoFinalAPI)'
+ 2024-11-08 07:08:56 Route matched with {action = "GetCategorias", controller = "Categorias"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[ProyectoFinalAPI.Models.Categoria]]] GetCategorias() on controller ProyectoFinalAPI.Controllers.CategoriasController (ProyectoFinalAPI).
+ 2024-11-08 07:08:56 Consultando todas las categorías
+ 2024-11-08 07:08:56 Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[idCategoria], [c].[descripcion], [c].[nombreCategoria]
+FROM [Categoria] AS [c]
+ 2024-11-08 07:08:56 Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[ProyectoFinalAPI.Models.Categoria, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+ 2024-11-08 07:08:56 Executed action ProyectoFinalAPI.Controllers.CategoriasController.GetCategorias (ProyectoFinalAPI) in 44.492ms
+ 2024-11-08 07:08:56 Executed endpoint 'ProyectoFinalAPI.Controllers.CategoriasController.GetCategorias (ProyectoFinalAPI)'
+ 2024-11-08 07:08:56 Request finished HTTP/1.1 GET http://localhost:5194/api/Categorias - 200 null application/json; charset=utf-8 73.992ms
+ 2024-11-08 07:08:05 Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[idProducto], [p].[NombreCategoria], [p].[descripcion], [p].[idCategoria], [p].[idInventario], [p].[imagen], [p].[nombreProducto], [p].[precio], [p].[stock]
+FROM [Producto] AS [p]
+ 2024-11-08 07:08:05 Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [PromocionesRandom] ([Codigo], [FechaCreacion], [FechaFin], [Productos])
+OUTPUT INSERTED.[IdPromocionRandom]
+VALUES (@p0, @p1, @p2, @p3);
+ 2024-11-08 07:08:05 Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[idProducto], [p].[NombreCategoria], [p].[descripcion], [p].[idCategoria], [p].[idInventario], [p].[imagen], [p].[nombreProducto], [p].[precio], [p].[stock]
+FROM [Producto] AS [p]
+ 2024-11-08 07:08:05 Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [PromocionesRandom] ([Codigo], [FechaCreacion], [FechaFin], [Productos])
+OUTPUT INSERTED.[IdPromocionRandom]
+VALUES (@p0, @p1, @p2, @p3);

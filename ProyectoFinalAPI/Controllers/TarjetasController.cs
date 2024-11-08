@@ -12,56 +12,99 @@ namespace ProyectoFinalAPI.Controllers
     public class TarjetasController : ControllerBase
     {
         private readonly ProyectoContext _context;
+        private readonly ILogger<TarjetasController> _logger;
 
-        public TarjetasController(ProyectoContext context)
+        public TarjetasController(ProyectoContext context, ILogger<TarjetasController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // POST: api/Tarjetas
         [HttpPost]
         public async Task<ActionResult<Tarjetas>> PostTarjeta(Tarjetas tarjeta)
         {
-            _context.Tarjetas.Add(tarjeta);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTarjetaById), new { id = tarjeta.idTarjeta }, tarjeta);
+            try
+            {
+                _context.Tarjetas.Add(tarjeta);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Tarjeta creada con éxito: {TarjetaId}", tarjeta.idTarjeta);
+                return CreatedAtAction(nameof(GetTarjetaById), new { id = tarjeta.idTarjeta }, tarjeta);
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, "Error al crear la tarjeta: {Tarjeta}", tarjeta);
+                return StatusCode(500, "Error al crear la tarjeta.");
+            }
         }
 
         // GET: api/Tarjetas/usuario/{idUsuario}
         [HttpGet("usuario/{idUsuario}")]
         public async Task<ActionResult<IEnumerable<Tarjetas>>> GetTarjetasByUsuario(int idUsuario)
         {
-            var tarjetas = await _context.Tarjetas.Where(t => t.idUsuario == idUsuario).ToListAsync();
-            if (tarjetas == null || tarjetas.Count == 0)
+            try
             {
-                return NotFound();
+                var tarjetas = await _context.Tarjetas.Where(t => t.idUsuario == idUsuario).ToListAsync();
+                if (tarjetas == null || tarjetas.Count == 0)
+                {
+                    _logger.LogWarning("No se encontraron tarjetas para el usuario: {UsuarioId}", idUsuario);
+                    return NotFound("No se encontraron tarjetas.");
+                }
+                _logger.LogInformation("Se encontraron {Count} tarjetas para el usuario: {UsuarioId}", tarjetas.Count, idUsuario);
+                return tarjetas;
             }
-            return tarjetas;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener tarjetas para el usuario: {UsuarioId}", idUsuario);
+                return StatusCode(500, "Error al obtener las tarjetas.");
+            }
         }
 
         // DELETE: api/Tarjetas/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTarjeta(int id)
         {
-            var tarjeta = await _context.Tarjetas.FindAsync(id);
-            if (tarjeta == null)
+            try
             {
-                return NotFound();
-            }
+                var tarjeta = await _context.Tarjetas.FindAsync(id);
+                if (tarjeta == null)
+                {
+                    _logger.LogWarning("Tarjeta no encontrada para eliminación: {TarjetaId}", id);
+                    return NotFound("Tarjeta no encontrada.");
+                }
 
-            _context.Tarjetas.Remove(tarjeta);
-            await _context.SaveChangesAsync();
-            return NoContent();
+                _context.Tarjetas.Remove(tarjeta);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Tarjeta eliminada con éxito: {TarjetaId}", id);
+                return NoContent();
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, "Error al eliminar la tarjeta: {TarjetaId}", id);
+                return StatusCode(500, "Error al eliminar la tarjeta.");
+            }
         }
+
+        // GET: api/Tarjetas/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Tarjetas>> GetTarjetaById(int id)
         {
-            var tarjeta = await _context.Tarjetas.FindAsync(id);
-            if (tarjeta == null)
+            try
             {
-                return NotFound();
+                var tarjeta = await _context.Tarjetas.FindAsync(id);
+                if (tarjeta == null)
+                {
+                    _logger.LogWarning("Tarjeta no encontrada: {TarjetaId}", id);
+                    return NotFound("Tarjeta no encontrada.");
+                }
+                _logger.LogInformation("Tarjeta encontrada: {TarjetaId}", id);
+                return tarjeta;
             }
-            return tarjeta;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener la tarjeta: {TarjetaId}", id);
+                return StatusCode(500, "Error al obtener la tarjeta.");
+            }
         }
     }
 }

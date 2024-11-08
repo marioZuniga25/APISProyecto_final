@@ -312,3 +312,8 @@ D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\obj\Debug\net8.0\refint\Proye
 D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\obj\Debug\net8.0\ProyectoFinalAPI.pdb
 D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\obj\Debug\net8.0\ProyectoFinalAPI.genruntimeconfig.cache
 D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\obj\Debug\net8.0\ref\ProyectoFinalAPI.dll
+D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\bin\Debug\net8.0\Serilog.dll
+D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\bin\Debug\net8.0\Serilog.Sinks.File.dll
+D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+D:\Desarrollos\APISProyecto_final\ProyectoFinalAPI\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
