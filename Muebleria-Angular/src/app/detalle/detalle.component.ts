@@ -20,6 +20,7 @@ export class DetalleComponent implements OnInit {
   precioConDescuento!: number;
   descuento!: number;
   tienePromocion: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,6 +45,10 @@ export class DetalleComponent implements OnInit {
         this.productosService.getProductoById(id).subscribe(producto => {
           if (producto) {
             this.producto = producto;
+            // Si no hay promoción, asigna el precio normal al precioConDescuento
+            if (!this.tienePromocion) {
+              this.precioConDescuento = this.producto.precio;
+            }
             this.buscadorService.closeBuscador();
           } else {
             console.error('Producto no encontrado');
@@ -54,7 +59,7 @@ export class DetalleComponent implements OnInit {
       }
     });
   }
-  
+
   agregarAlCarrito() {
     const userId = localStorage.getItem('userId');
     if (!userId) {
@@ -74,7 +79,7 @@ export class DetalleComponent implements OnInit {
           const productoCarrito: ProductoCarrito = {
             id: this.producto.idProducto,
             nombre: this.producto.nombreProducto,
-            precio: this.precioConDescuento, // Usa el precio con descuento
+            precio: this.precioConDescuento, 
             cantidad: this.cantidad,
             imagen: this.producto.imagen,
             stock: this.producto.stock

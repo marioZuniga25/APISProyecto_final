@@ -27,6 +27,7 @@ import { ForgotPasswordComponent } from './Usuario/forgot-password/forgot-passwo
 import { ResetPasswordComponent } from './Usuario/reset-password/reset-password.component';
 import { Error404Component } from './error404/error404.component'; 
 import { TipoVentasComponent } from './Admin/tipo-ventas/tipo-ventas.component';
+import { MermaComponent } from './Admin/merma/merma.component';
 
 export const routes: Routes = [
   {
@@ -114,6 +115,11 @@ export const routes: Routes = [
   {
     path: 'admin/inicio',
     component: InicioAdminComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin],
+  },
+  {
+    path: 'admin/merma',
+    component: MermaComponent,
     canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {

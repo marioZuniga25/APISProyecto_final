@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gracias por tu compra</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e1e;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .header img {
+            max-width: 150px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+        .content h2 {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        .content p {
+            margin: 15px 0;
+            font-size: 16px;
+            color: #bbbbbb;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .product-table th, .product-table td {
+            padding: 12px;
+            border: 1px solid #444;
+            text-align: left;
+            color: #ffffff;
+        }
+        .product-table th {
+            background-color: #333;
+            font-weight: 600;
+        }
+        .product-table td {
+            background-color: #3e3e3e;
+        }
+        .total {
+            font-weight: bold;
+            color: #4caf50;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #bbbbbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="[LOGO_URL]" alt="Logo">
+        </div>
+        <div class="content">
+            <h2>Gracias por tu compra, [NOMBRE_USUARIO]!</h2>
+            <p>A continuación te enviamos el detalle de tu compra:</p>
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario (MXN)</th>
+                        <th>Total (MXN)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    [DETALLE_PRODUCTOS]
+                </tbody>
+            </table>
+            <p class="total">Total de la compra: [TOTAL_COMPRA] MXN</p>
+        </div>
+        <div class="footer">
+            &copy; 2024 - Muebles Troncoso. Todos los derechos reservados.
+        </div>
+    </div>
+</body>
+</html>
