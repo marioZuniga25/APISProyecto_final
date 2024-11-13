@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment,python } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, forkJoin  } from 'rxjs';
 import { IUsuarioDetalle } from '../interfaces/IUsuarioDetalle';
 import { AuthResponse, User } from '../interfaces/AuthResponse';
 import { map } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
   apiUrl: string = environment.endpoint;
+  apiPython: string = python.endpoint;
   private userKey = "currentUser"; // Asegúrate de tener una clave única
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
@@ -92,19 +93,47 @@ export class AuthService {
     this.currentUserSubject.next(null); // Notifica a los suscriptores del cambio
   }
   
-  login(data: IUsuarioDetalle): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}usuario/login`, data)
-      .pipe(
-        map((response: AuthResponse) => {
-          if (response && response.user) {
-            console.log('Respuesta completa del servidor:', response.user); // Para verificar la respuesta
-            this.setUser(response.user); // Guardar el usuario completo en LocalStorage
-          }
-          return response;
-        })
-      );
-  }
+ // auth.service.ts en Angular
+login(data: IUsuarioDetalle): Observable<AuthResponse> {
+  // Llamadas a ambas APIs
+  const dotnetLogin = this.http.post<AuthResponse>(`${this.apiUrl}usuario/login`, data);
+
+  // Solo enviar los datos necesarios para Python, sin la contraseña
+  const pythonLogin = dotnetLogin.pipe(
+    switchMap(dotnetResponse => {
+      if (dotnetResponse && dotnetResponse.user) {
+        return this.http.post<any>(`${this.apiPython}login`, {
+          user_id: dotnetResponse.user.idUsuario,
+          username: dotnetResponse.user.nombreUsuario,
+          rol: dotnetResponse.user.rol
+        }, { withCredentials: true });
+      } else {
+        throw new Error('Usuario no autenticado en .NET');
+      }
+    })
+  );
+
+  // Ejecutar ambas llamadas en paralelo
+  return forkJoin([dotnetLogin, pythonLogin]).pipe(
+    map(([dotnetResponse, pythonResponse]) => {
+      // Manejar la respuesta de .NET (dotnetResponse)
+      if (dotnetResponse && dotnetResponse.user) {
+        console.log('Respuesta de .NET:', dotnetResponse.user);
+        this.setUser(dotnetResponse.user); // Guardar el usuario en LocalStorage
+      }
+
+      // Manejar la respuesta de Python (pythonResponse)
+      if (pythonResponse && pythonResponse.status === 'success') {
+        console.log('Sala creada exitosamente en la API de Python');
+      } else {
+        console.error('Error al crear la sala en la API de Python');
+      }
+
+      return dotnetResponse; // Retorna solo la respuesta de .NET
+    })
+  );
+}
+
   
 
   searchUsuariosPorNombre(nombre: string): Observable<IUsuarioDetalle[]> {

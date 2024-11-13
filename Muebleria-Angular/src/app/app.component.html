@@ -3,9 +3,19 @@
   <app-carrito></app-carrito>
   <router-outlet></router-outlet>
   <app-footer></app-footer>
+
 </ng-container>
 
 <ng-container *ngIf="!mostrarComponentes">
   <app-menu style="padding-bottom: 20px;"></app-menu>
   <router-outlet></router-outlet>
 </ng-container>
+
+<div class="chat-float-button" *ngIf="mostrarChat" (click)="toggleChat()">
+  <img src="../assets/images/chat-icon.png" alt="Chat Icon" />
+</div>
+
+<!-- Contenedor del Web Component de chat -->
+<div *ngIf="isChatOpen" class="chat-container">
+  <User-chat></User-chat>
+</div>

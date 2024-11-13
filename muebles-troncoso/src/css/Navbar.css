@@ -1,0 +1,57 @@
+/* src/css/Navbar.css */
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    background-color: #333;
+    padding: 1rem;
+    color: #fff;
+    
+  }
+  
+  .navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .navbar-links li{
+    text-align: center;
+    
+  }
+  
+/* src/css/Navbar.css */
+/* src/css/Navbar.css */
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px; /* Espacio para la línea */
+}
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease, left 0.3s ease;
+  transform: translateX(-50%); /* Centra la línea */
+}
+
+.navbar-links a:hover::after,
+.navbar-links a:focus::after {
+  width: 300%; /* Aumenta el ancho al 120% del texto */
+  left: 50%;
+  transform: translateX(-50%);
+}
