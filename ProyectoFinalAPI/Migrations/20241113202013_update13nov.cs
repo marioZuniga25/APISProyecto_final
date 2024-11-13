@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class update13nov : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -108,7 +108,7 @@ namespace ProyectoFinalAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fechaMerma = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    idMateria = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    idMateria = table.Column<int>(type: "int", nullable: false),
                     cantidad = table.Column<int>(type: "int", nullable: false),
                     unidadMedida = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     causa = table.Column<string>(type: "nvarchar(max)", nullable: false),
