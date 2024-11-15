@@ -17,13 +17,13 @@ const LiveChat = () => {
   useEffect(() => {
     // Obtener el usuario autenticado
     console.log("Obteniendo el usuario autenticado...");
-    axios.get('http://localhost:5000/current_user', { withCredentials: true })
+    axios.get('http://localhost:5001/current_user', { withCredentials: true })
       .then(response => {
         console.log("Usuario autenticado:", response.data);
         setCurrentUser(response.data);
         if (response.data.role === 1) {
           console.log("Obteniendo las salas...");
-          axios.get('http://localhost:5000/api/salas', { withCredentials: true })
+          axios.get('http://localhost:5001/api/salas', { withCredentials: true })
             .then(res => {
               console.log("Salas recibidas:", res.data);
               setSalas(res.data);
