@@ -8,5 +8,6 @@ public class ProductoDto
     public string NombreCategoria { get; set; }  // Aquí es donde se devuelve el nombre de la categoría
     public int IdInventario { get; set; }
     public int IdCategoria { get; set; }
+    public int EnPromocion { get; set; }
     public string Imagen { get; set; }
 }

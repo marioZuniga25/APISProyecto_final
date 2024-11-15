@@ -197,6 +197,8 @@ namespace ProyectoFinalAPI.Controllers
             {
                 return Unauthorized(new { message = "Tu usuario está bloqueado. Restablece la contraseña para volver a ingresar." });
             }
+            usuario.loginCount += 1;
+            await _context.SaveChangesAsync();
 
             // Verificar la contraseña
             if (!BCrypt.Net.BCrypt.Verify(request.contrasenia, usuario.contrasenia))

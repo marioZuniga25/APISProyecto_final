@@ -21,6 +21,7 @@ const getProductos = async () => {
     console.log(response.data)
     return response.data;
     
+    return response.data;
   } catch (error) {
     console.error('Error fetching productos:', error);
     throw error; // Lanza el error para que pueda ser manejado en el componente

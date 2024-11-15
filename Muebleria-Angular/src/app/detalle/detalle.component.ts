@@ -20,7 +20,6 @@ export class DetalleComponent implements OnInit {
   precioConDescuento!: number;
   descuento!: number;
   tienePromocion: boolean = false;
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
