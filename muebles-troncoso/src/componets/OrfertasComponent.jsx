@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import PromocionesService from '../services/PromocionesService'; 
+import PromocionesService from '../services/promocionesService';
 import '../css/Ofertas.css';
 import 'animate.css';
 import { FaBolt } from 'react-icons/fa';

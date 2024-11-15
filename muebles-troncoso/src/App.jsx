@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './componets/Navbar';
 import Dashboard from './componets/Dashboard';
 import LiveChat from './componets/LiveChat';
-import Settings from './componets/Settings';
+import Promociones from './componets/Promociones';
 import UserChat from './componets/UserChat';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/live-chat" element={<LiveChat />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/promociones" element={<Promociones />} />
           <Route path="/User" element={<UserChat />} />
 
         </Routes>
