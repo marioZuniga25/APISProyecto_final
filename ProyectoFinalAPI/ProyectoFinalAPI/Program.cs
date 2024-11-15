@@ -1,6 +1,7 @@
 using Hangfire;
 using ProyectoFinalAPI;
 using ProyectoFinalAPI.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Configura Hangfire
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+     options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
+
+
 builder.Services.AddHangfire(config =>
     config.UseSqlServerStorage(builder.Configuration.GetConnectionString("cnProyecto")));
 builder.Services.AddHangfireServer();
@@ -22,14 +31,15 @@ builder.Services.AddSqlServer<ProyectoContext>(builder.Configuration.GetConnecti
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("NuevaPolitica", app =>
-    {
-        app.SetIsOriginAllowed(origin => true)
-           .AllowAnyMethod()
-           .AllowAnyHeader()
-           .AllowCredentials();
-    });
+ options.AddPolicy("NuevaPolitica", app =>
+ {
+  app.WithOrigins("http://localhost:4200", "http://localhost:5173")
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+     .AllowCredentials();
+ });
 });
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5194);

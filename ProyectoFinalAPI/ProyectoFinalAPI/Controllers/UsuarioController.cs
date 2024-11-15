@@ -189,8 +189,10 @@ namespace ProyectoFinalAPI.Controllers
             {
                 return Unauthorized(new { message = "Contraseña incorrecta." });
             }
+            usuario.loginCount += 1;
+            await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Inicio de sesión exitoso", user = usuario });
+        return Ok(new { message = "Inicio de sesión exitoso", user = usuario });
         }
 
         [HttpGet("BuscarPorNombre")]
