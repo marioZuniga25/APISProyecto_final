@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoFinalAPI.Controllers
 {
- [ApiController]
+    [ApiController]
  [Route("api/[controller]")]
  public class PromocionesController : ControllerBase
  {

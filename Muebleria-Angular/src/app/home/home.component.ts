@@ -55,6 +55,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.initializeSlickSlider();
   }
 
+  
   private initializeSlickSlider(): void {
     // Delay initialization to ensure DOM updates
     setTimeout(() => {

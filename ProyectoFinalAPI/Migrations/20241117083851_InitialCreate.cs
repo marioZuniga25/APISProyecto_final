@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class update13nov : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -184,6 +184,7 @@ namespace ProyectoFinalAPI.Migrations
                     nombreProducto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     precio = table.Column<double>(type: "float", nullable: false),
+                    EnPromocion = table.Column<int>(type: "int", nullable: false),
                     stock = table.Column<int>(type: "int", nullable: false),
                     NombreCategoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     idCategoria = table.Column<int>(type: "int", nullable: false),
@@ -201,12 +202,9 @@ namespace ProyectoFinalAPI.Migrations
                 {
                     IdPromocion = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descuento = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Productos = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,6 +282,7 @@ namespace ProyectoFinalAPI.Migrations
                     correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     contrasenia = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     rol = table.Column<int>(type: "int", nullable: false),
+                    loginCount = table.Column<int>(type: "int", nullable: false),
                     type = table.Column<int>(type: "int", nullable: false),
                     IntentosFallidos = table.Column<int>(type: "int", nullable: false),
                     EstaBloqueado = table.Column<bool>(type: "bit", nullable: false),
@@ -349,6 +348,34 @@ namespace ProyectoFinalAPI.Migrations
                         principalTable: "Producto",
                         principalColumn: "idProducto",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DetallePromocion",
+                columns: table => new
+                {
+                    IdDetallePromocion = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPromocion = table.Column<int>(type: "int", nullable: false),
+                    IdProducto = table.Column<int>(type: "int", nullable: false),
+                    PorcentajeDescuento = table.Column<double>(type: "float", nullable: false),
+                    PrecioFinal = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetallePromocion", x => x.IdDetallePromocion);
+                    table.ForeignKey(
+                        name: "FK_DetallePromocion_Producto_IdProducto",
+                        column: x => x.IdProducto,
+                        principalTable: "Producto",
+                        principalColumn: "idProducto",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DetallePromocion_Promociones_IdPromocion",
+                        column: x => x.IdPromocion,
+                        principalTable: "Promociones",
+                        principalColumn: "IdPromocion",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -457,6 +484,16 @@ namespace ProyectoFinalAPI.Migrations
                 column: "OrdenCompraidOrdenCompra");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DetallePromocion_IdProducto",
+                table: "DetallePromocion",
+                column: "IdProducto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallePromocion_IdPromocion",
+                table: "DetallePromocion",
+                column: "IdPromocion");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DireccionesEnvio_PersonaId",
                 table: "DireccionesEnvio",
                 column: "PersonaId");
@@ -504,6 +541,9 @@ namespace ProyectoFinalAPI.Migrations
                 name: "DetalleOrdenCompra");
 
             migrationBuilder.DropTable(
+                name: "DetallePromocion");
+
+            migrationBuilder.DropTable(
                 name: "DetalleVenta");
 
             migrationBuilder.DropTable(
@@ -525,9 +565,6 @@ namespace ProyectoFinalAPI.Migrations
                 name: "Produccion");
 
             migrationBuilder.DropTable(
-                name: "Promociones");
-
-            migrationBuilder.DropTable(
                 name: "PromocionesRandom");
 
             migrationBuilder.DropTable(
@@ -544,6 +581,9 @@ namespace ProyectoFinalAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrdenCompra");
+
+            migrationBuilder.DropTable(
+                name: "Promociones");
 
             migrationBuilder.DropTable(
                 name: "Personas");

@@ -17,7 +17,7 @@ namespace ProyectoFinalAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -221,6 +221,35 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasIndex("OrdenCompraidOrdenCompra");
 
                     b.ToTable("DetalleOrdenCompra", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.DetallePromocion", b =>
+                {
+                    b.Property<int>("IdDetallePromocion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetallePromocion"));
+
+                    b.Property<int>("IdProducto")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdPromocion")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PorcentajeDescuento")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PrecioFinal")
+                        .HasColumnType("float");
+
+                    b.HasKey("IdDetallePromocion");
+
+                    b.HasIndex("IdProducto");
+
+                    b.HasIndex("IdPromocion");
+
+                    b.ToTable("DetallePromocion", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleVenta", b =>
@@ -462,6 +491,9 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idProducto"));
 
+                    b.Property<int>("EnPromocion")
+                        .HasColumnType("int");
+
                     b.Property<string>("NombreCategoria")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -503,24 +535,13 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPromocion"));
 
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Descuento")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Productos")
+                    b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -547,7 +568,7 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Productos")
+                    b.PrimitiveCollection<string>("Productos")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -702,6 +723,9 @@ namespace ProyectoFinalAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("loginCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("nombreUsuario")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -773,6 +797,25 @@ namespace ProyectoFinalAPI.Migrations
                         .HasForeignKey("OrdenCompraidOrdenCompra");
                 });
 
+            modelBuilder.Entity("ProyectoFinalAPI.Models.DetallePromocion", b =>
+                {
+                    b.HasOne("ProyectoFinalAPI.Models.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("IdProducto")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinalAPI.Models.Promocion", "Promocion")
+                        .WithMany("Detalles")
+                        .HasForeignKey("IdPromocion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
+
+                    b.Navigation("Promocion");
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.MateriaPrima", b =>
                 {
                     b.HasOne("ProyectoFinalAPI.Models.Proveedor", null)
@@ -816,6 +859,11 @@ namespace ProyectoFinalAPI.Migrations
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>
+                {
+                    b.Navigation("Detalles");
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Promocion", b =>
                 {
                     b.Navigation("Detalles");
                 });

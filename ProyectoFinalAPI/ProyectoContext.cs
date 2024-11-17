@@ -21,12 +21,12 @@ namespace ProyectoFinalAPI
         public DbSet<Tarjetas> Tarjetas { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
-  
-      public DbSet<Promocion> Promociones { get; set; }
-      public DbSet<DetallePromocion> DetallePromocion { get; set; }
 
-  public DbSet<PromocionesRandom> PromocionesRandom { get; set; }
-  public DbSet<Receta> Recetas { get; set; }
+        public DbSet<Promocion> Promociones { get; set; }
+        public DbSet<DetallePromocion> DetallePromocion { get; set; }
+
+        public DbSet<PromocionesRandom> PromocionesRandom { get; set; }
+        public DbSet<Receta> Recetas { get; set; }
         public DbSet<RecetaDetalle> RecetaDetalles { get; set; }
         public DbSet<Contacto> Contactos { get; set; }
         public DbSet<UnidadMedida> UnidadesMedida { get; set; }
@@ -48,17 +48,17 @@ namespace ProyectoFinalAPI
         {
 
             modelBuilder.Entity<Categoria>(categoria =>
-                     {
-                         categoria.ToTable("Categoria");
-                         categoria.HasKey(c => c.idCategoria);
-                         categoria.Property(c => c.idCategoria).ValueGeneratedOnAdd().UseIdentityColumn();
-                         categoria.Property(c => c.nombreCategoria).IsRequired();
-                         categoria.Property(c => c.descripcion).IsRequired();
-                         //ciudad.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
+            {
+                categoria.ToTable("Categoria");
+                categoria.HasKey(c => c.idCategoria);
+                categoria.Property(c => c.idCategoria).ValueGeneratedOnAdd().UseIdentityColumn();
+                categoria.Property(c => c.nombreCategoria).IsRequired();
+                categoria.Property(c => c.descripcion).IsRequired();
+                //ciudad.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
 
-                     });
+            });
 
-            modelBuilder.Entity<Merma>(merma=>
+            modelBuilder.Entity<Merma>(merma =>
             {
                 merma.ToTable("Merma");
                 merma.HasKey(m => m.IdMerma);
@@ -133,28 +133,28 @@ namespace ProyectoFinalAPI
 
 
             modelBuilder.Entity<Produccion>(produccion =>
-                     {
-                         produccion.ToTable("Produccion");
-                         produccion.HasKey(p => p.idProduccion);
-                         produccion.Property(p => p.idProduccion).ValueGeneratedOnAdd().UseIdentityColumn();
-                         produccion.Property(p => p.cantidad).IsRequired();
-                         produccion.Property(p => p.idProducto).IsRequired();
+            {
+                produccion.ToTable("Produccion");
+                produccion.HasKey(p => p.idProduccion);
+                produccion.Property(p => p.idProduccion).ValueGeneratedOnAdd().UseIdentityColumn();
+                produccion.Property(p => p.cantidad).IsRequired();
+                produccion.Property(p => p.idProducto).IsRequired();
 
-                     });
+            });
 
 
             modelBuilder.Entity<Producto>(producto =>
             {
-             producto.ToTable("Producto");
-             producto.HasKey(i => i.idProducto);
-             producto.Property(i => i.idProducto).ValueGeneratedOnAdd().UseIdentityColumn();
-             producto.Property(i => i.nombreProducto).IsRequired();
-             producto.Property(i => i.descripcion);
-             producto.Property(i => i.idInventario).IsRequired();
-             producto.Property(i => i.precio).IsRequired();
-             producto.Property(i => i.stock).IsRequired();
-             producto.Property(i => i.idCategoria).IsRequired();
-             
+                producto.ToTable("Producto");
+                producto.HasKey(i => i.idProducto);
+                producto.Property(i => i.idProducto).ValueGeneratedOnAdd().UseIdentityColumn();
+                producto.Property(i => i.nombreProducto).IsRequired();
+                producto.Property(i => i.descripcion);
+                producto.Property(i => i.idInventario).IsRequired();
+                producto.Property(i => i.precio).IsRequired();
+                producto.Property(i => i.stock).IsRequired();
+                producto.Property(i => i.idCategoria).IsRequired();
+
                 producto.Property(i => i.idInventario).IsRequired();
 
             });
@@ -214,16 +214,16 @@ namespace ProyectoFinalAPI
 
 
             modelBuilder.Entity<Venta>(venta =>
-                     {
-                         venta.ToTable("Venta");
-                         venta.HasKey(i => i.idVenta);
-                         venta.Property(i => i.idVenta).ValueGeneratedOnAdd().UseIdentityColumn();
-                         venta.Property(i => i.total).IsRequired();
-                         venta.Property(i => i.fechaVenta).IsRequired();
-                         venta.Property(i => i.idUsuario).IsRequired();
-                         venta.Property(i => i.tipoVenta).IsRequired().HasMaxLength(10).HasColumnType("varchar(10)");
+            {
+                venta.ToTable("Venta");
+                venta.HasKey(i => i.idVenta);
+                venta.Property(i => i.idVenta).ValueGeneratedOnAdd().UseIdentityColumn();
+                venta.Property(i => i.total).IsRequired();
+                venta.Property(i => i.fechaVenta).IsRequired();
+                venta.Property(i => i.idUsuario).IsRequired();
+                venta.Property(i => i.tipoVenta).IsRequired().HasMaxLength(10).HasColumnType("varchar(10)");
 
-                     });
+            });
             modelBuilder.Entity<ContraseniaInsegura>(contraseniaInsegura =>
             {
                 contraseniaInsegura.ToTable("ContraseniaInsegura");
@@ -231,49 +231,49 @@ namespace ProyectoFinalAPI
                 contraseniaInsegura.Property(i => i.IdContraseniaInsegura).ValueGeneratedOnAdd().UseIdentityColumn();
                 contraseniaInsegura.Property(i => i.Contrasenia).IsRequired();
             });
-   // Configuración de Promociones
-   modelBuilder.Entity<Promocion>(promocion =>
-   {
-    promocion.ToTable("Promociones");
-    promocion.HasKey(p => p.IdPromocion);
-    promocion.Property(p => p.IdPromocion).ValueGeneratedOnAdd();
-    promocion.Property(p => p.Nombre).IsRequired();
-    promocion.Property(p => p.FechaInicio).IsRequired();
-    promocion.Property(p => p.FechaFin).IsRequired();
-    promocion.HasMany(p => p.Detalles) // Relación uno a muchos con DetallePromocion
-             .WithOne(d => d.Promocion)
-             .HasForeignKey(d => d.IdPromocion)
-             .OnDelete(DeleteBehavior.Cascade);
-   });
+            // Configuración de Promociones
+            modelBuilder.Entity<Promocion>(promocion =>
+            {
+                promocion.ToTable("Promociones");
+                promocion.HasKey(p => p.IdPromocion);
+                promocion.Property(p => p.IdPromocion).ValueGeneratedOnAdd();
+                promocion.Property(p => p.Nombre).IsRequired();
+                promocion.Property(p => p.FechaInicio).IsRequired();
+                promocion.Property(p => p.FechaFin).IsRequired();
+                promocion.HasMany(p => p.Detalles) // Relación uno a muchos con DetallePromocion
+                         .WithOne(d => d.Promocion)
+                         .HasForeignKey(d => d.IdPromocion)
+                         .OnDelete(DeleteBehavior.Cascade);
+            });
 
-   // Configuración de la entidad DetallePromocion
-   modelBuilder.Entity<DetallePromocion>(detallePromocion =>
-   {
-    detallePromocion.ToTable("DetallePromocion");
-    detallePromocion.HasKey(d => d.IdDetallePromocion);
-    detallePromocion.Property(d => d.IdDetallePromocion).ValueGeneratedOnAdd();
-    detallePromocion.Property(d => d.PorcentajeDescuento).IsRequired();
-    detallePromocion.Property(d => d.PrecioFinal).IsRequired();
+            // Configuración de la entidad DetallePromocion
+            modelBuilder.Entity<DetallePromocion>(detallePromocion =>
+            {
+                detallePromocion.ToTable("DetallePromocion");
+                detallePromocion.HasKey(d => d.IdDetallePromocion);
+                detallePromocion.Property(d => d.IdDetallePromocion).ValueGeneratedOnAdd();
+                detallePromocion.Property(d => d.PorcentajeDescuento).IsRequired();
+                detallePromocion.Property(d => d.PrecioFinal).IsRequired();
 
-    // Relación con Producto
-    detallePromocion.HasOne(d => d.Producto)
-                    .WithMany() // Puedes definir una colección en Producto si lo necesitas
-                    .HasForeignKey(d => d.IdProducto)
-                    .OnDelete(DeleteBehavior.Restrict);
-   });
+                // Relación con Producto
+                detallePromocion.HasOne(d => d.Producto)
+                                .WithMany() // Puedes definir una colección en Producto si lo necesitas
+                                .HasForeignKey(d => d.IdProducto)
+                                .OnDelete(DeleteBehavior.Restrict);
+            });
 
-   // Configuración de PromocionesRandom
-   modelBuilder.Entity<PromocionesRandom>(promocionRandom =>
-   {
-    promocionRandom.ToTable("PromocionesRandom");
-    promocionRandom.HasKey(p => p.IdPromocionRandom);
-    promocionRandom.Property(p => p.Codigo).IsRequired();
-    promocionRandom.Property(p => p.FechaCreacion).IsRequired();
-    promocionRandom.Property(p => p.FechaFin).IsRequired();
-    promocionRandom.Property(p => p.Productos).IsRequired(); // Ajusta esto si necesitas un tipo específico
-   });
+            // Configuración de PromocionesRandom
+            modelBuilder.Entity<PromocionesRandom>(promocionRandom =>
+            {
+                promocionRandom.ToTable("PromocionesRandom");
+                promocionRandom.HasKey(p => p.IdPromocionRandom);
+                promocionRandom.Property(p => p.Codigo).IsRequired();
+                promocionRandom.Property(p => p.FechaCreacion).IsRequired();
+                promocionRandom.Property(p => p.FechaFin).IsRequired();
+                promocionRandom.Property(p => p.Productos).IsRequired(); // Ajusta esto si necesitas un tipo específico
+            });
 
-   modelBuilder.Entity<Pedidos>(pedido =>
+            modelBuilder.Entity<Pedidos>(pedido =>
             {
                 pedido.ToTable("Pedidos");
                 pedido.HasKey(p => p.idPedido);
