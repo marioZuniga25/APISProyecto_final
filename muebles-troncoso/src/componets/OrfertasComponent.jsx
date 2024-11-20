@@ -8,6 +8,7 @@ const Ofertas = () => {
   const [countdown, setCountdown] = useState(0);
   const [progress, setProgress] = useState(0);
 
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,17 +24,36 @@ const Ofertas = () => {
         const ultimaPromocion = promocionesActivas.length > 0 ? promocionesActivas[promocionesActivas.length - 1] : null;
 
         if (ultimaPromocion) {
-          const productosEnPromocion = ultimaPromocion.productos.map(productoId => {
-            const producto = productosData.find(p => p.idProducto === productoId);
-            const descuento = Math.floor(Math.random() * 11) + 10; // Descuento entre 10% y 20%
-            const precioConDescuento = (producto.precio * (1 - descuento / 100)).toFixed(2);
-            return {
-              ...producto,
-              descuento,
-              precioConDescuento
-            };
-          });
-          setOfertas({ ...ultimaPromocion, productos: productosEnPromocion });
+          const descuentosGuardados = JSON.parse(localStorage.getItem('descuentos')) || {};
+          const nuevaPromocionId = ultimaPromocion.codigo;
+
+          // Si es una nueva promoción, genera nuevos descuentos
+          if (descuentosGuardados.promocionId !== nuevaPromocionId) {
+            const productosEnPromocion = ultimaPromocion.productos.map(productoId => {
+              const producto = productosData.find(p => p.idProducto === productoId);
+              const descuento = Math.floor(Math.random() * 11) + 10; // Descuento entre 10% y 20%
+              const precioConDescuento = (producto.precio * (1 - descuento / 100)).toFixed(2);
+              return {
+                ...producto,
+                descuento,
+                precioConDescuento
+              };
+            });
+
+            // Guarda los descuentos en el localStorage
+            localStorage.setItem('descuentos', JSON.stringify({
+              promocionId: nuevaPromocionId,
+              productos: productosEnPromocion
+            }));
+
+            setOfertas({ ...ultimaPromocion, productos: productosEnPromocion });
+          } else {
+            // Usa los descuentos existentes
+            setOfertas({
+              ...ultimaPromocion,
+              productos: descuentosGuardados.productos
+            });
+          }
 
           const tiempoRestante = Math.floor((new Date(ultimaPromocion.fechaFin) - ahora) / 1000);
           setCountdown(tiempoRestante);
@@ -69,13 +89,14 @@ const Ofertas = () => {
     return `${h} hr ${m} min ${s} sec`;
   };
 
-  // Nueva función para emitir el evento
   const handleProductClick = (producto) => {
+  
     const event = new CustomEvent('productoSeleccionado', {
       detail: {
         idProducto: producto.idProducto,
         precioConDescuento: producto.precioConDescuento,
-        descuento: producto.descuento
+        descuento: producto.descuento,
+        idPromocionRandom: ofertas.codigo
       },
       bubbles: true,
       cancelable: true,

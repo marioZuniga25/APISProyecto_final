@@ -28,7 +28,7 @@ import { ResetPasswordComponent } from './Usuario/reset-password/reset-password.
 import { Error404Component } from './error404/error404.component'; 
 import { TipoVentasComponent } from './Admin/tipo-ventas/tipo-ventas.component';
 import { MermaComponent } from './Admin/merma/merma.component';
-
+import { CrmComponent } from './crm/crm.component';
 export const routes: Routes = [
   {
     path: '',
@@ -141,7 +141,11 @@ export const routes: Routes = [
   {
     path: 'perfil/:id',
     component: PerfilComponent
-  },
+  },{
+    path: 'crm',
+    component: CrmComponent,
+    canActivate: [AuthGuard, AuthGuardAdmin]
+   },
   {
     path: 'admin/compras-materias-primas',
     component: ComprasMateriasPrimasComponent,

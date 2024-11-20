@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import socket from '../socket';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import '../css/LiveChat.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faComments, faPaperPlane  } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faComments, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const LiveChat = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -16,19 +17,15 @@ const LiveChat = () => {
 
   useEffect(() => {
     // Obtener el usuario autenticado
-    console.log("Obteniendo el usuario autenticado...");
     axios.get('http://localhost:5000/current_user', { withCredentials: true })
       .then(response => {
-        console.log("Usuario autenticado:", response.data);
         setCurrentUser(response.data);
         if (response.data.role === 1) {
-          console.log("Obteniendo las salas...");
-          axios.get('http://localhost:5000/api/salas', { withCredentials: true })
+          axios.get('http://localhost:5000/api/salas/activos', { withCredentials: true })
             .then(res => {
-              console.log("Salas recibidas:", res.data);
               setSalas(res.data);
             })
-            .catch(err => console.error("Error al obtener las salas:", err));
+            .catch(err => console.error("Error al obtener las salas activas:", err));
         }
       })
       .catch(error => {
@@ -36,12 +33,10 @@ const LiveChat = () => {
       });
 
     socket.on('message', (msg) => {
-      console.log("Mensaje recibido en el socket:", msg);
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
     socket.on('fetch_messages', (historicalMessages) => {
-      console.log("Mensajes históricos recibidos:", historicalMessages);
       setMessages(historicalMessages);
     });
 
@@ -53,8 +48,7 @@ const LiveChat = () => {
 
   const handleRoomChange = (roomId, roomName) => {
     const room = roomName;  
-    console.log(`Cambiando a la sala: ${room}`);
-    setSelectedRoom(room);
+    setSelectedRoom(roomId);
     setSelectedRoomName(roomName);
     setMessages([]);
     socket.emit('join', { user_id: currentUser.user_id, room });
@@ -65,14 +59,44 @@ const LiveChat = () => {
     if (message.trim()) {
       const messageData = {
         user_id: currentUser.user_id,
-        room: selectedRoom,
+        room: selectedRoomName,
         text: message,
         usuario: currentUser.username
       };
-      console.log("Enviando mensaje:", messageData);
       socket.emit('message', messageData);
       setMessage('');
     }
+  };
+
+  const handleMarkAsAttended = () => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¿Quieres marcar esta sala como atendida y borrar los mensajes?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, marcar como atendida'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Llamar a la API para finalizar la sala y eliminar los mensajes
+        axios.post('http://localhost:5000/api/salas/finalizar', 
+          { sala_id: selectedRoom }, 
+          { withCredentials: true }
+        )
+          .then(() => {
+            Swal.fire('¡Marcado!', 'La sala ha sido marcada como atendida.', 'success');
+            // Actualizar la lista de salas para reflejar el cambio
+            setSalas(salas.filter(sala => sala._id !== selectedRoom));
+            setSelectedRoom(null);
+            setMessages([]);
+          })
+          .catch(err => {
+            console.error("Error al marcar la sala como atendida:", err);
+            Swal.fire('Error', 'No se pudo marcar la sala como atendida.', 'error');
+          });
+      }
+    });
   };
 
   const filteredSalas = salas.filter(sala =>
@@ -98,7 +122,7 @@ const LiveChat = () => {
               {filteredSalas.map((sala) => (
                 <div 
                 key={sala._id} 
-                className={`room-card ${selectedRoom === sala.sala ? "active" : ""}`} 
+                className={`room-card ${selectedRoom === sala._id ? "active" : ""}`}
                 onClick={() => handleRoomChange(sala._id, sala.sala)}
                 >
                   {sala.sala}
@@ -113,6 +137,9 @@ const LiveChat = () => {
     <>
       <div className="chat-header">
         <h3>{selectedRoomName}</h3>
+        <button className="btn-attend" onClick={handleMarkAsAttended}  >
+          Marcar como atendida
+        </button>
       </div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
