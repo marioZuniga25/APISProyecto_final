@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241106090539_correccionMerma")]
-    partial class correccionMerma
+    [Migration("20241113202013_update13nov")]
+    partial class update13nov
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

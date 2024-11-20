@@ -32,6 +32,7 @@ namespace ProyectoFinalAPI.Controllers
                         Stock = producto.stock,
                         NombreCategoria = categoria.nombreCategoria,
                         IdInventario = producto.idInventario,
+                        EnPromocion = producto.EnPromocion,
                         Imagen = producto.imagen
                     })
                 .ToListAsync();
@@ -144,6 +145,7 @@ namespace ProyectoFinalAPI.Controllers
                               Stock = producto.stock,
                               NombreCategoria = categoria.nombreCategoria,
                               IdInventario = producto.idInventario,
+                              EnPromocion = producto.EnPromocion,
                               Imagen = producto.imagen
                           })
                     .ToListAsync();
@@ -169,6 +171,7 @@ namespace ProyectoFinalAPI.Controllers
                     Stock = pc.producto.stock,
                     NombreCategoria = pc.categoria.nombreCategoria,
                     IdInventario = pc.producto.idInventario,
+                 EnPromocion = pc.producto.EnPromocion,
                     Imagen = pc.producto.imagen
                 })
                 .ToListAsync();

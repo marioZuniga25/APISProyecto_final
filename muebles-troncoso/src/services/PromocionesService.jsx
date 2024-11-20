@@ -20,6 +20,7 @@ const getProductos = async () => {
     const response = await axios.get(PRODUCTOS_API_URL);
     return response.data;
     
+    return response.data;
   } catch (error) {
     console.error('Error fetching productos:', error);
     throw error; // Lanza el error para que pueda ser manejado en el componente

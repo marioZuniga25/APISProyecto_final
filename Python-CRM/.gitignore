@@ -1,0 +1,39 @@
+# Ignorar archivos y carpetas de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar entornos virtuales
+env/
+venv/
+ENV/
+.venv/
+.VENV/
+env.bak/
+*.env
+
+# Ignorar configuraciones de VSCode
+.vscode/
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos de bases de datos locales
+*.sqlite3
+*.db
+
+# Ignorar el archivo requirements.txt generado automáticamente si deseas hacerlo
+# !requirements.txt  # Puedes quitar el comentario si quieres que sí se incluya
+
+# Ignorar archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos y carpetas específicas del proyecto
+migrations/
+instance/
