@@ -5,20 +5,17 @@ import Navbar from './componets/Navbar';
 import Dashboard from './componets/Dashboard';
 import LiveChat from './componets/LiveChat';
 import Promociones from './componets/Promociones';
-import UserChat from './componets/UserChat';
-
 function App() {
   return (
-    <Router>
+    <Router basename="/crm">
       <Navbar />
       <div className="content">
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/live-chat" element={<LiveChat />} />
-          <Route path="/promociones" element={<Promociones />} />
-          <Route path="/User" element={<UserChat />} />
-
-        </Routes>
+      <Routes>
+        <Route index element={<Dashboard />} /> {/* Ruta predeterminada */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/live-chat" element={<LiveChat />} />
+        <Route path="/promociones" element={<Promociones />} />
+      </Routes>
       </div>
     </Router>
   );
