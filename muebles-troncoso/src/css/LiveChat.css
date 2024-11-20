@@ -1,0 +1,171 @@
+.live-chat {
+  display: flex;
+  height: 80vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.live-chat .chat-sidebar {
+  width: 25%;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-right: 1px solid #ddd;
+}
+
+.live-chat .chat-sidebar h3 {
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.live-chat .room-search {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.live-chat .room-search input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.live-chat .room-cards {
+  max-height: 60vh; /* Limita la altura del área de salas */
+  overflow-y: auto; /* Agrega scroll si el contenido es muy grande */
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.live-chat .room-card {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background-color: #e3e3e3;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.live-chat .room-card:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.live-chat .chat-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.live-chat .chat-header {
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #333;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.live-chat .chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.live-chat .message {
+  display: flex; /* Cambiar a flex para alinear elementos */
+  flex-direction: column; /* Mantener el tiempo en la parte inferior */
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  max-width: 70%;
+  line-height: 1.5;
+  word-wrap: break-word;
+  position: relative;
+}
+.live-chat .message-content svg{
+  display: flex; /* Flex para alinear nombre y mensaje */
+  justify-content: space-between; /* Asegura que el nombre y el mensaje estén juntos */
+  margin-bottom: 5px; /* Asegura que el nombre y el mensaje estén juntos */
+}
+
+.live-chat .room-card.active {
+  background-color: #007bff; /* El mismo color que el hover */
+  color: white; /* Asegúrate que el texto sea visible */
+}
+
+.live-chat .message-time {
+  font-size: 0.8rem;
+  color: rgb(255, 255, 255);
+  margin-top: 5px; /* Espacio entre el mensaje y la hora */
+  align-self: flex-end; /* Alinear la hora a la derecha */ /* Espacio entre el mensaje y la hora */
+}
+.live-chat .sent-time {
+  color: rgb(255, 255, 255); /* Color de la hora para mensajes enviados */
+  align-self: flex-end; /* Alinear a la derecha */
+}
+.live-chat .received-time {
+  color: rgb(0, 0, 0); /* Color de la hora para mensajes recibidos */
+  align-self: flex-start; /* Alinear a la izquierda */
+}
+
+.live-chat .message.received {
+  background-color: #e0e0e0;
+  align-self: flex-start;
+}
+
+.live-chat .message.sent {
+  background-color: #007bff;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.live-chat .chat-input {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ddd;
+  padding-top: 0.5rem;
+  
+}
+
+.live-chat .chat-input input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  height: 30px;
+}
+
+.live-chat .chat-input button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  height: 45px;
+}
+
+.live-chat .chat-input button:hover {
+  background-color: #0056b3;
+}
+
+.live-chat .select-room {
+  text-align: center;
+  color: #777;
+  margin-top: 2rem;
+}

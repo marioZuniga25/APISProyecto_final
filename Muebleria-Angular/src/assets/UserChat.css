@@ -1,0 +1,100 @@
+.user-chat {
+    display: flex;
+    flex-direction: column;
+    height: 60vh; /* Ajusta la altura para hacer el componente más pequeño */
+    max-width: 400px; /* Reducir el ancho máximo */
+    margin: 20px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+}
+
+.user-chat .chat-header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px; /* Reducir padding */
+    text-align: center;
+    font-size: 1rem; /* Reducir tamaño de fuente */
+    font-weight: bold;
+}
+
+.user-chat .chat-messages {
+    flex: 1;
+    padding: 10px; /* Reducir padding */
+    overflow-y: auto;
+    background-color: #f4f6f9;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Reducir espacio entre mensajes */
+}
+
+/* Mensaje genérico */
+.user-chat .messages {
+    padding: 8px 12px; /* Reducir padding de los mensajes */
+    border-radius: 12px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem; /* Reducir tamaño de fuente */
+    line-height: 1.3;
+}
+
+/* Mensaje enviado */
+.user-chat .messages.sent {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 2px;
+    border-top-left-radius: 12px;
+}
+
+/* Mensaje recibido */
+.user-chat .messages.received {
+    background-color: #e8e8e8;
+    color: #333;
+    align-self: flex-start;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 2px;
+}
+
+.user-chat .messages-time {
+    font-size: 0.7rem; /* Reducir tamaño de la hora */
+    color: inherit;
+    margin-top: 4px;
+    align-self: flex-end;
+}
+
+.user-chat .chat-input {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding: 8px; /* Reducir padding */
+    background-color: #fff;
+}
+
+.user-chat .chat-input input {
+    flex: 1;
+    padding: 8px 12px; /* Reducir padding */
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    outline: none;
+    font-size: 0.85rem; /* Reducir tamaño de fuente */
+    margin-right: 8px; /* Reducir margen */
+    transition: border-color 0.3s;
+}
+
+.user-chat .chat-input button {
+    padding: 8px 12px; /* Reducir tamaño del botón */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    font-size: 0.85rem; /* Reducir tamaño de fuente del botón */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

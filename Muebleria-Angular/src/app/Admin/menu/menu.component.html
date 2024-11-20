@@ -8,8 +8,11 @@
             </li>
             <li><a href="/admin/venta">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Ventas</span></a>
+                    <span>Punto de Ventas</span></a>
             </li>
+            <li><a href="/admin/tipoVenta">
+                <i class="fas fa-chart-line"></i>
+                <span>Ventas</span></a>
             <li><a href="/admin/materiaprima">
                     <i class="fas fa-cubes"></i>
                     <span>Materias Primas</span>
@@ -48,6 +51,11 @@
                     <span>Usuarios</span>
                 </a>
             </li>
+            <li><a href="/admin/merma">
+                <i class="fa fa-trash"></i>
+                <span>Merma</span>
+            </a>
+        </li>
 
             <!-- Dropdown para Usuario -->
             <ng-container *ngIf="user; else noUser">

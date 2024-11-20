@@ -1782,6 +1782,7 @@ body.owH {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: hidden;
 }
 
 .modal.show {
@@ -1796,6 +1797,7 @@ body.owH {
   width: 80%;
   max-width: 500px;
   border-radius: 15px;
+  margin-top: 2%;
 }
 
 .close {
@@ -1870,4 +1872,26 @@ hr {
 .corregir-content {
   max-width: 100% !important; 
   width: 100% !important;
+}
+
+
+.campo-formulario {
+  width: calc(33% - 20px); /* Cada campo ocupa un tercio del ancho */
+  margin: 10px;
+  text-align: left;
+}
+
+input, select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid grey;
+  outline: none;
+  padding: 8px 10px;
+}
+
+.boton-enviar {
+  width: 100%; /* Para que el botón se alinee horizontalmente */
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
