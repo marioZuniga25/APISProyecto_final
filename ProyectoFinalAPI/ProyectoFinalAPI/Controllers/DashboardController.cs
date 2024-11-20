@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinalAPI.Models;
+using System.Linq;
 
 namespace ProyectoFinalAPI.Controllers
 {
@@ -131,5 +132,46 @@ namespace ProyectoFinalAPI.Controllers
 
             return Ok(result);
         }
-    }
+
+        [HttpGet("PromocionesActivasYResultados")]
+        public async Task<ActionResult<object>> GetPromocionesActivasYResultados()
+        {
+         var activas = await _context.Promociones
+             .Where(p => p.FechaFin >= DateTime.Now)
+             .Select(p => new { p.IdPromocion, p.Nombre, p.FechaFin })
+             .ToListAsync();
+
+         var finalizadas = await _context.Promociones
+             .Where(p => p.FechaFin < DateTime.Now)
+             .Select(p => new
+             {
+              p.IdPromocion,
+              p.Nombre,
+              TotalUsuariosBeneficiados = p.Detalles.Count()
+             })
+             .ToListAsync();
+
+         return Ok(new { Activas = activas, Finalizadas = finalizadas });
+        }
+
+
+
+  [HttpGet("Alertas")]
+  public async Task<ActionResult<object>> GetAlertas()
+  {
+   var inventarioBajo = await _context.Producto
+       .Where(p => p.stock < 10)
+       .Select(p => new { p.nombreProducto, p.stock })
+       .ToListAsync();
+
+   var promocionesPorTerminar = await _context.Promociones
+       .Where(p => p.FechaFin <= DateTime.Now.AddDays(7))
+       .Select(p => new { p.Nombre, p.FechaFin })
+       .ToListAsync();
+
+   return Ok(new { InventarioBajo = inventarioBajo, PromocionesPorTerminar = promocionesPorTerminar });
+  }
+
+
+ }
 }

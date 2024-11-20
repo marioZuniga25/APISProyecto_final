@@ -21,8 +21,10 @@ namespace ProyectoFinalAPI
         public DbSet<Tarjetas> Tarjetas { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
-  
-      public DbSet<Promocion> Promociones { get; set; }
+  public DbSet<LogInicioSesion> LogInicioSesion { get; set; }
+  public DbSet<Promocion> Promociones { get; set; }
+public DbSet<Persona> Personas { get; set; } 
+public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
       public DbSet<DetallePromocion> DetallePromocion { get; set; }
 
   public DbSet<PromocionesRandom> PromocionesRandom { get; set; }
