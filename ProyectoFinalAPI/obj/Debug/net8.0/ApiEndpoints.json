@@ -487,26 +487,6 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
-    "Method": "GetPedidos",
-    "RelativePath": "api/Pedido",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFinalAPI.Models.PedidoDetalleDto, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
     "Method": "AddPedido",
     "RelativePath": "api/Pedido",
     "HttpMethod": "POST",
@@ -551,6 +531,58 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
+    "Method": "GetPedidos",
+    "RelativePath": "api/Pedido/GetPedidos/{filtro}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFinalAPI.Models.PedidoDetalleDto, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
+    "Method": "GetPedidosPorUsuario",
+    "RelativePath": "api/Pedido/GetPedidosPorUsuario{idUsuario}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFinalAPI.Models.PedidoDetalleDto, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.PerfilController",

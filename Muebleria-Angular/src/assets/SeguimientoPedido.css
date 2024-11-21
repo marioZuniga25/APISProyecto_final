@@ -1,0 +1,248 @@
+/* SeguimientoPedido.css */
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+} 
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 2px solid black;
+}
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.table-hover tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.table .d-none {
+  display: none;
+}
+
+.seleccionado {
+  background-color: #f0f8ff;
+}
+
+.table .btn {
+  border-radius: 10px;
+  color: white;
+  background-color: #343a40;
+  border: none;
+  padding: 5px 10px;
+}
+
+.table .btn:hover {
+  background-color: #495057;
+}
+
+.table .form-select {
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #fff;
+}
+
+.table .form-select option {
+  padding: 10px;
+}
+
+
+:root {
+  --body: #8c9eff;
+  --cont: #eceff1;
+  --line: #651fff;
+  --txt: #007bfd;
+  --light: #c5cae9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.bodys {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.seguimiento-pedido {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.seguimiento-pedido .details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seguimiento-pedido .track {
+  margin: 4em 0;
+}
+
+.seguimiento-pedido #progress {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-bottom: 2em;
+  gap: 14rem;
+}
+
+.seguimiento-pedido #progress li {
+  position: relative;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+}
+
+#progress li {
+  position: relative;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+}
+
+#progress li::before {
+  content: '';
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background-color: #c5cae9;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  z-index: 2;
+  transition: background-color 0.3s ease;
+}
+.seguimiento-pedido #progress li::before {
+  content: '\2713';
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background: var(--line);
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.seguimiento-pedido #progress li:last-child::before {
+  content: '\2713';
+  font-weight: bold;
+  background: var(--light);
+}
+
+.seguimiento-pedido #progress::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: calc(100% - 10px);
+  height: 10px;
+  background: var(--line);
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.seguimiento-pedido #progress::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: calc(100% - 10px);
+  height: 10px;
+  background: #c5cae9;
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.seguimiento-pedido .lists {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1em;
+  width: 100%;
+}
+
+.seguimiento-pedido .list {
+  text-align: center;
+  gap: 6rem;
+  flex: 1;
+}
+
+.seguimiento-pedido .list img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.seguimiento-pedido .list p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+#progress li.active::before {
+  background-color: var(--line);
+}
+
+#progress li:nth-child(1).active::before {
+  background-color: var(--line)
+}
+
+#progress li:nth-child(2).active::before {
+  background-color: var(--line);
+}
+
+#progress li:nth-child(3).active::before {
+  background-color: var(--line);
+}
+
+#progress li:not(.active)::before {
+  background-color: #c5cae9;
+}
+
+#progress li:nth-child(1).active,
+#progress li:nth-child(2).active,
+#progress li:nth-child(3).active {
+  
+}
+
+.estatus-entrega {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #651fff;
+  padding: 10px 0;
+}
+
+.estatus-entrega p {
+  margin: 0;
+  line-height: 1.5;
+}

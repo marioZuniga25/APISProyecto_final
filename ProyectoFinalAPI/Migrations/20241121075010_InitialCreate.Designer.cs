@@ -12,7 +12,7 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241117083851_InitialCreate")]
+    [Migration("20241121075010_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

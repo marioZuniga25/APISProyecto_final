@@ -4,6 +4,31 @@
       <div class="col-9">
         <h4 class="mt-2 text-center"><i class="fas fa-shopping-cart"></i> Pedidos</h4>
       </div>
+      <div class="col-12">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <button class="nav-link" 
+                    [class.active]="filtroActual === 'Pedido'" 
+                    (click)="cambiarFiltro('Pedido')">
+              <i class="fas fa-box"></i> Pedidos por Enviar
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" 
+                    [class.active]="filtroActual === 'Enviado'" 
+                    (click)="cambiarFiltro('Enviado')">
+              <i class="fas fa-truck"></i> Pedidos Enviados
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" 
+                    [class.active]="filtroActual === 'Entregado'" 
+                    (click)="cambiarFiltro('Entregado')">
+              <i class="fas fa-check-circle"></i> Pedidos Entregados
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="table-container">
@@ -34,10 +59,26 @@
           </td>
           <td>{{ pedido.estatus }}</td>
           <td>
-            <button class="btn btn-dark" (click)="enviarPedido(pedido.idPedido)" [disabled]="pedido.estatus === 'enviado'">
+            <button 
+              class="btn btn-dark" 
+              *ngIf="pedido.estatus === 'Pedido'" 
+              (click)="actualizarEstatus(pedido.idPedido, 'Enviado')">
               <i class="fas fa-paper-plane"></i> Enviar
             </button>
+            <button 
+              class="btn btn-dark" 
+              *ngIf="pedido.estatus === 'Enviado'" 
+              (click)="actualizarEstatus(pedido.idPedido, 'Entregado')">
+              <i class="fas fa-handshake"></i> Entregar
+            </button>
+            <button 
+              class="btn btn-dark" 
+              *ngIf="pedido.estatus === 'Entregado'" 
+              disabled>
+              <i class="fas fa-check-circle"></i> Entregado
+            </button>
           </td>
+          
         </tr>
       </tbody>
     </table>

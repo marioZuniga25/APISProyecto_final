@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import UserChat from './componets/UserChat';
+import seguimiento from './componets/SegimientoPedido';
 import reactToWebComponent from 'react-to-webcomponent';
 
 // Convertir el componente de React a un Web Component
-const ChatUsuarioComponent = reactToWebComponent(UserChat, React, ReactDOM);
+const seguimientoPedido = reactToWebComponent(seguimiento, React, ReactDOM);
 
 // Registrar el Web Component
-customElements.define('user-chat', ChatUsuarioComponent);
+customElements.define('seguimiento-pedido', seguimientoPedido);

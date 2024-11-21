@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { PerfilService } from '../services/perfil.service';
 import { IUsuarioDetalle } from '../interfaces/IUsuarioDetalle';
 import { ActivatedRoute } from '@angular/router';
@@ -12,14 +12,14 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-
 registerLocaleData(localeEs, 'es');
 @Component({
   selector: 'app-perfil',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  styleUrls: ['./perfil.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class PerfilComponent implements OnInit {
   user: IUsuarioDetalle | null = null;
