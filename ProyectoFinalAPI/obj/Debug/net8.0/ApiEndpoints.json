@@ -513,6 +513,32 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
+    "Method": "GetPedidoById",
+    "RelativePath": "api/Pedido/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ProyectoFinalAPI.Models.Pedidos",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
     "Method": "UpdatePedido",
     "RelativePath": "api/Pedido/{id}",
     "HttpMethod": "PUT",
