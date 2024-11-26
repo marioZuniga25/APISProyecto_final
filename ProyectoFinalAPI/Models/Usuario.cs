@@ -13,8 +13,8 @@
         public bool EstaBloqueado { get; set; }
 
 
-        // // Recuperación de contraseña
-        public string? ResetToken { get; set; }
+  // // Recuperación de contraseña
+  public string? ResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
 
         public Persona? Persona { get; set; } // Navegación a Persona

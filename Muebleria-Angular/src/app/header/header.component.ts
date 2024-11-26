@@ -60,4 +60,8 @@ export class HeaderComponent {
     localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
+  goToCRM(): void {
+    this.router.navigate(['/crm']);
+  }
+  
 }

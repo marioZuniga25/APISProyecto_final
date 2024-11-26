@@ -38,10 +38,11 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
     // Escuchar el evento del Web Component
     window.addEventListener('productoSeleccionado', (event: any) => {
-      const { idProducto, precioConDescuento, descuento } = event.detail;
+      const { idProducto, precioConDescuento, descuento, idPromocionRandom } = event.detail;
       console.log('Producto seleccionado:', idProducto);
       console.log('Precio con descuento:', precioConDescuento);
       console.log('Descuento:', descuento);
+      console.log("promocion: ", idPromocionRandom);
 
       // Redirigir a la página de detalles del producto
       this.router.navigate(['/detalle', idProducto], { 
