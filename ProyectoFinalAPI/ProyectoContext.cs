@@ -37,13 +37,8 @@ public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
         public DbSet<DetalleOrdenCompra> DetallesOrdenCompra { get; set; }
         public DbSet<UnidadMedida> UnidadMedidas { get; set; }
         public DbSet<ContraseniaInsegura> ContraseniaInsegura { get; set; }
-        public DbSet<LogInicioSesion> LogInicioSesion { get; set; }
         public DbSet<Merma> Merma { get; set; }
 
-
-        public DbSet<Persona> Personas { get; set; }
-
-        public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
