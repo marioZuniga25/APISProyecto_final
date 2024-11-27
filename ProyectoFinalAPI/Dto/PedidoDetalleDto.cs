@@ -29,6 +29,6 @@ namespace ProyectoFinalAPI.Models
         public string descripcion { get; set; }
         public double precioUnitario { get; set; }
         public int cantidad { get; set; }
-        public string imagen { get; set; } 
+        public string imagen { get; set; }
     }
 }

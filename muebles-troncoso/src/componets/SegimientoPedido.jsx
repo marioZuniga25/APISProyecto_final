@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../css/SeguimientoPedido.css';
-import servicioPedidos from '../services/PromocionesService';
+import servicioPedidos from '../services/promocionesService';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faTruck, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
