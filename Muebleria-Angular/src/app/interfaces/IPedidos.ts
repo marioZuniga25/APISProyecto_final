@@ -29,6 +29,8 @@ imagen: string;
 export interface IPedidosResponse {
 idPedido: number;
 idVenta: number;
+idUsuario: number;
+idTarjeta: number;
 nombre: string;
 apellidos: string;
 telefono: string;

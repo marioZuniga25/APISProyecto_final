@@ -1,0 +1,38 @@
+[33m698aef1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33mc2bb913[m HEAD@{1}: reset: moving to HEAD~1
+[33m50fd0a6[m HEAD@{2}: checkout: moving from emanuelPendejo to main
+[33m1db2f32[m[33m ([m[1;32memanuelPendejo[m[33m)[m HEAD@{3}: commit: Guardar cambios locales
+[33m04ad3c0[m[33m ([m[1;31morigin/emanuelPendejo[m[33m)[m HEAD@{4}: reset: moving to origin/emanuelPendejo
+[33m93dddc5[m HEAD@{5}: commit: Guardando cambios antes de cambiar de rama
+[33m04ad3c0[m[33m ([m[1;31morigin/emanuelPendejo[m[33m)[m HEAD@{6}: reset: moving to origin/emanuelPendejo
+[33md4f3ed2[m HEAD@{7}: checkout: moving from main to emanuelPendejo
+[33m50fd0a6[m HEAD@{8}: reset: moving to HEAD
+[33m50fd0a6[m HEAD@{9}: revert: Revert "Resueltos los conflictos del merge de main"
+[33mc2bb913[m HEAD@{10}: checkout: moving from emanuelPendejo to main
+[33md4f3ed2[m HEAD@{11}: revert: Revert "Resueltos los conflictos del merge de main"
+[33m4d75484[m HEAD@{12}: reset: moving to 4d75484f6ec53bbc217ef3124d0d8c03effdbc3d
+[33m4d75484[m HEAD@{13}: reset: moving to 4d75484f6ec53bbc217ef3124d0d8c03effdbc3d
+[33m04ad3c0[m[33m ([m[1;31morigin/emanuelPendejo[m[33m)[m HEAD@{14}: commit: CRM Pedro y seguimientoPedido funcionando
+[33m51775cf[m HEAD@{15}: commit: Errores corregidos
+[33m257045a[m HEAD@{16}: commit: no se hacer push
+[33m47bb5df[m[33m ([m[1;31morigin/feature/seguimientoPedido[m[33m, [m[1;32mfeature/seguimientoPedido[m[33m)[m HEAD@{17}: checkout: moving from feature/seguimientoPedido to emanuelPendejo
+[33m47bb5df[m[33m ([m[1;31morigin/feature/seguimientoPedido[m[33m, [m[1;32mfeature/seguimientoPedido[m[33m)[m HEAD@{18}: checkout: moving from main to feature/seguimientoPedido
+[33mc2bb913[m HEAD@{19}: reset: moving to HEAD
+[33mc2bb913[m HEAD@{20}: commit (merge): Resueltos los conflictos del merge de main
+[33m698aef1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{21}: checkout: moving from feature/seguimientoPedido to main
+[33m47bb5df[m[33m ([m[1;31morigin/feature/seguimientoPedido[m[33m, [m[1;32mfeature/seguimientoPedido[m[33m)[m HEAD@{22}: commit: Guardando cambios antes de hacer el merge con main
+[33m0d0399d[m HEAD@{23}: reset: moving to 0d0399d4b17d7053d9c0a4f0bc51e42ed3215431
+[33m0d0399d[m HEAD@{24}: commit: Seguimiento del pedido termiando
+[33m698aef1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{25}: checkout: moving from main to feature/seguimientoPedido
+[33m698aef1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{26}: commit: Últimos cambios antes de crear rama feature/seguimientoPedido
+[33m305a2cf[m HEAD@{27}: reset: moving to origin/main
+[33m305a2cf[m HEAD@{28}: checkout: moving from micambioEmanuel to main
+[33m9ee3e40[m[33m ([m[1;31morigin/micambioEmanuel[m[33m, [m[1;32mmicambioEmanuel[m[33m)[m HEAD@{29}: reset: moving to HEAD
+[33m9ee3e40[m[33m ([m[1;31morigin/micambioEmanuel[m[33m, [m[1;32mmicambioEmanuel[m[33m)[m HEAD@{30}: checkout: moving from main to micambioEmanuel
+[33m305a2cf[m HEAD@{31}: pull origin main: Fast-forward
+[33m67a609c[m HEAD@{32}: checkout: moving from micambioEmanuel to main
+[33m9ee3e40[m[33m ([m[1;31morigin/micambioEmanuel[m[33m, [m[1;32mmicambioEmanuel[m[33m)[m HEAD@{33}: reset: moving to HEAD
+[33m9ee3e40[m[33m ([m[1;31morigin/micambioEmanuel[m[33m, [m[1;32mmicambioEmanuel[m[33m)[m HEAD@{34}: commit (merge): micamio
+[33m67a609c[m HEAD@{35}: checkout: moving from main to micambioEmanuel
+[33m67a609c[m HEAD@{36}: commit: mi nueva rama
+[33m2978194[m HEAD@{37}: clone: from https://github.com/marioZuniga25/APISProyecto_final.git

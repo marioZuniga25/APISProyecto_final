@@ -9,3 +9,4 @@ const AppComponent = reactToWebComponent(App, React, ReactDOM);
 // Registrar el Web Component
 
 customElements.define('app-component', AppComponent);
+

@@ -209,6 +209,16 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
+    "Method": "GetAlertas",
+    "RelativePath": "api/Dashboard/Alertas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
     "Method": "GetProductosMasVendidos",
     "RelativePath": "api/Dashboard/productos-mas-vendidos",
     "HttpMethod": "GET",
@@ -221,6 +231,16 @@
     "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
     "Method": "GetProductosPorCategoria",
     "RelativePath": "api/Dashboard/productos-por-categoria",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
+    "Method": "GetPromocionesActivasYResultados",
+    "RelativePath": "api/Dashboard/PromocionesActivasYResultados",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -487,15 +507,21 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
-    "Method": "GetPedidos",
+    "Method": "AddPedido",
     "RelativePath": "api/Pedido",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "pedido",
+        "Type": "ProyectoFinalAPI.Models.Pedidos",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFinalAPI.Models.PedidoDetalleDto, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "ProyectoFinalAPI.Models.Pedidos",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -507,15 +533,15 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
-    "Method": "AddPedido",
-    "RelativePath": "api/Pedido",
-    "HttpMethod": "POST",
+    "Method": "GetPedidoById",
+    "RelativePath": "api/Pedido/{id}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "pedido",
-        "Type": "ProyectoFinalAPI.Models.Pedidos",
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -551,6 +577,58 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
+    "Method": "GetPedidos",
+    "RelativePath": "api/Pedido/GetPedidos/{filtro}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFinalAPI.Models.PedidoDetalleDto, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.PedidoController",
+    "Method": "GetPedidosPorUsuario",
+    "RelativePath": "api/Pedido/GetPedidosPorUsuario{idUsuario}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFinalAPI.Models.PedidoDetalleDto, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.PerfilController",

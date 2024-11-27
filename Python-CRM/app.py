@@ -5,6 +5,7 @@ from flask_cors import CORS
 from models.models import mongo_db
 from bson import ObjectId
 import uuid
+from apscheduler.schedulers.background import BackgroundScheduler
 app = Flask(__name__)
 app.config.from_object('config')
 app.secret_key = 'integrador'  # Necesario para usar sesiones con Flask
@@ -88,5 +89,157 @@ def obtener_salas():
 from sockets.chat import register_socketio_events
 register_socketio_events(socketio)
 
+@app.route('/api/salas/activos', methods=['GET'])
+def listar_salas_activas():
+    try:
+        # Filtrar las salas que no están atendidas
+        salas = mongo_db.mensajes.find({"atendida": {"$ne": True}})
+        lista_salas = []
+        for sala in salas:
+            comentarios = sala.get("comentarios", [])
+            lista_salas.append({
+                "_id": str(sala["_id"]),
+                "sala": sala["sala"],
+                "comentarios": comentarios
+            })
+        return jsonify(lista_salas), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# Endpoint para finalizar una sala y eliminar los mensajes
+@app.route('/api/salas/finalizar', methods=['POST'])
+def finalizar_sala():
+    data = request.get_json()
+    sala_id = data.get('sala_id')
+
+    try:
+        result = mongo_db.mensajes.update_one(
+            {"_id": ObjectId(sala_id)},
+            {"$set": {"comentarios": [], "atendida": True}}
+        )
+        
+        if result.modified_count > 0:
+            return jsonify({"status": "success", "message": "Sala finalizada y mensajes eliminados"}), 200
+        else:
+            return jsonify({"status": "error", "message": "No se encontró la sala o ya estaba vacía"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/salas/estadisticas', methods=['GET'])
+def obtener_estadisticas():
+    try:
+        total_salas = mongo_db.mensajes.count_documents({})
+        atendidas = mongo_db.mensajes.count_documents({"atendida": True})
+        no_atendidas = total_salas - atendidas
+
+        # Calcula el promedio de comentarios por sala
+        salas = mongo_db.mensajes.find()
+        total_comentarios = sum(len(sala.get("comentarios", [])) for sala in salas)
+        promedio_comentarios = total_comentarios / total_salas if total_salas > 0 else 0
+
+        estadisticas = {
+            "total_salas": total_salas,
+            "atendidas": atendidas,
+            "no_atendidas": no_atendidas,
+            "promedio_comentarios": round(promedio_comentarios, 2)
+        }
+        
+        return jsonify(estadisticas), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Endpoint para las salas más comentadas
+@app.route('/api/admins/top_mensajes', methods=['GET'])
+def obtener_admins_top_mensajes():
+    try:
+        admins_top_mensajes = mongo_db.mensajes.aggregate([
+            # Desanidar el array de comentarios
+            {"$unwind": "$comentarios"},
+            # Asegurarnos de que sala_nombre sea un string válido
+            {
+                "$addFields": {
+                    "sala_nombre_str": {
+                        "$cond": {
+                            "if": {"$not": {"$isArray": "$comentarios.sala_nombre"}},  # Validar que no sea array
+                            "then": {"$ifNull": ["$comentarios.sala_nombre", ""]},  # Reemplazar valores nulos con string vacío
+                            "else": "$comentarios.sala_nombre"
+                        }
+                    }
+                }
+            },
+            # Filtrar mensajes donde el usuario no es el dueño de la sala
+            {
+                "$match": {
+                    "$expr": {
+                        "$ne": [
+                            "$comentarios.usuario", 
+                            {"$substr": ["$sala_nombre_str", 8, {"$strLenCP": "$sala_nombre_str"}]}  # Extraer el nombre después de "Sala de "
+                        ]
+                    }
+                }
+            },
+            # Agrupar por administrador (usuario que no es dueño de la sala)
+            {
+                "$group": {
+                    "_id": "$comentarios.usuario",  # Agrupar por el usuario (administrador)
+                    "totalMensajes": {"$sum": 1},  # Contar mensajes atendidos
+                    "salasAtendidas": {"$addToSet": "$comentarios.sala_nombre"}  # Listar salas atendidas
+                }
+            },
+            # Ordenar por la cantidad de mensajes enviados
+            {"$sort": {"totalMensajes": -1}},
+            # Limitar a los top 5
+            {"$limit": 5}
+        ])
+
+        # Convertir el cursor en una lista de diccionarios
+        top_admins = [
+            {
+                "admin": admin["_id"],
+                "totalMensajes": admin["totalMensajes"],
+                "salasAtendidas": list(admin["salasAtendidas"])
+            }
+            for admin in admins_top_mensajes
+        ]
+
+        return jsonify(top_admins), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+
+
+# Endpoint para usuarios por rol
+@app.route('/api/usuarios/roles', methods=['GET'])
+def usuarios_por_rol():
+    try:
+        roles = mongo_db.tokens.aggregate([
+            {"$group": {"_id": "$role", "cantidad": {"$sum": 1}}}
+        ])
+        usuarios_roles = [{"role": rol["_id"], "cantidad": rol["cantidad"]} for rol in roles]
+        return jsonify(usuarios_roles), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+def limpiar_mensajes_antiguos():
+    """Elimina mensajes de salas atendidas que tienen más de 30 días."""
+    fecha_limite = datetime.now() - timedelta(days=7)
+    mongo_db.mensajes.update_many(
+        {"atendida": True, "comentarios.timestamp": {"$lt": fecha_limite.strftime('%Y-%m-%d %H:%M:%S')}},
+        {"$pull": {"comentarios": {"timestamp": {"$lt": fecha_limite.strftime('%Y-%m-%d %H:%M:%S')}}}}
+    )
+    print("Mensajes antiguos eliminados.")
+
+# Configurar el scheduler para ejecutar cada 24 horas
+scheduler = BackgroundScheduler()
+scheduler.add_job(limpiar_mensajes_antiguos, 'interval', days=1)
+scheduler.start()
+
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5001, debug=False)
+    try:
+        socketio.run(app, host='0.0.0.0', port=5000, debug=False)
+    except (KeyboardInterrupt, SystemExit):
+        scheduler.shutdown()

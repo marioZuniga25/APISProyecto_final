@@ -13,7 +13,7 @@ const UserChat = () => {
 
   useEffect(() => {
     // Obtener el usuario actual y unirse a la sala de chat
-    axios.get('http://localhost:5001/current_user', { withCredentials: true })
+    axios.get('http://localhost:5000/current_user', { withCredentials: true })
       .then(response => {
         setCurrentUser(response.data);
         const room = `Sala de ${response.data.username}`;

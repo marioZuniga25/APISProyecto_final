@@ -91,14 +91,12 @@ def register_socketio_events(socketio):
         # Comprobar si la sala existe en la base de datos
         sala_existente = mongo_db.mensajes.find_one({"sala": room})
 
-        if sala_existente:
-            print(f"Se unió a la sala existente: {room}")
-        else:
-            # Si la sala no existe, crearla usando el nombre del usuario
-            room = f"Sala de {data.get('usuario', 'Anónimo')}"
+        if not sala_existente:
+            # Crear la sala si no existe
             mongo_db.mensajes.insert_one({"sala": room, "comentarios": []})
             print(f"Creada nueva sala: {room}")
 
+        # Verificar permisos para enviar mensajes
         if user_role == 1 or room == f"Sala de {data.get('usuario', 'Anónimo')}":
             # Construir el mensaje
             message = {
@@ -119,8 +117,15 @@ def register_socketio_events(socketio):
                 upsert=True
             )
 
+            # Emitir el mensaje en tiempo real
             emit('message', message, to=room)
             print(f"Mensaje almacenado y emitido en la sala {room}: {message}")
+
+            # Emitir el historial completo de mensajes después de la creación de la sala
+            sala_actualizada = mongo_db.mensajes.find_one({"sala": room})
+            mensajes_actualizados = sala_actualizada.get("comentarios", [])
+            join_room(room)  # Unir al cliente a la sala si aún no está
+            emit('fetch_messages', mensajes_actualizados, to=room)
         else:
             emit('error', {'message': 'No tienes permisos para enviar mensajes en esta sala'})
             print("Error: Usuario intentó enviar un mensaje sin permisos.")

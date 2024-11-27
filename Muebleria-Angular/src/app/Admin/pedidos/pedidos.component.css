@@ -204,3 +204,53 @@
   max-width: 100% !important; 
   width: 100% !important;
 }
+
+.nav-pills {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  background-color: -3px 6px 41px -25px rgba(0,0,0,0.75);
+  border-radius: 0.375rem;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-link i {
+  margin-right: 5px;
+}
+
+.nav-link.active {
+  background-color: white;
+  color: black;
+}
+
+.nav-link.active i {
+  color: black; 
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.nav-link:hover i {
+  color: white;
+}
