@@ -29,17 +29,26 @@ builder.Services.AddScoped<EmailService>();
 builder.Services.AddSqlServer<ProyectoContext>(builder.Configuration.GetConnectionString("cnProyecto"));
 
 
+// builder.Services.AddCors(options =>
+// {
+//  options.AddPolicy("NuevaPolitica", app =>
+//  {
+//   app.WithOrigins("http://localhost:4200", "http://localhost:5173")
+//      .AllowAnyMethod()
+//      .AllowAnyHeader()
+//      .AllowCredentials();
+//  });
+// });
 builder.Services.AddCors(options =>
 {
- options.AddPolicy("NuevaPolitica", app =>
- {
-  app.WithOrigins("http://localhost:4200", "http://localhost:5173")
-     .AllowAnyMethod()
-     .AllowAnyHeader()
-     .AllowCredentials();
- });
+    options.AddPolicy("NuevaPolitica", app =>
+    {
+        app.SetIsOriginAllowed(origin => true)
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials();
+    });
 });
-
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5194);

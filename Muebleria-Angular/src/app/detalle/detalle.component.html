@@ -8,25 +8,19 @@
         </div>
         <div class="text">
           <h1>{{ producto.nombreProducto }}</h1>
-  
-          <!-- Muestra el precio original y el precio con descuento si hay promoción -->
           <p class="price" *ngIf="tienePromocion">
             <span class="strikethrough">${{ producto.precio | number:'1.2-2' }}</span>
             <span class="descuento">${{ precioConDescuento | number:'1.2-2' }} MXN ({{ descuento }}% de descuento)</span>
           </p>
-  
-          <!-- Muestra solo el precio normal si no hay promoción -->
           <p class="price" *ngIf="!tienePromocion">
             ${{ producto.precio | number:'1.2-2' }} MXN
           </p>
-  
           <p *ngIf="producto.stock > 0">
             Cantidad: <span>{{ producto.stock }} disponibles</span>
           </p>
           <p *ngIf="producto.stock === 0" style="color: red;">
             Agotado
           </p>
-  
           <div class="data">
             <div class="col">
               <div class="titulo data-titulo">
@@ -37,7 +31,6 @@
               </div>
             </div>
           </div>
-  
           <div class="tiempo">Tiempo aproximado de entrega 2 días</div>
           <button class="btn-negro" (click)="agregarAlCarrito()">AGREGAR AL CARRITO</button>
         </div>

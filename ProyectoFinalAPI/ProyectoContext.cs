@@ -7,10 +7,8 @@ namespace ProyectoFinalAPI
 {
     public class ProyectoContext : DbContext
     {
-
         public ProyectoContext(DbContextOptions<ProyectoContext> options) : base(options)
         { }
-
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<DetalleVenta> DetalleVenta { get; set; }
         public DbSet<InstructivoProducto> instructivoProductos { get; set; }
@@ -21,10 +19,10 @@ namespace ProyectoFinalAPI
         public DbSet<Tarjetas> Tarjetas { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
-  
+        public DbSet<Carrito> Carrito { get; set; } 
+        public DbSet<DetalleCarrito> DetalleCarrito { get; set; }
       public DbSet<Promocion> Promociones { get; set; }
       public DbSet<DetallePromocion> DetallePromocion { get; set; }
-
   public DbSet<PromocionesRandom> PromocionesRandom { get; set; }
   public DbSet<Receta> Recetas { get; set; }
         public DbSet<RecetaDetalle> RecetaDetalles { get; set; }
@@ -37,13 +35,8 @@ namespace ProyectoFinalAPI
         public DbSet<ContraseniaInsegura> ContraseniaInsegura { get; set; }
         public DbSet<LogInicioSesion> LogInicioSesion { get; set; }
         public DbSet<Merma> Merma { get; set; }
-
-
         public DbSet<Persona> Personas { get; set; }
-
         public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -82,16 +75,28 @@ namespace ProyectoFinalAPI
                 dVenta.Property(dv => dv.cantidad).IsRequired();
                 dVenta.Property(dv => dv.idVenta).IsRequired();
                 dVenta.Property(dv => dv.precioUnitario).IsRequired();
-
-                // Configuración de la relación con Producto
-                // dVenta.HasOne(dv => dv.Producto)
-                //     .WithMany() // No necesitamos la colección inversa en Producto
-                //     .HasForeignKey(dv => dv.idProducto)
-                //     .OnDelete(DeleteBehavior.Restrict);
-                //Agregar datos iniciales
-                //empleado.HasData(empleadoInit);
+            });
+            
+           modelBuilder.Entity<Carrito>(carrito =>
+            {
+                carrito.ToTable("Carrito");
+                carrito.HasKey(c => c.IdCarrito);
+                carrito.Property(c => c.IdCarrito).ValueGeneratedOnAdd().UseIdentityColumn();
+                carrito.Property(c => c.Total).IsRequired();
+                carrito.Property(c => c.FechaCreacion).IsRequired(); // Cambiar FechaAgregado por FechaCreacion
+                carrito.Property(c => c.IdUsuario).IsRequired();
             });
 
+            modelBuilder.Entity<DetalleCarrito>(detalle =>
+            {
+                detalle.ToTable("DetalleCarrito");
+                detalle.HasKey(d => d.IdDetalleCarrito);
+                detalle.Property(d => d.IdDetalleCarrito).ValueGeneratedOnAdd().UseIdentityColumn();
+                detalle.Property(d => d.IdProducto).IsRequired();
+                detalle.Property(d => d.Cantidad).IsRequired();
+                detalle.Property(d => d.PrecioUnitario).IsRequired();
+                detalle.Property(d => d.FechaAgregado).IsRequired(); // Agregada
+            });
             modelBuilder.Entity<InstructivoProducto>(InstructivoProducto =>
             {
                 InstructivoProducto.HasKey(i => i.id);
@@ -100,9 +105,6 @@ namespace ProyectoFinalAPI
                 InstructivoProducto.Property(i => i.cantidad);
 
             });
-
-
-
             modelBuilder.Entity<MateriaPrima>(matPrim =>
             {
                 matPrim.ToTable("MateriaPrima");
@@ -127,11 +129,6 @@ namespace ProyectoFinalAPI
                 unidad.Property(u => u.idUnidad).ValueGeneratedOnAdd().UseIdentityColumn();
                 unidad.Property(u => u.nombreUnidad).IsRequired();
             });
-
-
-
-
-
             modelBuilder.Entity<Produccion>(produccion =>
                      {
                          produccion.ToTable("Produccion");
@@ -141,8 +138,6 @@ namespace ProyectoFinalAPI
                          produccion.Property(p => p.idProducto).IsRequired();
 
                      });
-
-
             modelBuilder.Entity<Producto>(producto =>
             {
              producto.ToTable("Producto");
@@ -210,9 +205,6 @@ namespace ProyectoFinalAPI
                 detalle.Property(d => d.precioUnitario).IsRequired();
 
             });
-
-
-
             modelBuilder.Entity<Venta>(venta =>
                      {
                          venta.ToTable("Venta");
@@ -261,7 +253,6 @@ namespace ProyectoFinalAPI
                     .HasForeignKey(d => d.IdProducto)
                     .OnDelete(DeleteBehavior.Restrict);
    });
-
    // Configuración de PromocionesRandom
    modelBuilder.Entity<PromocionesRandom>(promocionRandom =>
    {
