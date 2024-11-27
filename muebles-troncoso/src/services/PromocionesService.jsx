@@ -20,7 +20,6 @@ const getPromocionesRandom = async () => {
 const getProductos = async () => {
   try {
     const response = await axios.get(PRODUCTOS_API_URL);
-    console.log(response.data)
     return response.data;
     
     return response.data;

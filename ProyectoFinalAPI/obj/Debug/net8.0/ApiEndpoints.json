@@ -209,6 +209,16 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
+    "Method": "GetAlertas",
+    "RelativePath": "api/Dashboard/Alertas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
     "Method": "GetProductosMasVendidos",
     "RelativePath": "api/Dashboard/productos-mas-vendidos",
     "HttpMethod": "GET",
@@ -221,6 +231,16 @@
     "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
     "Method": "GetProductosPorCategoria",
     "RelativePath": "api/Dashboard/productos-por-categoria",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.DashboardController",
+    "Method": "GetPromocionesActivasYResultados",
+    "RelativePath": "api/Dashboard/PromocionesActivasYResultados",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

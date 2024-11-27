@@ -19,7 +19,9 @@ export class CarritoComponent implements OnInit{
     this.carritoService.toggleBag();
   }
   ngOnInit(): void {
-    this.carrito = this.carritoService.obtenerCarrito();
+    this.carritoService.carrito$.subscribe(carrito => {
+      this.carrito = carrito; // Actualiza el carrito en tiempo real
+    });
   }
   eliminarDelCarrito(productoId: number) {
     this.carritoService.eliminarDelCarrito(productoId);

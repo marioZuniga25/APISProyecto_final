@@ -34,7 +34,7 @@ export class DetalleComponent implements OnInit {
       const id = idStr ? +idStr : null;
       const descuentoStr = this.route.snapshot.queryParamMap.get('descuento');
       const precioConDescuentoStr = this.route.snapshot.queryParamMap.get('precioConDescuento');
-
+      const idPromocionRandom = this.route.snapshot.queryParamMap.get('idPromocionRandom'); // Captura el ID de promoción
       // Verifica si hay promoción
       this.descuento = descuentoStr ? +descuentoStr : 0;
       this.precioConDescuento = precioConDescuentoStr ? +precioConDescuentoStr : 0;
@@ -81,7 +81,8 @@ export class DetalleComponent implements OnInit {
             precio: this.precioConDescuento, 
             cantidad: this.cantidad,
             imagen: this.producto.imagen,
-            stock: this.producto.stock
+            stock: this.producto.stock,
+            descuento: this.tienePromocion ? this.descuento : undefined
           };
           this.carritoService.agregarAlCarrito(productoCarrito);
           Swal.fire('Éxito', 'Se agregó el producto al carrito.', 'success');

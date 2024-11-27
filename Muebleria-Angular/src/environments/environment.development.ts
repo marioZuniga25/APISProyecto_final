@@ -4,5 +4,5 @@ export const environment = {
 };
 export const python = {
     production: false,
-    endpoint: 'http://localhost:5001/'
+    endpoint: 'http://localhost:5000/'
 }
