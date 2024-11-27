@@ -37,8 +37,6 @@ export class EnvioComponent implements OnInit {
   estado: string = '';
   codigoPostal: string = '';
   idTarjeta: number = 0;
-
-
   estados: string[] = [
     'Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche',
     'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Durango', 'Guanajuato',
@@ -57,7 +55,6 @@ export class EnvioComponent implements OnInit {
   ngOnInit(): void {
     this.idUsuario = localStorage.getItem('userId')!;
     this.cargarDatosUsuario(); 
-    
     this.carritoService.obtenerCarrito(+this.idUsuario).subscribe(
       response => {
         console.log('Respuesta del carrito:', response); 
@@ -81,8 +78,6 @@ export class EnvioComponent implements OnInit {
         console.error('Error al obtener el carrito:', error);
       }
     );
-    
-    
     this.perfilService.getUserCards(+this.idUsuario).subscribe(
       (data: IUtarjetas[]) => {
         this.tarjetas = data;
@@ -92,8 +87,6 @@ export class EnvioComponent implements OnInit {
       }
     );
   }
-  
-  
   formatCardNumber(cardNumber: string): string {
     return cardNumber.replace(/(\d{4})(?=\d)/g, '$1-');
   }
@@ -127,25 +120,26 @@ export class EnvioComponent implements OnInit {
       console.error('Carrito no es un array:', this.carrito);
     }
   }
-  
-  
-  
   confirmarPedido(): void {
     const idUsuario = localStorage.getItem('userId')!;
     const idTarjeta = (document.querySelector('input[name="tarjeta"]:checked') as HTMLInputElement)?.value;
-
+  
     if (!this.nombre || !this.apellidos || !this.telefono || !this.correo ||
       !this.calle || !this.numero || !this.colonia || !this.ciudad ||
       !this.estado || !this.codigoPostal || !idTarjeta) {
       Swal.fire('Campos incompletos', 'Por favor, llena todos los campos y selecciona una tarjeta.', 'warning');
       return;
     }
+  
+    // Crear el objeto de venta
     const nuevaVenta: IVenta = {
       idUsuario: parseInt(idUsuario),
       fechaVenta: new Date(),
       total: this.total,
       tipoVenta: ''
     };
+  
+    // Llamada a la API para registrar la venta
     this.ventasService.addVentaOnline(nuevaVenta).subscribe(
       idVentaGenerado => {
         const detallesVenta: IDetalleVenta[] = this.carrito.map(producto => ({
@@ -155,8 +149,10 @@ export class EnvioComponent implements OnInit {
           cantidad: producto.cantidad,
           precioUnitario: producto.precio
         }));
+  
         this.ventasService.addDetalleVenta(detallesVenta).subscribe(
           () => {
+            // Crear el pedido
             const nuevoPedido: IPedidos = {
               idPedido: 0,
               idVenta: idVentaGenerado,
@@ -174,27 +170,37 @@ export class EnvioComponent implements OnInit {
               codigoPostal: this.codigoPostal,
               estatus: 'Pedido'
             };
+  
             this.pedidoService.guardarPedido(nuevoPedido).subscribe(
               () => {
-                Swal.fire({
-                  title: 'Procesando la transacción...',
-                  allowOutsideClick: false,
-                  didOpen: () => {
-                    Swal.showLoading();
+                // Limpiar el carrito en la base de datos
+                this.carritoService.limpiarCarrito(parseInt(idUsuario)).subscribe(
+                  () => {
+                    Swal.fire({
+                      title: 'Procesando la transacción...',
+                      allowOutsideClick: false,
+                      didOpen: () => {
+                        Swal.showLoading();
+                      }
+                    });
+                    setTimeout(() => {
+                      Swal.close();
+                      Swal.fire({
+                        title: '¡Venta exitosa!',
+                        icon: 'success',
+                        showConfirmButton: true
+                      }).then(() => {
+                        const secretKey = 'tu_clave_secreta';
+                        const encryptedId = CryptoJS.AES.encrypt(idVentaGenerado.toString(), secretKey).toString();
+                        window.location.href = `/gracias/${encodeURIComponent(encryptedId)}`;
+                      });
+                    }, 5000);
+                  },
+                  (error) => {
+                    Swal.fire('Error', 'No se pudo limpiar el carrito.', 'error');
+                    console.error('Error al limpiar el carrito', error);
                   }
-                });
-                setTimeout(() => {
-                  Swal.close();
-                  Swal.fire({
-                    title: '¡Venta exitosa!',
-                    icon: 'success',
-                    showConfirmButton: true
-                  }).then(() => {
-                    const secretKey = 'tu_clave_secreta';
-                    const encryptedId = CryptoJS.AES.encrypt(idVentaGenerado.toString(), secretKey).toString();
-                    window.location.href = `/gracias/${encodeURIComponent(encryptedId)}`;                  
-                  });
-                }, 5000);
+                );
               },
               (error) => {
                 Swal.fire('Error', 'Error al guardar el pedido', 'error');
@@ -214,5 +220,5 @@ export class EnvioComponent implements OnInit {
       }
     );
   }
-
+  
 }

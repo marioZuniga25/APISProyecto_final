@@ -17,7 +17,7 @@ namespace ProyectoFinalAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -229,8 +229,7 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("FechaAgregado")
-                        .IsRequired()
+                    b.Property<DateTime>("FechaAgregado")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdCarrito")
@@ -619,7 +618,7 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Productos")
+                    b.PrimitiveCollection<string>("Productos")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

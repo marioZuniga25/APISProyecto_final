@@ -10,6 +10,7 @@ const Navbar = () => {
         <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/live-chat">Chat en Vivo</Link></li>
         <li><Link to="/promociones">Promociones</Link></li>
+        
       </ul>
     </nav>
   );

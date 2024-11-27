@@ -225,6 +225,14 @@
           <p>Último inicio de sesión: {{ ultimoInicioSesion | date:'fullDate':'':'es-ES' }} a las {{ ultimoInicioSesion
             | date:'hh:mm a':'':'es-ES' }}</p>
         </div>
+        
+        <div class="ultimo-inicio-sesion mt-4">
+          <h1>MIS PEDIDOS</h1>
+          <!-- Mostrar los pedidos aqui -->
+          <seguimiento-pedido></seguimiento-pedido>
+          
+        </div>
+
       </div>
     </div>
   </div>

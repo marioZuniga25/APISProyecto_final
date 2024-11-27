@@ -12,15 +12,15 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241121190516_carritoMigration")]
-    partial class carritoMigration
+    [Migration("20241127172022_MigracionPrubaaa")]
+    partial class MigracionPrubaaa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -134,22 +134,22 @@ namespace ProyectoFinalAPI.Migrations
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.Carrito", b =>
                 {
-                    b.Property<int>("idCarrito")
+                    b.Property<int>("IdCarrito")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idCarrito"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCarrito"));
 
-                    b.Property<DateTime>("fechaAgregado")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("idUsuario")
+                    b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
-                    b.Property<double>("total")
+                    b.Property<double>("Total")
                         .HasColumnType("float");
 
-                    b.HasKey("idCarrito");
+                    b.HasKey("IdCarrito");
 
                     b.ToTable("Carrito", (string)null);
                 });
@@ -223,25 +223,28 @@ namespace ProyectoFinalAPI.Migrations
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleCarrito", b =>
                 {
-                    b.Property<int>("idDetalleCarrito")
+                    b.Property<int>("IdDetalleCarrito")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idDetalleCarrito"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetalleCarrito"));
 
-                    b.Property<int>("cantidad")
+                    b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int>("idCarrito")
+                    b.Property<DateTime>("FechaAgregado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdCarrito")
                         .HasColumnType("int");
 
-                    b.Property<int>("idProducto")
+                    b.Property<int>("IdProducto")
                         .HasColumnType("int");
 
-                    b.Property<double>("precioUnitario")
+                    b.Property<double>("PrecioUnitario")
                         .HasColumnType("float");
 
-                    b.HasKey("idDetalleCarrito");
+                    b.HasKey("IdDetalleCarrito");
 
                     b.ToTable("DetalleCarrito", (string)null);
                 });
@@ -618,7 +621,7 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Productos")
+                    b.PrimitiveCollection<string>("Productos")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -146,5 +146,28 @@ namespace ProyectoFinalAPI.Controllers
             _context.SaveChanges();
             return Ok(new { message = "Producto eliminado del carrito" });
         }
+        [HttpDelete("{idUsuario}/limpiar")]
+        public IActionResult LimpiarCarrito(int idUsuario)
+        {
+            var carrito = _context.Carrito.FirstOrDefault(c => c.IdUsuario == idUsuario);
+            
+            if (carrito == null)
+            {
+                return NotFound(new { Message = "Carrito no encontrado para el usuario especificado." });
+            }
+            var detalles = _context.DetalleCarrito.Where(dc => dc.IdCarrito == carrito.IdCarrito).ToList();
+            
+            if (!detalles.Any())
+            {
+                return Ok(new { Message = "El carrito ya está vacío." });
+            }
+
+            _context.DetalleCarrito.RemoveRange(detalles);
+            _context.Carrito.RemoveRange(carrito);
+            _context.SaveChanges(); 
+
+            return Ok(new { Message = "Carrito limpiado exitosamente." });
+        }
+
     }
 }

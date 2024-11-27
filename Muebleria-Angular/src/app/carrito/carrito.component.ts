@@ -47,7 +47,7 @@ export class CarritoComponent implements OnInit{
         }
       );
     } else {
-      Swal.fire('Atención', 'Debes iniciar sesión para ver tu carrito', 'info');
+     
     }
   }
   incrementar(producto: any): void {

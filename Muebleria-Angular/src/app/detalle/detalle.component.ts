@@ -34,7 +34,7 @@ export class DetalleComponent implements OnInit {
       const id = idStr ? +idStr : null;
       const descuentoStr = this.route.snapshot.queryParamMap.get('descuento');
       const precioConDescuentoStr = this.route.snapshot.queryParamMap.get('precioConDescuento');
-
+      const idPromocionRandom = this.route.snapshot.queryParamMap.get('idPromocionRandom'); // Captura el ID de promoción
       // Verifica si hay promoción
       this.descuento = descuentoStr ? +descuentoStr : 0;
       this.precioConDescuento = precioConDescuentoStr ? +precioConDescuentoStr : 0;

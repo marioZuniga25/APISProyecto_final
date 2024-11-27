@@ -12,11 +12,11 @@
     </div>
 
     <div class="venta-container d-flex">
-        <div class="productos-disponibles">
+        <div class="productos-disponibles" style="width: 50% !important; flex: 1 !important; margin: 0 30px;">
             <h2>Productos Disponibles</h2>
             <div *ngIf="products.length > 0; else noProductos" class="products-table">
                 <div class="row">
-                    <div class="col-md-4" *ngFor="let product of products" (click)="agregarProducto(product)">
+                    <div class="col-md-4" style="width: 50% !important; margin-bottom: 20px;" *ngFor="let product of products" (click)="agregarProducto(product)">
                         <div class="product-card">
                             <img src="{{product.imagen}}" class="product-image" alt="Imagen de producto {{product.nombreProducto}}">
                             <h3>{{product.nombreProducto}}</h3>

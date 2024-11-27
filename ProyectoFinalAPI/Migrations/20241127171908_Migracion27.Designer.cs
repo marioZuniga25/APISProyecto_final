@@ -12,15 +12,15 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241121201335_carritoMigration2.0")]
-    partial class carritoMigration20
+    [Migration("20241127171908_Migracion27")]
+    partial class Migracion27
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -140,7 +140,7 @@ namespace ProyectoFinalAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCarrito"));
 
-                    b.Property<DateTime>("FechaAgregado")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdUsuario")
@@ -232,6 +232,9 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("FechaAgregado")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IdCarrito")
                         .HasColumnType("int");
 
@@ -242,8 +245,6 @@ namespace ProyectoFinalAPI.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("IdDetalleCarrito");
-
-                    b.HasIndex("IdCarrito");
 
                     b.ToTable("DetalleCarrito", (string)null);
                 });
@@ -620,7 +621,7 @@ namespace ProyectoFinalAPI.Migrations
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Productos")
+                    b.PrimitiveCollection<string>("Productos")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -842,15 +843,6 @@ namespace ProyectoFinalAPI.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleCarrito", b =>
-                {
-                    b.HasOne("ProyectoFinalAPI.Models.Carrito", null)
-                        .WithMany("Detalles")
-                        .HasForeignKey("IdCarrito")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>
                 {
                     b.HasOne("ProyectoFinalAPI.Models.OrdenCompra", null)
@@ -917,11 +909,6 @@ namespace ProyectoFinalAPI.Migrations
             modelBuilder.Entity("Persona", b =>
                 {
                     b.Navigation("DireccionesEnvio");
-                });
-
-            modelBuilder.Entity("ProyectoFinalAPI.Models.Carrito", b =>
-                {
-                    b.Navigation("Detalles");
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.OrdenCompra", b =>

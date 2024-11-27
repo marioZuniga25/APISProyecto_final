@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoFinalAPI.Controllers
 {
- [ApiController]
+    [ApiController]
  [Route("api/[controller]")]
  public class PromocionesController : ControllerBase
  {
@@ -114,7 +114,7 @@ namespace ProyectoFinalAPI.Controllers
     var subject = $"Nueva Promoción: {promocion.Nombre}";
     var body = $@"
                     <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;'>
-                        <h2 style='text-align: center; color: #4CAF50;'>Gracias por tu interés en nuestras promociones!</h2>
+                        <h2 style='text-al0ign: center; color: #4CAF50;'>Gracias por tu interés en nuestras promociones!</h2>
                         <p>Estamos emocionados de ofrecerte una nueva promoción en nuestros productos.</p>
                         <table style='width: 100%; border-collapse: collapse; margin-top: 20px;'>
                             <thead>

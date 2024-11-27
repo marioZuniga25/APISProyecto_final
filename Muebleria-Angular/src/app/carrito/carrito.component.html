@@ -12,6 +12,9 @@
           <div class="bag-producto-item-contenido">
             <div class="bag-producto-item-contenido-img">
               <img style="max-width: 100px;" [src]="producto.imagen" alt="{{ producto.nombre }}">
+              <div *ngIf="producto.descuento" class="descuento-sticker">
+                {{ producto.descuento }}%
+              </div>
             </div>
             <div class="bag-producto-item-contenido-text">
               <div class="bag-titulo">

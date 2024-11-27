@@ -13,6 +13,7 @@ export interface ProductoCarrito {
   imagen: string;
   stock: number;
   fechaAgregado?: Date; 
+  descuento?: number;
 }
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,9 @@ export class CarritoService {
   }
   eliminarProducto(idDetalleCarrito: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/eliminar/${idDetalleCarrito}`);
+  }  
+  limpiarCarrito(idUsuario: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${idUsuario}/limpiar`);
   }  
   toggleBag() {
     this.mostrarBagSubject.next(!this.mostrarBagSubject.value);

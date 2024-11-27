@@ -15,8 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-     options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
 
 
@@ -29,26 +29,17 @@ builder.Services.AddScoped<EmailService>();
 builder.Services.AddSqlServer<ProyectoContext>(builder.Configuration.GetConnectionString("cnProyecto"));
 
 
-// builder.Services.AddCors(options =>
-// {
-//  options.AddPolicy("NuevaPolitica", app =>
-//  {
-//   app.WithOrigins("http://localhost:4200", "http://localhost:5173")
-//      .AllowAnyMethod()
-//      .AllowAnyHeader()
-//      .AllowCredentials();
-//  });
-// });
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("NuevaPolitica", app =>
     {
-        app.SetIsOriginAllowed(origin => true)
+        app.WithOrigins("http://localhost:4200", "http://localhost:5173")
            .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials();
     });
 });
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5194);
@@ -78,6 +69,6 @@ var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>(
 recurringJobManager.AddOrUpdate<PromocionesRandomService>(
     "ActualizarPromocionesRandom",
     service => service.EjecutarPromocionesAleatorias(),
-    Cron.Hourly); 
+    Cron.Hourly);
 
 app.Run();
