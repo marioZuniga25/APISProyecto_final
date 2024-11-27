@@ -14,7 +14,7 @@ const SeguimientoPedidos = () => {
     useEffect(() => {
       const obtenerPedidosUsuario = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/current_user', {
+          const response = await axios.get('http://localhost:5001/current_user', {
             withCredentials: true,
           });
           const idUsuario = response.data.user_id;

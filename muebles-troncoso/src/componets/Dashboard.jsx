@@ -20,7 +20,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchEstadisticas = async () => {
       try {
-        const estadisticasResponse = await axios.get('http://localhost:5000/api/salas/estadisticas');
+        const estadisticasResponse = await axios.get('http://localhost:5001/api/salas/estadisticas');
         setEstadisticas(estadisticasResponse.data);
       } catch (error) {
         console.error('Error fetching estadísticas:', error);
@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     const fetchTopAdmins = async () => {
       try {
-        const topAdminsResponse = await axios.get('http://localhost:5000/api/admins/top_mensajes');
+        const topAdminsResponse = await axios.get('http://localhost:5001/api/admins/top_mensajes');
         setTopAdmins(topAdminsResponse.data);
         renderTopAdminsChart(topAdminsResponse.data);
       } catch (error) {
@@ -39,7 +39,7 @@ const Dashboard = () => {
 
     const fetchUsuariosPorRol = async () => {
       try {
-        const usuariosResponse = await axios.get('http://localhost:5000/api/usuarios/roles');
+        const usuariosResponse = await axios.get('http://localhost:5001/api/usuarios/roles');
         setUsuariosPorRol(usuariosResponse.data);
         renderUsuariosPorRolChart(usuariosResponse.data);
       } catch (error) {

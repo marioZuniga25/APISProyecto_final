@@ -69,27 +69,34 @@ export class DetalleComponent implements OnInit {
         confirmButtonText: 'Ir al Login'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.router.navigate(['/login']); 
+          this.router.navigate(['/login']);
         }
       });
     } else {
-      this.productosService.validarStock(this.producto.idProducto).subscribe(stockDisponible => {
-        if (stockDisponible === 1) {
-          const productoCarrito: ProductoCarrito = {
-            id: this.producto.idProducto,
-            nombre: this.producto.nombreProducto,
-            precio: this.precioConDescuento, 
-            cantidad: this.cantidad,
-            imagen: this.producto.imagen,
-            stock: this.producto.stock,
-            descuento: this.tienePromocion ? this.descuento : undefined
-          };
-          this.carritoService.agregarAlCarrito(productoCarrito);
-          Swal.fire('Éxito', 'Se agregó el producto al carrito.', 'success');
-        } else {
-          Swal.fire('Error', 'Este producto está agotado.', 'error');
+      if (this.producto.stock < this.cantidad) {
+        Swal.fire('Error', 'No hay suficiente stock disponible.', 'error');
+        return;
+      }
+  
+      const productoCarrito: ProductoCarrito = {
+        idDetalleCarrito: 0, 
+        id: this.producto.idProducto,
+        nombre: this.producto.nombreProducto,
+        precio: this.precioConDescuento,
+        cantidad: this.cantidad,
+        imagen: this.producto.imagen,
+        stock: this.producto.stock,
+        fechaAgregado: new Date() // Agrega la fecha de forma explícita
+      };
+  
+      this.carritoService.agregarAlCarrito(Number(userId), productoCarrito).subscribe(
+        () => {
+          Swal.fire('Éxito', 'Producto agregado al carrito.', 'success');
+        },
+        (error) => {
+          Swal.fire('Error', 'No se pudo agregar el producto al carrito.', 'error');
         }
-      });
+      );
     }
-  }
+  }  
 }

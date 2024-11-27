@@ -19,12 +19,12 @@ const LiveChat = () => {
     // Obtener el usuario autenticado
 
     
-    axios.get('http://localhost:5000/current_user', { withCredentials: true })
+    axios.get('http://localhost:5001/current_user', { withCredentials: true })
       .then(response => {
         setCurrentUser(response.data);
         if (response.data.role === 1) {
 
-          axios.get('http://localhost:5000/api/salas/activos', { withCredentials: true })
+          axios.get('http://localhost:5001/api/salas/activos', { withCredentials: true })
 
             .then(res => {
               setSalas(res.data);
@@ -84,7 +84,7 @@ const LiveChat = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Llamar a la API para finalizar la sala y eliminar los mensajes
-        axios.post('http://localhost:5000/api/salas/finalizar', 
+        axios.post('http://localhost:5001/api/salas/finalizar', 
           { sala_id: selectedRoom }, 
           { withCredentials: true }
         )

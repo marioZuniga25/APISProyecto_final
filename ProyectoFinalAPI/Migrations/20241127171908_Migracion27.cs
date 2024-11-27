@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinalAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Migracion27 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Carrito",
+                columns: table => new
+                {
+                    IdCarrito = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carrito", x => x.IdCarrito);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categoria",
                 columns: table => new
@@ -52,6 +67,23 @@ namespace ProyectoFinalAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ContraseniaInsegura", x => x.IdContraseniaInsegura);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DetalleCarrito",
+                columns: table => new
+                {
+                    IdDetalleCarrito = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdCarrito = table.Column<int>(type: "int", nullable: false),
+                    IdProducto = table.Column<int>(type: "int", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    PrecioUnitario = table.Column<double>(type: "float", nullable: false),
+                    FechaAgregado = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetalleCarrito", x => x.IdDetalleCarrito);
                 });
 
             migrationBuilder.CreateTable(
@@ -529,6 +561,9 @@ namespace ProyectoFinalAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Carrito");
+
+            migrationBuilder.DropTable(
                 name: "Categoria");
 
             migrationBuilder.DropTable(
@@ -536,6 +571,9 @@ namespace ProyectoFinalAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "ContraseniaInsegura");
+
+            migrationBuilder.DropTable(
+                name: "DetalleCarrito");
 
             migrationBuilder.DropTable(
                 name: "DetalleOrdenCompra");

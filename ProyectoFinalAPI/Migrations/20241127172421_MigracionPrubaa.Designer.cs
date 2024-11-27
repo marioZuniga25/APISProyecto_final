@@ -12,8 +12,8 @@ using ProyectoFinalAPI;
 namespace ProyectoFinalAPI.Migrations
 {
     [DbContext(typeof(ProyectoContext))]
-    [Migration("20241117083851_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241127172421_MigracionPrubaa")]
+    partial class MigracionPrubaa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,6 +132,28 @@ namespace ProyectoFinalAPI.Migrations
                     b.ToTable("Personas");
                 });
 
+            modelBuilder.Entity("ProyectoFinalAPI.Models.Carrito", b =>
+                {
+                    b.Property<int>("IdCarrito")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCarrito"));
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.HasKey("IdCarrito");
+
+                    b.ToTable("Carrito", (string)null);
+                });
+
             modelBuilder.Entity("ProyectoFinalAPI.Models.Categoria", b =>
                 {
                     b.Property<int>("idCategoria")
@@ -197,6 +219,34 @@ namespace ProyectoFinalAPI.Migrations
                     b.HasKey("IdContraseniaInsegura");
 
                     b.ToTable("ContraseniaInsegura", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleCarrito", b =>
+                {
+                    b.Property<int>("IdDetalleCarrito")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetalleCarrito"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaAgregado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdCarrito")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProducto")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PrecioUnitario")
+                        .HasColumnType("float");
+
+                    b.HasKey("IdDetalleCarrito");
+
+                    b.ToTable("DetalleCarrito", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinalAPI.Models.DetalleOrdenCompra", b =>

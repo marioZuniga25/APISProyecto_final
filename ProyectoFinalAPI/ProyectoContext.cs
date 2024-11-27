@@ -21,6 +21,8 @@ namespace ProyectoFinalAPI
         public DbSet<Tarjetas> Tarjetas { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Venta> Venta { get; set; }
+        public DbSet<Carrito> Carrito { get; set; } 
+        public DbSet<DetalleCarrito> DetalleCarrito { get; set; }
   public DbSet<LogInicioSesion> LogInicioSesion { get; set; }
   public DbSet<Promocion> Promociones { get; set; }
 public DbSet<Persona> Personas { get; set; } 
@@ -70,7 +72,26 @@ public DbSet<DireccionEnvio> DireccionesEnvio { get; set; }
                 merma.Property(m => m.idMateria).IsRequired();
 
             });
+            modelBuilder.Entity<Carrito>(carrito =>
+            {
+                carrito.ToTable("Carrito");
+                carrito.HasKey(c => c.IdCarrito);
+                carrito.Property(c => c.IdCarrito).ValueGeneratedOnAdd().UseIdentityColumn();
+                carrito.Property(c => c.Total).IsRequired();
+                carrito.Property(c => c.FechaCreacion).IsRequired(); // Cambiar FechaAgregado por FechaCreacion
+                carrito.Property(c => c.IdUsuario).IsRequired();
+            });
 
+            modelBuilder.Entity<DetalleCarrito>(detalle =>
+            {
+                detalle.ToTable("DetalleCarrito");
+                detalle.HasKey(d => d.IdDetalleCarrito);
+                detalle.Property(d => d.IdDetalleCarrito).ValueGeneratedOnAdd().UseIdentityColumn();
+                detalle.Property(d => d.IdProducto).IsRequired();
+                detalle.Property(d => d.Cantidad).IsRequired();
+                detalle.Property(d => d.PrecioUnitario).IsRequired();
+                detalle.Property(d => d.FechaAgregado).IsRequired(); // Agregada
+            });
             modelBuilder.Entity<DetalleVenta>(dVenta =>
             {
                 dVenta.ToTable("DetalleVenta");
