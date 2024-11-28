@@ -51,7 +51,7 @@ export class ProveedoresService {
   // Actualizar un proveedor existente
   // En el servicio ProveedoresService
     updateProveedor(id: number, proveedor: IProveedorRequest): Observable<IProveedorResponse> {
-      return this.http.put<IProveedorResponse>(`/api/Proveedores/${id}`, proveedor);
+      return this.http.put<IProveedorResponse>(`${this.apiUrl}proveedores/${id}`, proveedor);
     }
 
   // Eliminar un proveedor

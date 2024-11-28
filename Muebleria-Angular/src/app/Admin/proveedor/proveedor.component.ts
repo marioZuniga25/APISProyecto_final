@@ -62,16 +62,20 @@ materiaPrimaInput = {
   getProveedores(): void {
     this.proveedoresService.getProveedores().subscribe(
       (data: IProveedorResponse[]) => {
-        this.proveedores = data;
+        this.proveedores = data.map((proveedor) => ({
+          ...proveedor,
+          preciosMateriasPrimas: proveedor.preciosMateriasPrimas || [], // Asegura la existencia de la lista
+          unidadesMateriasPrimas: proveedor.unidadesMateriasPrimas || [], // Asegura la existencia de la lista
+        }));
         this.resultadosBusqueda = this.proveedores;
         console.log('Proveedores obtenidos:', this.proveedores);
-        
       },
       (error) => {
         Swal.fire('Error', 'Error al obtener los proveedores.', 'error');
       }
     );
   }
+  
   
 
   // Función para manejar resultados de búsqueda
@@ -97,25 +101,29 @@ materiaPrimaInput = {
         stock: mp.stock
       }))
     };
-    
   
     this.proveedoresService.addProveedor(proveedorToSave).subscribe(
-      data => {
-        this.proveedores.push(data);
+      (data) => {
+        // Asegurarse de inicializar preciosMateriasPrimas y unidadesMateriasPrimas
+        const nuevoProveedor: IProveedorResponse = {
+          ...data,
+          preciosMateriasPrimas: data.preciosMateriasPrimas || [], // Inicializa si no está definido
+          unidadesMateriasPrimas: data.unidadesMateriasPrimas || [] // Inicializa si no está definido
+        };
+  
+        this.proveedores = [...this.proveedores, nuevoProveedor];
         this.resultadosBusqueda = this.proveedores;
         this.cerrarModal();
         this.resetFormulario();
         Swal.fire('Éxito', 'Proveedor agregado exitosamente.', 'success');
       },
-      error => {
+      (error) => {
         Swal.fire('Error', 'Error al agregar proveedor.', 'error');
       }
     );
   }
   
   
-  
-
   obtenerNombreUnidad(idUnidad: string): string {
     console.log('ID Unidad recibida:', idUnidad);
     console.log('Unidades de Medida disponibles:', this.unidadesMedida);
@@ -136,6 +144,32 @@ materiaPrimaInput = {
 }
 
 
+// Editar proveedor: asignar los datos del proveedor seleccionado
+editarProveedor(proveedor: IProveedorResponse): void {
+  this.proveedorActual = {
+    idProveedor: proveedor.idProveedor,
+    nombreProveedor: proveedor.nombreProveedor,
+    telefono: proveedor.telefono,
+    correo: proveedor.correo,
+    materiasPrimas: proveedor.nombresMateriasPrimas.map((nombre, index) => ({
+      idMateriaPrima: 0, // Asigna un ID válido si está disponible
+      nombreMateriaPrima: nombre,
+      descripcion: '', // Ajusta si la descripción está disponible
+      idProveedor: proveedor.idProveedor,
+      precio: parseFloat(proveedor.preciosMateriasPrimas?.[index] || '0'), // Usa un valor predeterminado si está indefinido
+      stock: 0, // Ajustar si tienes stock disponible
+      idUnidad: this.obtenerIdUnidad(proveedor.unidadesMateriasPrimas?.[index] || '') // Usa un valor predeterminado si está indefinido
+    }))
+  };
+  this.esModificacion = true;
+  this.isModalOpen = true;
+}
+
+obtenerIdUnidad(nombreUnidad: string): number {
+  const unidad = this.unidadesMedida.find((u) => u.nombreUnidad === nombreUnidad);
+  return unidad ? unidad.idUnidad : 0; // Retorna 0 si no encuentra la unidad
+}
+
 
 
   // Modificar un proveedor
@@ -148,20 +182,18 @@ materiaPrimaInput = {
       materiasPrimas: this.proveedorActual.materiasPrimas.map(mp => ({
         nombreMateriaPrima: mp.nombreMateriaPrima,
         descripcion: mp.descripcion,
-        idProveedor: mp.idProveedor,        
+        idProveedor: this.proveedorActual.idProveedor,
         idUnidad: mp.idUnidad,
         precio: mp.precio,
         stock: mp.stock
       }))
-      
-    
     };
-
+  
     this.proveedoresService.updateProveedor(proveedorToUpdate.idProveedor, proveedorToUpdate).subscribe(
       () => {
-        this.getProveedores();
-        this.cerrarModal();
-        this.resetFormulario();
+        this.getProveedores(); // Actualiza la lista de proveedores
+        this.cerrarModal(); // Cierra el modal después de la modificación
+        this.resetFormulario(); // Resetea el formulario para el siguiente uso
         Swal.fire('Éxito', 'Proveedor modificado exitosamente.', 'success');
       },
       error => {
@@ -169,6 +201,7 @@ materiaPrimaInput = {
       }
     );
   }
+  
 
   // Modal para agregar un proveedor
   abrirModalAgregar(): void {
@@ -263,4 +296,49 @@ materiaPrimaInput = {
       }
     );
   }
+
+  confirmarEliminacion() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esta acción',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed && this.proveedorActual.idProveedor) {
+        this.eliminarProveedor(this.proveedorActual.idProveedor);
+      }
+    });
+  }
+
+  eliminarProveedor(id: number): void {
+    this.proveedoresService.deleteProveedor(id).subscribe({
+      next: () => {
+        // Filtrar el proveedor eliminado de la lista local
+        this.proveedores = this.proveedores.filter(p => p.idProveedor !== id);
+        this.resultadosBusqueda = this.proveedores; // Asegura que los resultados de búsqueda se actualicen
+        this.cerrarModal();
+        Swal.fire('Éxito', 'El proveedor ha sido eliminado con éxito', 'success');
+      },
+      error: (err) => {
+        Swal.fire('Error', 'No se pudo eliminar el proveedor. Intenta de nuevo.', 'error');
+      }
+    });
+  }
+
+  actualizarLista() {
+    // Lógica para refrescar la lista de proveedores
+    this.proveedoresService.getProveedores().subscribe({
+      next: (data) => {
+        this.proveedores = data;
+      },
+      error: (err) => {
+        console.error('Error al actualizar la lista de proveedores:', err);
+      }
+    });
+  }
+
 }
