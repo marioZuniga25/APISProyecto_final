@@ -33,7 +33,14 @@ namespace ProyectoFinalAPI.Controllers
                 nombreProveedor = p.nombreProveedor,
                 telefono = p.telefono,
                 correo = p.correo,
-                nombresMateriasPrimas = p.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList()
+                nombresMateriasPrimas = p.MateriasPrimas.Select(mp => mp.nombreMateriaPrima).ToList(),
+                preciosMateriasPrimas = p.MateriasPrimas.Select(mp => mp.precio).ToList(),
+                unidadesMateriasPrimas = p.MateriasPrimas.Select(mp =>
+                    _context.UnidadMedidas
+                        .Where(u => u.idUnidad == mp.idUnidad)
+                        .Select(u => u.nombreUnidad)
+                        .FirstOrDefault() ?? "N/A" // Maneja unidades no encontradas
+                ).ToList()
             }).ToList();
 
             return Ok(proveedoresDto);
@@ -102,6 +109,57 @@ namespace ProyectoFinalAPI.Controllers
             return CreatedAtAction("GetProveedor", new { id = proveedor.idProveedor }, proveedorDto);
         }
 
+        // PUT: api/Proveedores/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutProveedor(int id, Proveedor proveedor)
+        {
+            if (id != proveedor.idProveedor)
+            {
+                return BadRequest("El ID del proveedor no coincide con el parámetro de la URL.");
+            }
+
+            // Verificar si el proveedor existe
+            if (!ProveedorExists(id))
+            {
+                return NotFound("No se encontró el proveedor.");
+            }
+
+            // Actualizar el proveedor en el contexto
+            var proveedorExistente = await _context.Proveedor
+                .Include(p => p.MateriasPrimas)
+                .FirstOrDefaultAsync(p => p.idProveedor == id);
+
+            if (proveedorExistente == null)
+            {
+                return NotFound("No se encontró el proveedor.");
+            }
+
+            // Actualizar propiedades del proveedor
+            proveedorExistente.nombreProveedor = proveedor.nombreProveedor;
+            proveedorExistente.telefono = proveedor.telefono;
+            proveedorExistente.correo = proveedor.correo;
+
+            // Actualizar materias primas
+            proveedorExistente.MateriasPrimas = proveedor.MateriasPrimas;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProveedorExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
         // DELETE: api/Proveedores/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProveedor(int id)

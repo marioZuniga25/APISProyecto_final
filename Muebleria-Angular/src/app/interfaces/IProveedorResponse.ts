@@ -4,9 +4,9 @@ export interface IProveedorResponse {
   telefono: string;
   correo: string;
   nombresMateriasPrimas: string[]; // Verifica que el nombre aquí coincida
+  preciosMateriasPrimas: string[]; // Verifica que el nombre aquí coincida
+  unidadesMateriasPrimas: string[]; // Verifica que el nombre aquí coincida
 }
-
-
 export interface IProveedorRequest {
   idProveedor: number;
   nombreProveedor: string;
