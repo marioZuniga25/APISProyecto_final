@@ -25,6 +25,7 @@ builder.Services.AddHangfire(config =>
 builder.Services.AddHangfireServer();
 
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<CarritoService>();
 
 builder.Services.AddSqlServer<ProyectoContext>(builder.Configuration.GetConnectionString("cnProyecto"));
 
@@ -71,4 +72,10 @@ recurringJobManager.AddOrUpdate<PromocionesRandomService>(
     service => service.EjecutarPromocionesAleatorias(),
     Cron.Hourly);
 
+var recurringJobManager2 = app.Services.GetRequiredService<IRecurringJobManager>();
+recurringJobManager2.AddOrUpdate<CarritoService>(
+    "EnviarRecordatoriosCarritos",
+    service => service.EnviarRecordatoriosCarritosAsync(),
+    Cron.MinuteInterval(1440)); 
+    // Cron.MinuteInterval(5)); 
 app.Run();
