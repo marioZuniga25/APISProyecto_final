@@ -15,7 +15,7 @@ namespace ProyectoFinalAPI.Controllers
         private readonly ProyectoContext _context;
         private readonly IServiceProvider _serviceProvider;
 
-        public CarritoController(ProyectoContext context, IServiceProvider serviceProvider)
+        public CarritoController(ProyectoContext context, IServiceProvider serviceProvider, EmailService emailService)
         {
             _context = context;
             _serviceProvider = serviceProvider;
@@ -168,6 +168,6 @@ namespace ProyectoFinalAPI.Controllers
 
             return Ok(new { Message = "Carrito limpiado exitosamente." });
         }
-
+       
     }
 }
