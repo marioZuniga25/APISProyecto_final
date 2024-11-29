@@ -1,5 +1,106 @@
 [
   {
+    "ContainingType": "ProyectoFinalAPI.Controllers.CarritoController",
+    "Method": "AgregarAlCarrito",
+    "RelativePath": "api/Carrito/{idUsuario}/agregar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "detalle",
+        "Type": "ProyectoFinalAPI.Models.DetalleCarrito",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.CarritoController",
+    "Method": "ObtenerCarrito",
+    "RelativePath": "api/Carrito/{idUsuario}/carrito",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.CarritoController",
+    "Method": "LimpiarCarrito",
+    "RelativePath": "api/Carrito/{idUsuario}/limpiar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.CarritoController",
+    "Method": "DecrementarCantidad",
+    "RelativePath": "api/Carrito/decrementar/{idDetalleCarrito}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDetalleCarrito",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.CarritoController",
+    "Method": "EliminarProducto",
+    "RelativePath": "api/Carrito/eliminar/{idDetalleCarrito}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDetalleCarrito",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.CarritoController",
+    "Method": "IncrementarCantidad",
+    "RelativePath": "api/Carrito/incrementar/{idDetalleCarrito}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDetalleCarrito",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProyectoFinalAPI.Controllers.CategoriasController",
     "Method": "GetCategorias",
     "RelativePath": "api/Categorias",
@@ -1137,6 +1238,27 @@
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.ProveedoresController",
+    "Method": "PutProveedor",
+    "RelativePath": "api/Proveedores/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "proveedor",
+        "Type": "ProyectoFinalAPI.Models.Proveedor",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.ProveedoresController",
     "Method": "DeleteProveedor",
     "RelativePath": "api/Proveedores/{id}",
     "HttpMethod": "DELETE",
@@ -1799,6 +1921,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProyectoFinalAPI.Controllers.VentasController",
+    "Method": "GetProductosRelacionados",
+    "RelativePath": "api/Ventas/GetProductosRelacionados/{categoriaId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoriaId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ProyectoFinalAPI.Models.Producto, ProyectoFinalAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "ProyectoFinalAPI.Controllers.VentasController",

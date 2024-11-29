@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'; // Importa Router
 import { VentasService } from '../services/ventas.service';
 import { IDetalleVenta } from '../interfaces/IDetalleVenta';
@@ -10,7 +10,8 @@ import * as CryptoJS from 'crypto-js';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './gracias.component.html',
-  styleUrl: './gracias.component.css'
+  styleUrl: './gracias.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class GraciasComponent implements OnInit {
   venta: IVenta | undefined;
@@ -45,7 +46,7 @@ export class GraciasComponent implements OnInit {
             // Espera 3 segundos antes de redirigir
             setTimeout(() => {
               this.router.navigate(['/catalogo']); // Redirige al catálogo
-            }, 3000); // 3000 milisegundos = 3 segundos
+            }, 60000); // 60000 milisegundos = 1 minuto
           },
           (error) => {
             console.error('Error al cargar los detalles de la venta', error);
