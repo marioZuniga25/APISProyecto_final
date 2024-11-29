@@ -95,9 +95,6 @@ private string GenerarCuerpoCorreo(dynamic carrito, dynamic usuario)
 
         detalleProductos.Append($@"
             <tr>
-                <td style='text-align: center;'>
-                    <img src='{imageUrl}' alt='{detalle.Producto.nombreProducto}' style='max-width: 100px; border-radius: 8px;'>
-                </td>
                 <td style='text-align: center;'>{detalle.Producto.nombreProducto}</td>
                 <td style='text-align: center;'>{detalle.Cantidad}</td>
                 <td style='text-align: center;'>{detalle.PrecioUnitario.ToString("C", new System.Globalization.CultureInfo("es-MX"))}</td>
@@ -189,7 +186,6 @@ private string GenerarCuerpoCorreo(dynamic carrito, dynamic usuario)
                 <table>
                     <thead>
                         <tr>
-                            <th>Imagen</th>
                             <th>Producto</th>
                             <th>Cantidad</th>
                             <th>Precio</th>
@@ -199,9 +195,6 @@ private string GenerarCuerpoCorreo(dynamic carrito, dynamic usuario)
                         {detalleProductos}
                     </tbody>
                 </table>
-                // <div class='button'>
-                //     <a href='http://localhost:4200/bag'>Completar Compra</a>
-                // </div>
             </div>
             <div class='footer'>
                 &copy; 2024 - Tu Empresa. Todos los derechos reservados.
