@@ -168,49 +168,157 @@ namespace ProyectoFinalAPI.Controllers
 
             try
             {
-                Console.WriteLine("Iniciando envío de correo...");
-                await Task.Delay(TimeSpan.FromSeconds(10));
+                //_logger.LogInformation("Iniciando envío de correo para la venta con ID: {IdVenta}...", idVenta);
+
+                await Task.Delay(TimeSpan.FromSeconds(10)); // Esto puede ser innecesario, es solo un retraso para simular procesamiento
 
                 var ventaCompleta = await ObtenerVentaConDetallesAsync(idVenta, scopedContext);
 
                 if (ventaCompleta == null || ventaCompleta.DetalleVentas == null || !ventaCompleta.DetalleVentas.Any())
                 {
-                    Console.WriteLine("No se encontraron detalles de la venta.");
+                    // _logger.LogWarning("No se encontraron detalles de la venta con ID: {IdVenta}.", idVenta);
                     return;
                 }
 
+                //_logger.LogInformation("Venta con ID {IdVenta} encontrada. Preparando detalles del correo...", idVenta);
+
+                // Cargar la plantilla HTML y reemplazar placeholders básicos
                 var body = System.IO.File.ReadAllText("Templates/OrdenConfirmationEmail.html")
-                .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
-                .Replace("[NOMBRE_USUARIO]", ventaCompleta.Usuario.NombreUsuario)
-                .Replace("[TOTAL_COMPRA]", ventaCompleta.Total.ToString("C", new System.Globalization.CultureInfo("es-MX")));
+                    .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
+                    .Replace("[NOMBRE_USUARIO]", ventaCompleta.Usuario.NombreUsuario)
+                    .Replace("[TOTAL_COMPRA]", ventaCompleta.Total.ToString("C", new System.Globalization.CultureInfo("es-MX")));
 
-
+                // Detalle de productos comprados
                 var detalleProductos = new StringBuilder();
                 foreach (var detalle in ventaCompleta.DetalleVentas)
                 {
-                    // Verifica si el prefijo ya está incluido en la imagen
                     string imagenProducto = detalle.Producto.Imagen.StartsWith("data:image") ?
-                        detalle.Producto.Imagen :
-                        "data:image/jpeg;base64," + detalle.Producto.Imagen;
+                    detalle.Producto.Imagen :
+                    "data:image/jpeg;base64," + detalle.Producto.Imagen;
 
+                    // Construir el detalle de cada producto con su imagen Base64
                     detalleProductos.Append($@"
-            <tr>
-                <td><img alt='Imagen del Producto' style='width: 50px; height: 50px;' /></td>
-                <td>{detalle.Producto.NombreProducto}</td>
-                <td>{detalle.Cantidad}</td>
-                <td>{detalle.PrecioUnitario.ToString("C", new System.Globalization.CultureInfo("es-MX"))}</td>
-                <td>{(detalle.Cantidad * detalle.PrecioUnitario).ToString("C", new System.Globalization.CultureInfo("es-MX"))}</td>
-            </tr>");
+                    <tr>
+                        <td><img alt='Imagen del Producto' style='width: 50px; height: 50px;' src='{imagenProducto}' /></td>
+                        <td>{detalle.Producto.NombreProducto}</td>
+                        <td>{detalle.Cantidad}</td>
+                        <td>{detalle.PrecioUnitario.ToString("C", new System.Globalization.CultureInfo("es-MX"))}</td>
+                        <td>{(detalle.Cantidad * detalle.PrecioUnitario).ToString("C", new System.Globalization.CultureInfo("es-MX"))}</td>
+                    </tr>");
                 }
 
                 body = body.Replace("[DETALLE_PRODUCTOS]", detalleProductos.ToString());
 
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                var primerDetalle = ventaCompleta.DetalleVentas.FirstOrDefault();
+                var categoriaId = 0;
+
+                if (primerDetalle != null)
+                {
+                    // Si necesitas acceder a la categoría del producto del primer detalle
+                    categoriaId = primerDetalle.Producto.IdCategoria;
+                    //_logger.LogInformation($"Categoría del producto: {categoriaId}");
+                }
+                else
+                {
+                    //_logger.LogWarning("No se encontraron detalles de venta.");
+                }
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                var productosRelacionadosHtml = new StringBuilder();
+                int productosMostrados = 0;
+                // Obtener productos relacionados (Ejemplo: por categoría del primer producto comprado)
+                var productosRelacionados = ObtenerProductosRelacionados(categoriaId, scopedContext);
+
+                // Reemplazar los placeholders de productos relacionados
+                foreach (var producto in productosRelacionados)
+                {
+                    // Limitar a un máximo de 3 productos
+                    if (productosMostrados >= 3) break;
+
+                    // Verificar si la imagen está en formato Base64 o URL
+                    string imagenProducto = producto.imagen.StartsWith("data:image") ?
+                        producto.imagen :
+                        "data:image/jpeg;base64," + producto.imagen;  // Asumir que la imagen es Base64 si no tiene una URL válida
+
+                    // Construir el HTML del producto relacionado
+                    productosRelacionadosHtml.Append($@"
+                    <div class='product-item'>
+                        <img src='' alt='{producto.nombreProducto}' style='width: 100px; height: 100px;' />
+                        <p>{producto.nombreProducto}</p>
+                        <p>{producto.precio.ToString("C", new System.Globalization.CultureInfo("es-MX"))} MXN</p>
+                        <a href='/productos/{producto.idProducto}'>Ver producto</a>
+                    </div>
+                    ");
+                    productosMostrados++;
+                }
+
+                // Si se encontraron productos relacionados, reemplazar los marcadores en el cuerpo del correo
+                if (productosMostrados > 0)
+                {
+                    body = body.Replace("[PRODUCTOS_RELACIONADOS]", productosRelacionadosHtml.ToString());
+                }
+                else
+                {
+                    body = body.Replace("[PRODUCTOS_RELACIONADOS]", "<p>No tenemos productos relacionados en este momento.</p>");
+                }
+
+
+
+                // Enviar el correo con los detalles ya reemplazados
                 await emailService.SendEmailAsync(ventaCompleta.Usuario.Correo, "Tu compra está en camino", body);
-                Console.WriteLine("Correo enviado correctamente.");
+
+                //_logger.LogInformation("Correo enviado correctamente a {CorreoUsuario} para la venta con ID: {IdVenta}.", ventaCompleta.Usuario.Correo, idVenta);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al enviar el correo: {ex.Message}");
+                //_logger.LogError(ex, "Error al enviar el correo para la venta con ID: {IdVenta}.", idVenta);
+            }
+        }
+
+
+
+        private List<Producto> ObtenerProductosRelacionados(int categoriaId, ProyectoContext context)
+        {
+            // _logger.LogInformation("IDPRODUCTO1: "+categoriaId);
+            var productos = context.Producto
+            .Where(p => p.idCategoria == categoriaId)
+            .OrderBy(p => p.idProducto)
+            .Take(3)
+            .ToList();
+
+
+
+            return productos;
+        }
+
+        [HttpGet("GetProductosRelacionados/{categoriaId}")]
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProductosRelacionados(int categoriaId)
+        {
+            try
+            {
+                //_logger.LogInformation("Consultando productos relacionados para la categoría ID: {CategoriaId}", categoriaId);
+
+                var productosRelacionados = await _context.Producto
+                    .Where(p => p.idCategoria == categoriaId)
+                    .OrderBy(p => p.idProducto)
+                    .Take(4)
+                    .ToListAsync();
+
+                if (productosRelacionados == null || !productosRelacionados.Any())
+                {
+                    //_logger.LogWarning("No se encontraron productos relacionados para la categoría ID: {CategoriaId}", categoriaId);
+                    return NotFound("No se encontraron productos relacionados.");
+                }
+
+                //_logger.LogInformation("Se encontraron {Count} productos relacionados.", productosRelacionados.Count);
+                return Ok(productosRelacionados);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, "Error al obtener productos relacionados para la categoría ID: {CategoriaId}", categoriaId);
+                return StatusCode(500, "Error interno del servidor.");
             }
         }
 
@@ -255,7 +363,8 @@ namespace ProyectoFinalAPI.Controllers
                         {
                             IdProducto = p.idProducto,
                             NombreProducto = p.nombreProducto,
-                            Imagen = p.imagen
+                            Imagen = p.imagen,
+                            IdCategoria = p.idCategoria
                         })
                         .FirstOrDefault()
                 })
