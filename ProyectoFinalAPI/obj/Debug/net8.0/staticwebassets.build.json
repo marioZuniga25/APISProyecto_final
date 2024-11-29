@@ -1,12 +1,11 @@
 {
   "Version": 1,
-  "Hash": "zVJwojrh+umFM73TOWYd0rdiXgrhKKBqW8UttNNeso8=",
+  "Hash": "GDgXijcjz8DuBQeg5Fl9fzMLPGSS0BeUeT1Mo00b7gc=",
   "Source": "ProyectoFinalAPI",
   "BasePath": "_content/ProyectoFinalAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": []
 }

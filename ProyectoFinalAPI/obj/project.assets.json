@@ -5616,31 +5616,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Mayo\\.nuget\\packages\\": {},
-    "D:\\IDEs\\sdk\\NuGetPackages": {}
+    "/Users/cristianleyva/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mayo\\Desktop\\version final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
+      "projectUniqueName": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
       "projectName": "ProyectoFinalAPI",
-      "projectPath": "C:\\Users\\Mayo\\Desktop\\version final\\APISProyecto_final\\ProyectoFinalAPI\\ProyectoFinalAPI.csproj",
-      "packagesPath": "C:\\Users\\Mayo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mayo\\Desktop\\version final\\APISProyecto_final\\ProyectoFinalAPI\\obj\\",
+      "projectPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/ProyectoFinalAPI.csproj",
+      "packagesPath": "/Users/cristianleyva/.nuget/packages/",
+      "outputPath": "/Users/cristianleyva/Documents/integrador/APISProyecto_final/ProyectoFinalAPI/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "D:\\IDEs\\sdk\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Mayo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/cristianleyva/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5657,9 +5650,8 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+        "auditMode": "direct"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -5713,20 +5705,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.206/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "El paquete \"Newtonsoft.Json\" 11.0.1 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-5crp-9r3c-p9vr",
-      "libraryId": "Newtonsoft.Json",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }
