@@ -1,7 +1,6 @@
 using ProyectoFinalAPI.Models; 
 using ProyectoFinalAPI; 
 using System.Text; 
-using Microsoft.EntityFrameworkCore;
 using ProyectoFinalAPI.Dto;
 public class CarritoService
 {

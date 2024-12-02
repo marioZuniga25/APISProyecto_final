@@ -11,14 +11,40 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./catalogo.component.css']
 })
 export class CatalogoComponent implements OnInit {
-  productos: any[] = [];
+  productos: any[] = []; // Lista de productos final con o sin descuento
 
   constructor(private productosService: ProductosService) {}
 
   ngOnInit(): void {
+    // Obtener ambos endpoints y combinar los datos
     this.productosService.getAllProductos().subscribe(
-      (data) => {
-        this.productos = data;
+      (productos) => {
+        this.productosService.getAllProductosPromociones().subscribe(
+          (productosPromociones) => {
+            // Mezclar datos: buscar si el producto tiene descuento
+            this.productos = productos.map((producto) => {
+              const productoPromocion = productosPromociones.find(
+                (promo) => promo.idProducto === producto.idProducto
+              );
+
+              // Si hay promoción, agregar precioFinal y porcentajeDescuento
+              if (productoPromocion) {
+                return {
+                  ...producto,
+                  precioOriginal: producto.precio,
+                  precioConDescuento: productoPromocion.precioFinal,
+                  porcentajeDescuento: productoPromocion.porcentajeDescuento
+                };
+              }
+
+              // Si no hay promoción, retornar el producto sin cambios
+              return producto;
+            });
+          },
+          (error) => {
+            console.error('Error al obtener los productos promociones', error);
+          }
+        );
       },
       (error) => {
         console.error('Error al obtener los productos', error);

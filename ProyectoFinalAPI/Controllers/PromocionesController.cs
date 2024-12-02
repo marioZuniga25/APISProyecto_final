@@ -9,110 +9,191 @@ using System.Threading.Tasks;
 namespace ProyectoFinalAPI.Controllers
 {
     [ApiController]
- [Route("api/[controller]")]
- public class PromocionesController : ControllerBase
- {
-  private readonly ProyectoContext _context;
-  private readonly EmailService _emailService;
-  public PromocionesController(ProyectoContext context, EmailService emailService)
-  {
-   _context = context;
-   _emailService = emailService;
-  }
-
-  [HttpPost("CreatePromocion")]
-  public async Task<ActionResult<Promocion>> CreatePromocion([FromBody] PromocionDto promocionDto)
-  {
-   // Crear la instancia de Promocion con los datos recibidos
-   var promocion = new Promocion
-   {
-    Nombre = promocionDto.Nombre,
-    FechaInicio = promocionDto.FechaInicio,
-    FechaFin = promocionDto.FechaFin,
-   };
-
-   // Guarda la promoción en la base de datos
-   _context.Promociones.Add(promocion);
-   await _context.SaveChangesAsync();
-
-   // Agregar los productos seleccionados como DetallePromocion
-   foreach (var idProducto in promocionDto.ProductosIds)
-   {
-    var producto = await _context.Producto.FindAsync(idProducto);
-    if (producto != null)
+    [Route("api/[controller]")]
+    public class PromocionesController : ControllerBase
     {
-     // Cálculo del precio final basado en el descuento
-     var precioFinal = producto.precio - (producto.precio * (promocionDto.Descuento / 100.0));
+        private readonly ProyectoContext _context;
+        private readonly EmailService _emailService;
+        public PromocionesController(ProyectoContext context, EmailService emailService)
+        {
+            _context = context;
+            _emailService = emailService;
+        }
 
-     var detallePromocion = new DetallePromocion
-     {
-      IdPromocion = promocion.IdPromocion,
-      IdProducto = idProducto,
-      PorcentajeDescuento = promocionDto.Descuento,
-      PrecioFinal = precioFinal
-     };
+        [HttpPost("CreatePromocion")]
+        public async Task<ActionResult<Promocion>> CreatePromocion([FromBody] PromocionDto promocionDto)
+        {
+            // Crear la instancia de Promocion con los datos recibidos
+            var promocion = new Promocion
+            {
+                Nombre = promocionDto.Nombre,
+                FechaInicio = promocionDto.FechaInicio,
+                FechaFin = promocionDto.FechaFin,
+            };
 
-     _context.DetallePromocion.Add(detallePromocion);
+            // Guarda la promoción en la base de datos
+            _context.Promociones.Add(promocion);
+            await _context.SaveChangesAsync();
 
-     // Actualiza el campo EnPromocion en el producto
-     producto.EnPromocion = 1; // 1 indica promoción activa
-    }
-   }
+            // Agregar los productos seleccionados como DetallePromocion
+            foreach (var idProducto in promocionDto.ProductosIds)
+            {
+                var producto = await _context.Producto.FindAsync(idProducto);
+                if (producto != null)
+                {
+                    // Cálculo del precio final basado en el descuento
+                    var precioFinal = producto.precio - (producto.precio * (promocionDto.Descuento / 100.0));
 
-   await _context.SaveChangesAsync();
+                    var detallePromocion = new DetallePromocion
+                    {
+                        IdPromocion = promocion.IdPromocion,
+                        IdProducto = idProducto,
+                        PorcentajeDescuento = promocionDto.Descuento,
+                        PrecioFinal = precioFinal
+                    };
 
-   return CreatedAtAction(nameof(GetPromocionById), new { id = promocion.IdPromocion }, promocion);
-  }
+                    _context.DetallePromocion.Add(detallePromocion);
 
-  [HttpGet("{id}")]
-  public async Task<ActionResult<Promocion>> GetPromocionById(int id)
-  {
-   var promocion = await _context.Promociones
-       .Include(p => p.Detalles) // Incluye los detalles de la promoción
-       .ThenInclude(d => d.Producto) // Incluye los productos en cada detalle
-       .FirstOrDefaultAsync(p => p.IdPromocion == id);
+                    // Actualiza el campo EnPromocion en el producto
+                    producto.EnPromocion = 1; // 1 indica promoción activa
+                }
+            }
 
-   if (promocion == null)
-   {
-    return NotFound();
-   }
-   return promocion;
-  }
+            await _context.SaveChangesAsync();
 
-  [HttpPost("EnviarCorreoPromocion")]
-  public async Task<IActionResult> EnviarCorreoPromocion(int promocionId, string recipientType)
-  {
-   Console.WriteLine($"Iniciando envío de correos para la promoción ID: {promocionId} a destinatarios de tipo: {recipientType}");
+            return CreatedAtAction(nameof(GetPromocionById), new { id = promocion.IdPromocion }, promocion);
+        }
 
-   try
-   {
-    var promocion = await _context.Promociones.Include(p => p.Detalles).ThenInclude(d => d.Producto)
-                        .FirstOrDefaultAsync(p => p.IdPromocion == promocionId);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Promocion>> GetPromocionById(int id)
+        {
+            var promocion = await _context.Promociones
+                .Include(p => p.Detalles) // Incluye los detalles de la promoción
+                .ThenInclude(d => d.Producto) // Incluye los productos en cada detalle
+                .FirstOrDefaultAsync(p => p.IdPromocion == id);
 
-    if (promocion == null)
-    {
-     Console.WriteLine("Promoción no encontrada.");
-     return NotFound("Promoción no encontrada");
-    }
+            if (promocion == null)
+            {
+                return NotFound();
+            }
+            return promocion;
+        }
 
-    List<Usuario> usuarios;
-    if (recipientType == "frecuentes")
-    {
-     usuarios = await _context.Usuario.Where(u => u.loginCount > 5).ToListAsync();
-    }
-    else if (recipientType == "nuevos")
-    {
-     usuarios = await _context.Usuario.Where(u => u.loginCount <= 1).ToListAsync();
-    }
-    else
-    {
-     usuarios = await _context.Usuario.ToListAsync();
-    }
+        [HttpGet("GetDetallePromocion")]
+        public async Task<ActionResult<IEnumerable<DetallePromocionDto>>> GetDetallePromocion(int? idPromocion = null)
+        {
+            try
+            {
+                var query = _context.DetallePromocion
+                    .Include(d => d.Producto)
+                    .AsQueryable();
 
-    Console.WriteLine($"Usuarios encontrados: {usuarios.Count}");
+                if (idPromocion.HasValue)
+                {
+                    query = query.Where(d => d.IdPromocion == idPromocion.Value);
+                }
 
-    var subject = $"{promocion.Nombre}";
-    var body = $@"
+                var detalles = await query.ToListAsync();
+
+                var detallesDto = detalles.Select(d => new DetallePromocionDto
+                {
+                    IdDetallePromocion = d.IdDetallePromocion,
+                    IdPromocion = d.IdPromocion,
+                    IdProducto = d.IdProducto,
+                    NombreProducto = d.Producto.nombreProducto,
+                    PorcentajeDescuento = d.PorcentajeDescuento,
+                    PrecioFinal = d.PrecioFinal
+                }).ToList();
+
+                return Ok(detallesDto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en GetDetallePromocion: {ex.Message}");
+                return StatusCode(500, "Error interno del servidor.");
+            }
+        }
+
+        [HttpGet("GetDetallePromocionActiva")]
+        public async Task<ActionResult<IEnumerable<DetallePromocionDto>>> GetDetallePromocionActiva(int? idPromocion = null)
+        {
+            try
+            {
+                // Fecha actual para filtrar promociones activas
+                var fechaActual = DateTime.Now;
+
+                // Consulta base con la relación entre DetallePromocion y Promociones
+                var query = _context.DetallePromocion
+                    .Include(d => d.Producto) // Relación con productos
+                    .Include(d => d.Promocion) // Relación con promociones
+                    .Where(d => d.Promocion.FechaFin > fechaActual) // Filtrar solo promociones activas
+                    .AsQueryable();
+
+                // Filtrar por idPromocion si se proporciona
+                if (idPromocion.HasValue)
+                {
+                    query = query.Where(d => d.IdPromocion == idPromocion.Value);
+                }
+
+                // Ejecutar la consulta
+                var detalles = await query.ToListAsync();
+
+                // Mapear a DTO
+                var detallesDto = detalles.Select(d => new DetallePromocionDto
+                {
+                    IdDetallePromocion = d.IdDetallePromocion,
+                    IdPromocion = d.IdPromocion,
+                    IdProducto = d.IdProducto,
+                    NombreProducto = d.Producto.nombreProducto,
+                    PorcentajeDescuento = d.PorcentajeDescuento,
+                    PrecioFinal = d.PrecioFinal,
+                    FechaFinPromocion = d.Promocion.FechaFin // Agregar información de FechaFin si es necesario
+                }).ToList();
+
+                return Ok(detallesDto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en GetDetallePromocion: {ex.Message}");
+                return StatusCode(500, "Error interno del servidor.");
+            }
+        }
+
+
+        [HttpPost("EnviarCorreoPromocion")]
+        public async Task<IActionResult> EnviarCorreoPromocion(int promocionId, string recipientType)
+        {
+            Console.WriteLine($"Iniciando envío de correos para la promoción ID: {promocionId} a destinatarios de tipo: {recipientType}");
+
+            try
+            {
+                var promocion = await _context.Promociones.Include(p => p.Detalles).ThenInclude(d => d.Producto)
+                                    .FirstOrDefaultAsync(p => p.IdPromocion == promocionId);
+
+                if (promocion == null)
+                {
+                    Console.WriteLine("Promoción no encontrada.");
+                    return NotFound("Promoción no encontrada");
+                }
+
+                List<Usuario> usuarios;
+                if (recipientType == "frecuentes")
+                {
+                    usuarios = await _context.Usuario.Where(u => u.loginCount > 5).ToListAsync();
+                }
+                else if (recipientType == "nuevos")
+                {
+                    usuarios = await _context.Usuario.Where(u => u.loginCount <= 1).ToListAsync();
+                }
+                else
+                {
+                    usuarios = await _context.Usuario.ToListAsync();
+                }
+
+                Console.WriteLine($"Usuarios encontrados: {usuarios.Count}");
+
+                var subject = $"{promocion.Nombre}";
+                var body = $@"
                     <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;'>
                         <h2 style='text-al0ign: center; color: #4CAF50;'>Gracias por tu interés en nuestras promociones!</h2>
                         <p>Estamos emocionados de ofrecerte una nueva promoción en nuestros productos.</p>
@@ -127,14 +208,14 @@ namespace ProyectoFinalAPI.Controllers
                             </thead>
                             <tbody>";
 
-    foreach (var detalle in promocion.Detalles)
-    {
-     var imagenUrl = $"data:image/png;base64,{detalle.Producto.imagen}"; // Debe ser una URL pública
-     var nombreProducto = detalle.Producto.nombreProducto;
-     var porcentajeDescuento = detalle.PorcentajeDescuento;
-     var precioFinal = detalle.PrecioFinal.ToString("C");
+                foreach (var detalle in promocion.Detalles)
+                {
+                    var imagenUrl = $"data:image/png;base64,{detalle.Producto.imagen}"; // Debe ser una URL pública
+                    var nombreProducto = detalle.Producto.nombreProducto;
+                    var porcentajeDescuento = detalle.PorcentajeDescuento;
+                    var precioFinal = detalle.PrecioFinal.ToString("C");
 
-     body += $@"
+                    body += $@"
                                 <tr>
                                     <td style='border: 1px solid #ddd; padding: 8px; text-ali gn: center;'>
                                         <img src='{imagenUrl}' alt='{nombreProducto}' style='width: 50px; height: auto; border-radius: 4px;'/>
@@ -143,34 +224,34 @@ namespace ProyectoFinalAPI.Controllers
                                     <td style='border: 1px solid #ddd; padding: 8px; text-align: center;'>{porcentajeDescuento}%</td>
                                     <td style='border: 1px solid #ddd; padding: 8px; text-align: center;'>{precioFinal}</td>
                                 </tr>";
-    }
+                }
 
-    body += @"
+                body += @"
                             </tbody>
                         </table>
                         <p style='text-align: center; margin-top: 20px;'>¡Aprovecha esta oportunidad antes de que termine!</p>
                     </div>";
 
-    foreach (var usuario in usuarios)
-    {
-     try
-     {
-      await _emailService.SendEmailAsync(usuario.correo, subject, body);
-      Console.WriteLine($"Correo enviado exitosamente a: {usuario.correo}");
-     }
-     catch (Exception ex)
-     {
-      Console.WriteLine($"Error al enviar correo a {usuario.correo}: {ex.Message}");
-     }
-    }
+                foreach (var usuario in usuarios)
+                {
+                    try
+                    {
+                        await _emailService.SendEmailAsync(usuario.correo, subject, body);
+                        Console.WriteLine($"Correo enviado exitosamente a: {usuario.correo}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error al enviar correo a {usuario.correo}: {ex.Message}");
+                    }
+                }
 
-    return Ok("Correos enviados con éxito");
-   }
-   catch (Exception ex)
-   {
-    Console.WriteLine($"Error en EnviarCorreoPromocion: {ex.Message}");
-    return StatusCode(500, "Error interno al enviar correos.");
-   }
-  }
- }
+                return Ok("Correos enviados con éxito");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en EnviarCorreoPromocion: {ex.Message}");
+                return StatusCode(500, "Error interno al enviar correos.");
+            }
+        }
+    }
 }

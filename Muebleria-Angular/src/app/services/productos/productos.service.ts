@@ -17,6 +17,11 @@ export class ProductosService {
     return this.http.get<any[]>(`${this._apiUrl}producto/ListadoProductos`);
   }
 
+  getAllProductosPromociones(): Observable<any[]> {
+    return this.http.get<any[]>(`${this._apiUrl}Promociones/GetDetallePromocionActiva`);
+  }
+
+
   // getProductoById(id: number): Observable<any> {
   //   const url = `${this._apiUrl}producto/${id}`;
   //   return this.http.get<any>(url);

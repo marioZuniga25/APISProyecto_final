@@ -19,13 +19,13 @@ namespace ProyectoFinalAPI.Controllers
         [HttpGet("ventas-totales")]
         public async Task<IActionResult> GetTotalVentas(string fechaInicio = "", string fechaFin = "")
         {
-            // Establecer fechas predeterminadas si están vacías
+            // Establecer fechas predeterminadas si estï¿½n vacï¿½as
             DateTime inicio;
             DateTime fin;
 
             if (string.IsNullOrEmpty(fechaInicio))
             {
-                // Si no se proporciona fecha de inicio, usar hace 7 días
+                // Si no se proporciona fecha de inicio, usar hace 7 dï¿½as
                 inicio = DateTime.Now.AddDays(-7).Date; // Solo la fecha, sin hora
             }
             else
@@ -44,11 +44,11 @@ namespace ProyectoFinalAPI.Controllers
             }
 
             var ventasOnline = await _context.Venta
-                .Where(v => v.tipoVenta == "Online" && v.fechaVenta >= inicio && v.fechaVenta <= fin.AddDays(1).AddTicks(-1)) // Incluye el día completo
+                .Where(v => v.tipoVenta == "Online" && v.fechaVenta >= inicio && v.fechaVenta <= fin.AddDays(1).AddTicks(-1)) // Incluye el dï¿½a completo
                 .SumAsync(v => v.total);
 
             var ventasFisico = await _context.Venta
-                .Where(v => v.tipoVenta == "Fisica" && v.fechaVenta >= inicio && v.fechaVenta <= fin.AddDays(1).AddTicks(-1)) // Incluye el día completo
+                .Where(v => v.tipoVenta == "Fisica" && v.fechaVenta >= inicio && v.fechaVenta <= fin.AddDays(1).AddTicks(-1)) // Incluye el dï¿½a completo
                 .SumAsync(v => v.total);
 
             return Ok(new { ventasOnline, ventasFisico });
@@ -147,7 +147,8 @@ namespace ProyectoFinalAPI.Controllers
              {
               p.IdPromocion,
               p.Nombre,
-              TotalUsuariosBeneficiados = p.Detalles.Count()
+              TotalUsuariosBeneficiados = p.Detalles.Count(),
+              p.FechaFin
              })
              .ToListAsync();
 

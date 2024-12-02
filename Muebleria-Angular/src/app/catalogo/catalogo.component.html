@@ -1,41 +1,51 @@
 <div class="Catalogo">
-    <div class="filtros">
-        <!-- Filtros -->
+  <div class="filtros">
+    <!-- Filtros -->
+  </div>
+  <div class="Catalogo-banner">
+    <div class="item">
+      <img src="/assets/images/banner-catalogo.png" alt="MUEBLES TRONCOSO">
     </div>
-    <div class="Catalogo-banner">
-        <div class="item">
-            <img src="/assets/images/banner-catalogo.png" alt="MUEBLES TRONCOSO">
+  </div>
+
+  <h2 class="text-center pt-5">NUESTROS PRODUCTOS</h2>
+
+  <div class="Catalogo-content">
+    <div class="Catalogo-content-container layout">
+      <div class="catalogo-actions">
+        <div class="btnFiltros">
+          <span class="icon"></span>
+          Filtros
         </div>
-    </div>
-
-    <h2 class="text-center pt-5">NUESTROS PRODUCTOS</h2>
-
-    <div class="Catalogo-content">
-        <div class="Catalogo-content-container layout">
-          <div class="catalogo-actions">
-            <div class="btnFiltros">
-              <span class="icon"></span>
-              Filtros
+        <p>{{ productos.length }} ARTÍCULOS</p>
+      </div>
+      <div class="blocks">
+        <div *ngFor="let producto of productos" class="blocks-item">
+          <a [routerLink]="['/detalle', producto.idProducto]" class="Producto">
+            <div class="img">
+              <!-- Mostrar porcentaje de descuento si existe -->
+              <div class="float" *ngIf="producto.porcentajeDescuento">
+                -{{ producto.porcentajeDescuento }}%
+              </div>
+              <div class="heart icon-favorito"></div>
+              <img [src]="producto.imagen" alt="{{ producto.nombreProducto }}">
+              <div class="quiero">LO QUIERO</div>
             </div>
-            <p>{{ productos.length }} ARTÍCULOS</p>
-          </div>
-          <div class="blocks">
-            <div *ngFor="let producto of productos" class="blocks-item">
-                <a [routerLink]="['/detalle', producto.idProducto]" class="Producto">
-                    <div class="img">
-                  <!-- <div class="float">-20%</div> -->
-                  <div class="heart icon-favorito"></div>
-                  <img [src]="producto.imagen" alt="{{ producto.nombreProducto }}">
-                  <div class="quiero">LO QUIERO</div>
-                </div>
-                <div class="bot">
-                  <h5>{{ producto.nombreProducto }}</h5>
-                  <span class="price desc">${{ producto.precio | number:'1.2-2' }}</span>
-                </div>
-              </a>
+            <div class="bot">
+              <h5>{{ producto.nombreProducto }}</h5>
+              <!-- Mostrar precio con descuento -->
+              <span class="price desc" *ngIf="producto.porcentajeDescuento">
+                <span class="original-price">${{ producto.precioOriginal | number:'1.2-2' }}</span>
+                <span class="discounted-price">${{ producto.precioConDescuento | number:'1.2-2' }}</span>
+              </span>
+              <!-- Mostrar precio normal si no tiene descuento -->
+              <span class="price desc" *ngIf="!producto.porcentajeDescuento">
+                ${{ producto.precio | number:'1.2-2' }}
+              </span>
             </div>
-          </div>
+          </a>
         </div>
       </div>
-      
+    </div>
+  </div>
 </div>

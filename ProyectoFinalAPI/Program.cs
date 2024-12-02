@@ -76,6 +76,6 @@ var recurringJobManager2 = app.Services.GetRequiredService<IRecurringJobManager>
 recurringJobManager2.AddOrUpdate<CarritoService>(
     "EnviarRecordatoriosCarritos",
     service => service.EnviarRecordatoriosCarritosAsync(),
-    Cron.MinuteInterval(1)); 
+    Cron.MinuteInterval(59)); 
     // Cron.MinuteInterval(5)); 
 app.Run();
