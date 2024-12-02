@@ -248,7 +248,7 @@ namespace ProyectoFinalAPI.Controllers
                         <img src='' alt='{producto.nombreProducto}' style='width: 100px; height: 100px;' />
                         <p>{producto.nombreProducto}</p>
                         <p>{producto.precio.ToString("C", new System.Globalization.CultureInfo("es-MX"))} MXN</p>
-                        <a href='/productos/{producto.idProducto}'>Ver producto</a>
+                        <a href='http://localhost:4200/detalle/{producto.idProducto}'>Ver producto</a>
                     </div>
                     ");
                     productosMostrados++;

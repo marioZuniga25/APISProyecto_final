@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Threading.Tasks.Dataflow;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinalAPI.Models;
@@ -168,32 +170,75 @@ namespace ProyectoFinalAPI.Controllers
 
         // Actualizar el estatus de un pedido
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePedido(int id, Pedidos pedido)
+public async Task<IActionResult> UpdatePedido(
+    int id,
+    [FromBody] Pedidos pedido,
+    [FromServices] EmailService emailService)
+{
+    // Imprime el pedido para depuración
+    Console.WriteLine("Datos del pedido recibido:");
+    Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(pedido));
+
+    if (id != pedido.idPedido)
+    {
+        return BadRequest();
+    }
+
+    _context.Entry(pedido).State = EntityState.Modified;
+
+    try
+    {
+        await _context.SaveChangesAsync();
+
+        // Inicializa las variables con valores predeterminados
+        string tituloCorreo = "Estado del pedido actualizado";
+        string mensajeCorreo = "El estado de tu pedido ha sido actualizado.";
+        string claveRastreoHtml = "";
+
+        if (pedido.estatus == "Enviado")
         {
-            if (id != pedido.idPedido)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(pedido).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Pedidos.Any(e => e.idPedido == id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            tituloCorreo = "Tu compra salió de nuestro almacén";
+            mensajeCorreo = "Tu pedido ya está en camino. Muy pronto podrás disfrutarlo. Gracias por confiar en nosotros.";
+            claveRastreoHtml = "<p>A continuación te compartimos la clave de rastreo:</p>" +
+                               "<p><a href=\"https://www.dhl.com/mx-es/home/rastreo.html?tracking-id=ATQ0DE7LRGZ8YXSDZCFPYYGDH\" style=\"color: #4caf50; text-decoration: underline;\">ATQ0DE7LRGZ8YXSDZCFPYYGDH</a></p>";
         }
+        else if (pedido.estatus == "Entregado")
+        {
+            tituloCorreo = "Tu compra ha llegado";
+            mensajeCorreo = "Esperamos que disfrutes tu compra. Si tienes alguna duda o necesitas ayuda, no dudes en contactarnos. ¡Gracias por tu preferencia!";
+            claveRastreoHtml = ""; // No mostrar clave de rastreo
+        }
+
+        var body = System.IO.File.ReadAllText("Templates/PedidoEmail.html")
+            .Replace("[LOGO_URL]", "https://i.imgur.com/EmvHFiH.png")
+            .Replace("[NOMBRE_USUARIO]", $"{pedido.nombre} {pedido.apellidos}")
+            .Replace("[ESTADO_PEDIDO]", pedido.estatus)
+            .Replace("[ID_PEDIDO]", pedido.idPedido.ToString())
+            .Replace("[DIRECCION]", $"{pedido.calle} {pedido.numero}, {pedido.colonia}, {pedido.ciudad}, {pedido.estado}, {pedido.codigoPostal}")
+            .Replace("[TELEFONO]", pedido.telefono)
+            .Replace("[CORREO]", pedido.correo)
+            .Replace("[MENSAJE_PERSONALIZADO]", mensajeCorreo)
+            .Replace("[CLAVE_RASTREO_HTML]", claveRastreoHtml);
+
+        await emailService.SendEmailAsync(
+            pedido.correo,
+            tituloCorreo, // Título dinámico según el estado
+            body
+        );
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!_context.Pedidos.Any(e => e.idPedido == id))
+        {
+            return NotFound();
+        }
+        else
+        {
+            throw;
+        }
+    }
+
+    return NoContent();
+}
     }
 }

@@ -111,7 +111,7 @@ namespace ProyectoFinalAPI.Controllers
 
     Console.WriteLine($"Usuarios encontrados: {usuarios.Count}");
 
-    var subject = $"Nueva Promoción: {promocion.Nombre}";
+    var subject = $"{promocion.Nombre}";
     var body = $@"
                     <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;'>
                         <h2 style='text-al0ign: center; color: #4CAF50;'>Gracias por tu interés en nuestras promociones!</h2>

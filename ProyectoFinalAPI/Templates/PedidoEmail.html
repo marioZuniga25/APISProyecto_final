@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Orden</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e1e;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .header img {
+            max-width: 150px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+
+        .content h2 {
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .content p {
+            margin: 15px 0;
+            font-size: 16px;
+            color: #bbbbbb;
+        }
+
+        .direccion {
+            margin-top: 30px;
+            text-align: left;
+            color: #bbbbbb;
+            line-height: 1.5;
+        }
+
+        .direccion h3 {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .button a {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .button a:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #bbbbbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="[LOGO_URL]" alt="Logo">
+        </div>
+        <div class="content">
+            <h2>[MENSAJE_PERSONALIZADO]</h2>
+            [CLAVE_RASTREO_HTML]
+        </div>
+
+        <div class="direccion">
+            <h3>Dirección de entrega:</h3>
+            <p>
+                <strong>Nombre:</strong> [NOMBRE_USUARIO] <br>
+                <strong>Dirección:</strong> [DIRECCION] <br>
+                <strong>Teléfono:</strong> [TELEFONO] <br>
+                <strong>Correo:</strong> [CORREO] <br>
+            </p>
+        </div>
+
+        <div class="footer">
+            &copy; 2024 - Muebles Troncoso. Todos los derechos reservados.
+        </div>
+    </div>
+</body>
+</html>

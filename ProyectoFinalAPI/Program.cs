@@ -34,7 +34,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("NuevaPolitica", app =>
     {
-        app.WithOrigins("http://localhost:4200", "http://localhost:5173")
+        app.WithOrigins("http://localhost:4200", "http://localhost:5173","http://172.20.10.3:4200","http://172.20.10.3:5173","http://localhost:5194")
            .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials();
@@ -76,6 +76,6 @@ var recurringJobManager2 = app.Services.GetRequiredService<IRecurringJobManager>
 recurringJobManager2.AddOrUpdate<CarritoService>(
     "EnviarRecordatoriosCarritos",
     service => service.EnviarRecordatoriosCarritosAsync(),
-    Cron.MinuteInterval(59)); 
+    Cron.MinuteInterval(1)); 
     // Cron.MinuteInterval(5)); 
 app.Run();

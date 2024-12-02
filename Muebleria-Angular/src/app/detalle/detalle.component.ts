@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService } from '../services/productos/productos.service';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,8 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './detalle.component.html',
-  styleUrls: ['./detalle.component.css']
+  styleUrls: ['./detalle.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class DetalleComponent implements OnInit {
   producto!: IProductoResponse;
